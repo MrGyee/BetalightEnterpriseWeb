@@ -81,6 +81,7 @@ export const siteSettingsAdminSchema = z.object({
   addressCountry: z.string().min(2, "Country is required."),
   hoursText: z.string().optional().or(z.literal("")),
   serviceAreasText: z.string().min(2, "Enter at least one service area."),
+  brandsText: z.string().optional().or(z.literal("")),
   socialFacebook: z.string().optional().or(z.literal("")),
   socialInstagram: z.string().optional().or(z.literal("")),
   socialTiktok: z.string().optional().or(z.literal("")),

@@ -126,6 +126,7 @@ create table if not exists site_settings (
   address_country text not null default '',
   hours jsonb not null default '[]'::jsonb,
   service_areas jsonb not null default '[]'::jsonb,
+  brands jsonb not null default '[]'::jsonb,
   social_facebook text not null default '',
   social_instagram text not null default '',
   social_tiktok text not null default '',

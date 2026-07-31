@@ -13,6 +13,7 @@ export type SiteSettingsRecord = {
   addressCountry: string;
   hours: { days: string; time: string }[];
   serviceAreas: string[];
+  brands: string[];
   socialFacebook: string;
   socialInstagram: string;
   socialTiktok: string;
@@ -32,6 +33,7 @@ type SiteSettingsRow = {
   address_country: string;
   hours: { days: string; time: string }[] | null;
   service_areas: string[] | null;
+  brands: string[] | null;
   social_facebook: string;
   social_instagram: string;
   social_tiktok: string;
@@ -52,6 +54,7 @@ function mapRow(row: SiteSettingsRow): SiteSettingsRecord {
     addressCountry: row.address_country,
     hours: row.hours ?? [],
     serviceAreas: row.service_areas ?? [],
+    brands: row.brands ?? [],
     socialFacebook: row.social_facebook,
     socialInstagram: row.social_instagram,
     socialTiktok: row.social_tiktok,
@@ -74,6 +77,7 @@ function toRow(values: SiteSettingsRecord) {
     address_country: values.addressCountry,
     hours: values.hours,
     service_areas: values.serviceAreas,
+    brands: values.brands,
     social_facebook: values.socialFacebook,
     social_instagram: values.socialInstagram,
     social_tiktok: values.socialTiktok,

@@ -32,6 +32,17 @@ function parseServiceAreasText(text: string): string[] {
     .filter(Boolean);
 }
 
+function parseBrandsText(text: string): string[] {
+  return text
+    .split(",")
+    .map((brand) => brand.trim())
+    .filter(Boolean);
+}
+
+function formatBrandsText(brands: string[]): string {
+  return brands.join(", ");
+}
+
 export async function getSiteSettingsFormValues() {
   const settings = await getSiteSettings();
   return {
@@ -46,6 +57,7 @@ export async function getSiteSettingsFormValues() {
     addressCountry: settings.addressCountry,
     hoursText: formatHoursText(settings.hours),
     serviceAreasText: settings.serviceAreas.join(", "),
+    brandsText: formatBrandsText(settings.brands),
     socialFacebook: settings.socialFacebook,
     socialInstagram: settings.socialInstagram,
     socialTiktok: settings.socialTiktok,
@@ -72,6 +84,7 @@ export async function updateSiteSettingsAction(values: SiteSettingsAdminValues):
     addressCountry: parsed.data.addressCountry,
     hours: parseHoursText(parsed.data.hoursText || ""),
     serviceAreas: parseServiceAreasText(parsed.data.serviceAreasText),
+    brands: parseBrandsText(parsed.data.brandsText || ""),
     socialFacebook: parsed.data.socialFacebook || "",
     socialInstagram: parsed.data.socialInstagram || "",
     socialTiktok: parsed.data.socialTiktok || "",

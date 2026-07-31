@@ -90,6 +90,13 @@ export function SiteSettingsForm({ defaultValues }: { defaultValues: SiteSetting
       </section>
 
       <section className="grid gap-4">
+        <h2 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">Brands We&apos;ve Worked With</h2>
+        <FormField label="Brand Names (comma-separated, shown in the homepage marquee)" htmlFor="brandsText">
+          <Textarea id="brandsText" rows={3} placeholder="Tronic, Vestwoods, SRNE, ..." {...register("brandsText")} />
+        </FormField>
+      </section>
+
+      <section className="grid gap-4">
         <h2 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">Social Links</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField label="Facebook URL" htmlFor="socialFacebook">

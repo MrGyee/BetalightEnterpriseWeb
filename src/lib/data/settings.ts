@@ -15,6 +15,7 @@ const FALLBACK_SETTINGS: SiteSettingsRecord = {
   addressCountry: siteConfig.address.country,
   hours: [...siteConfig.hours],
   serviceAreas: [...siteConfig.serviceAreas],
+  brands: ["Tronic", "Vestwoods", "SRNE", "Seven Stars", "ALLTOP Electronics", "ATTA", "Lutan Pump", "EAE", "Eastman", "MODI"],
   socialFacebook: siteConfig.social.facebook,
   socialInstagram: siteConfig.social.instagram,
   socialTiktok: siteConfig.social.tiktok,

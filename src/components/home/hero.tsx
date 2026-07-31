@@ -6,6 +6,7 @@ import { ArrowRight, Star, CheckCircle2, ChevronDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
 import { HeroSlideshow } from "@/components/home/hero-slideshow";
+import { useSiteSettings } from "@/components/shared/site-settings-provider";
 import { cn } from "@/lib/utils";
 
 const trustPoints = ["Licensed & Certified", "Genuine Products", "Fast Response Times", "Nationwide Delivery"];
@@ -17,10 +18,9 @@ const stats = [
   { label: "Counties Served", value: 8, suffix: "" },
 ];
 
-const brandNames = ["Tronic", "Vestwoods", "SRNE", "Seven Stars", "ALLTOP Electronics", "ATTA", "Lutan Pump", "EAE", "Eastman", "MODI"];
-
 export function Hero() {
-  const doubledBrands = [...brandNames, ...brandNames];
+  const settings = useSiteSettings();
+  const doubledBrands = [...settings.brands, ...settings.brands];
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#1F2937] via-[#20293a] to-[#14532d] pb-16 pt-32 sm:pb-20 sm:pt-44">

@@ -191,6 +191,7 @@ async function seedSiteSettings() {
         { days: "Sunday", time: "10:00 AM – 4:00 PM" },
       ],
       service_areas: ["Nairobi", "Kiambu", "Nakuru", "Mombasa", "Kisumu", "Eldoret", "Thika", "Machakos"],
+      brands: ["Tronic", "Vestwoods", "SRNE", "Seven Stars", "ALLTOP Electronics", "ATTA", "Lutan Pump", "EAE", "Eastman", "MODI"],
       social_facebook: "https://facebook.com/betalightenterprises",
       social_instagram: "https://instagram.com/betalightenterprises",
       social_tiktok: "https://tiktok.com/@betalightenterprises",
