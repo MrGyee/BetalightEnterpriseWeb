@@ -24,7 +24,7 @@ export function Footer() {
   const hasSocial = siteConfig.social.facebook || siteConfig.social.instagram || siteConfig.social.twitter;
 
   return (
-    <footer className="border-t border-border bg-secondary/40">
+    <footer className="border-t border-border bg-secondary/40 pb-16 md:pb-0">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
           <div>

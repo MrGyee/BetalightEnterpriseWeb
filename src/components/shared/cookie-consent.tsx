@@ -42,7 +42,7 @@ export function CookieConsent() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
-            className="fixed inset-x-4 bottom-4 z-50 mx-auto flex max-w-xl flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-xl sm:flex-row sm:items-center sm:justify-between"
+            className="fixed inset-x-4 bottom-20 z-50 mx-auto flex max-w-xl flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-xl sm:flex-row sm:items-center sm:justify-between md:bottom-4"
           >
             <p className="text-sm text-muted-foreground">
               We use cookies to improve your experience on this site. See our{" "}

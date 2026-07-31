@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Sun, Zap, ShieldCheck } from "lucide-react";
+import { ArrowRight, MessageCircle, Sun, Zap, ShieldCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { buildWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
 
 const floatingIcons = [
   { Icon: Sun, className: "left-[8%] top-[20%]", delay: 0 },
@@ -15,7 +16,7 @@ const floatingIcons = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#1F2937] via-[#20293a] to-[#14532d] py-24 sm:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#1F2937] via-[#20293a] to-[#14532d] pb-24 pt-32 sm:pb-32 sm:pt-44">
       <div className="pointer-events-none absolute inset-0 opacity-[0.35]">
         <svg className="h-full w-full" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 650 Q300 550 600 620 T1200 580" stroke="#F57C00" strokeWidth="1.5" opacity="0.5" />
@@ -84,6 +85,15 @@ export function Hero() {
           >
             Explore Our Products
           </Link>
+          <a
+            href={buildWhatsAppLink(defaultWhatsAppMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: "lg" }), "rounded-full bg-[#25D366] px-7 text-base text-white hover:bg-[#1ebe5a]")}
+          >
+            <MessageCircle className="size-4" fill="currentColor" strokeWidth={0} />
+            WhatsApp Us
+          </a>
         </motion.div>
       </div>
     </section>

@@ -5,8 +5,10 @@ import { ThemeProvider } from "@/components/shared/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/layout/header";
+import { HeaderSpacer } from "@/components/layout/header-spacer";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
+import { StickyMobileCta } from "@/components/layout/sticky-mobile-cta";
 import { BackToTop } from "@/components/shared/back-to-top";
 import { CookieConsent } from "@/components/shared/cookie-consent";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -70,9 +72,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TooltipProvider>
             <Header />
+            <HeaderSpacer />
             <main className="flex-1">{children}</main>
             <Footer />
             <WhatsAppButton />
+            <StickyMobileCta />
             <BackToTop />
             <CookieConsent />
             <Toaster />

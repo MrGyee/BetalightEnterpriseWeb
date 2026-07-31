@@ -23,6 +23,7 @@ export const siteConfig = {
   ],
   serviceAreas: ["Nairobi", "Kiambu", "Nakuru", "Mombasa", "Kisumu", "Eldoret", "Thika", "Machakos"],
   social: {
+    linkedin: "",
     facebook: "",
     instagram: "",
     twitter: "",
