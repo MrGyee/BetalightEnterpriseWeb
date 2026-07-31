@@ -49,7 +49,7 @@ export function Header() {
           transparent ? "bg-transparent" : "border-b border-border bg-background/95 shadow-sm backdrop-blur-md"
         )}
       >
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 md:h-24 lg:px-16">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-6 md:h-24 xl:gap-6 xl:px-10">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <Link href="/" className="flex shrink-0 items-center gap-3">
               <Image
@@ -71,7 +71,7 @@ export function Header() {
             </Link>
           </motion.div>
 
-          <nav className="hidden items-center gap-8 lg:flex xl:gap-10">
+          <nav className="hidden items-center gap-5 xl:flex 2xl:gap-8">
             {primaryNav.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               const colorClass = active ? navLinkActiveColor : navLinkColor;
@@ -150,26 +150,26 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 xl:flex">
             <ThemeToggle className={transparent ? "text-white hover:bg-white/10 hover:text-white" : ""} />
             <a
               href={`tel:${siteConfig.phones.primary}`}
               className={cn(
-                "flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white",
+                "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white",
                 transparent ? "border-white/30 bg-white/10 text-white" : "border-border bg-white text-foreground"
               )}
             >
               <Phone className="size-4" />
               Call Now
             </a>
-            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/quote" className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30">
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }} className="shrink-0">
+              <Link href="/quote" className="block whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/30">
                 Request a Quote
               </Link>
             </motion.div>
           </div>
 
-          <div className="flex items-center gap-1 lg:hidden">
+          <div className="flex items-center gap-1 xl:hidden">
             <ThemeToggle className={transparent ? "text-white hover:bg-white/10 hover:text-white" : ""} />
             <Sheet>
               <SheetTrigger
