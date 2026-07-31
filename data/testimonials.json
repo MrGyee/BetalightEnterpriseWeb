@@ -1,0 +1,44 @@
+[
+  {
+    "authorName": "Wanjiru M.",
+    "roleOrCompany": "Homeowner, Nairobi",
+    "quote": "The team installed our solar water heater in a single day and explained everything clearly before starting. Our power bill has noticeably dropped since.",
+    "rating": 5,
+    "photoPath": null
+  },
+  {
+    "authorName": "Otieno K.",
+    "roleOrCompany": "Building Contractor",
+    "quote": "I buy my circuit breakers, cables and distribution boards from them for every site I run. Stock is always genuine and prices are fair.",
+    "rating": 5,
+    "photoPath": null
+  },
+  {
+    "authorName": "Fatuma A.",
+    "roleOrCompany": "Small Business Owner",
+    "quote": "Our shop kept losing stock in the freezer during power cuts. They fitted us with a backup power system and it has not happened since.",
+    "rating": 5,
+    "photoPath": null
+  },
+  {
+    "authorName": "Njoroge W.",
+    "roleOrCompany": "Property Manager",
+    "quote": "They handled the control panel upgrade for our apartment block professionally, with proper safety signage and clean cabling throughout.",
+    "rating": 4,
+    "photoPath": null
+  },
+  {
+    "authorName": "Achieng P.",
+    "roleOrCompany": "Guesthouse Owner",
+    "quote": "Reliable hot water for our guests all year round now, and the installation team was tidy and punctual.",
+    "rating": 5,
+    "photoPath": null
+  },
+  {
+    "authorName": "Kiptoo S.",
+    "roleOrCompany": "Farm Owner",
+    "quote": "The solar borehole pump they recommended has been running our irrigation without a single breakdown since installation.",
+    "rating": 5,
+    "photoPath": null
+  }
+]

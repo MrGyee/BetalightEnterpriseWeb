@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "srne-hybrid-solar-installation-nairobi",
+    "title": "Residential Hybrid Solar Inverter & Battery Installation",
+    "category": "Residential Solar",
+    "location": "Nairobi",
+    "completedDate": "2026-06-15",
+    "imagePath": "/images/projects/srne-solar-inverter-installation.jpeg",
+    "description": "Supply and installation of an SRNE hybrid solar inverter paired with a wall-mounted lithium battery energy storage unit, giving this home clean backup power that switches in automatically during outages and can charge from solar panels during the day."
+  },
+  {
+    "slug": "eae-inverter-eastman-battery-backup",
+    "title": "Home Backup Power System with Eastman Gel Battery",
+    "category": "Power Backup Systems",
+    "location": "Nairobi",
+    "completedDate": "2026-05-20",
+    "imagePath": "/images/projects/eae-hybrid-inverter-installation.jpeg",
+    "description": "Installation of an EAE hybrid solar inverter with dedicated distribution and isolator boards, backed by an Eastman deep-cycle gel battery, delivering seamless backup power for lighting and essential circuits during grid outages."
+  },
+  {
+    "slug": "rooftop-solar-water-heater-installation",
+    "title": "Rooftop Solar Water Heater Installation",
+    "category": "Residential Solar",
+    "location": "Nairobi",
+    "completedDate": "2026-04-10",
+    "imagePath": "/images/projects/solar-water-heater-installation.jpeg",
+    "description": "Supply and rooftop installation of a vacuum-tube solar water heater, giving this household reliable hot water straight from the sun and cutting their monthly electricity costs."
+  },
+  {
+    "slug": "automatic-transfer-switch-control-panel",
+    "title": "Automatic Transfer Switch Control Panel",
+    "category": "Power Control Systems",
+    "location": "Nairobi",
+    "completedDate": "2026-03-02",
+    "imagePath": "/images/projects/automatic-transfer-switch-installation.jpeg",
+    "description": "Design and installation of a custom control panel with automatic transfer switching between mains and standby power, complete with clear UPS/mains status indicators and full electrical safety signage."
+  }
+]

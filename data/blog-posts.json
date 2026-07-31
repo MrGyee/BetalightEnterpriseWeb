@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "choosing-the-right-solar-water-heater-size-kenya",
+    "title": "How to Choose the Right Solar Water Heater Size for Your Home",
+    "category": "Solar Energy",
+    "publishedAt": "2026-06-01T08:00:00Z",
+    "coverImagePath": "/images/projects/solar-water-heater-installation.jpeg",
+    "seoDescription": "A practical guide to sizing a solar water heater for Kenyan homes, covering tank capacity, household size and roof considerations.",
+    "excerpt": "Buying an undersized solar water heater is one of the most common and avoidable mistakes homeowners make. Here is how to size yours correctly the first time.",
+    "content": "Solar water heaters are sold by tank capacity, usually 150, 200 or 300 litres, and picking the wrong size is the single most common mistake we see. Too small a tank means running out of hot water by evening; too large wastes roof space and money on a tank that never gets used.\n\nAs a rough starting point, a 150L tank comfortably serves two to three people, a 200L tank suits a family of four to five, and a 300L tank is better suited to larger households or small guesthouses with multiple bathrooms. Hot water habits matter too. A household that showers mostly in the morning can get away with a smaller tank than one with heavy evening usage, since the tank has all day to reheat with the smaller system.\n\nRoof orientation and shading also affect performance. A roof facing north with a clear view of the sky will heat water faster and more reliably than a shaded, obstructed roof, even with an identical tank size. If your roof has partial shading for part of the day, it is often worth sizing one tier up to compensate.\n\nFinally, think about your backup. Most solar water heaters include an electric backup element for cloudy stretches, but if you would rather minimise electricity use entirely, a slightly larger tank gives you more stored hot water to draw on before the backup element needs to kick in.\n\nIf you are not sure which size fits your household, send us your number of bathrooms, household size and a photo of your roof and we can recommend a system before you commit to a purchase."
+  },
+  {
+    "slug": "signs-you-need-electrical-rewiring-or-db-upgrade",
+    "title": "Signs Your Home Needs Electrical Rewiring or a Distribution Board Upgrade",
+    "category": "Electrical Safety",
+    "publishedAt": "2026-05-18T08:00:00Z",
+    "coverImagePath": "/images/projects/electrical-showroom-cables.jpeg",
+    "seoDescription": "Warning signs that your home's wiring or distribution board is outdated or overloaded, and when to call an electrician.",
+    "excerpt": "Flickering lights, warm switches and a distribution board that trips constantly are not quirks to live with, they are warning signs.",
+    "content": "Older Kenyan homes were often wired for a fraction of the appliances we run today. As households add air conditioners, water pumps, home offices and backup power systems, the original wiring and distribution board can quietly become overloaded long before anyone notices a serious problem.\n\nA few warning signs are worth acting on immediately. Lights that flicker when a heavy appliance switches on, sockets or switch plates that feel warm to the touch, a persistent burning smell near the distribution board, and breakers that trip repeatedly even under normal use all point to wiring or capacity issues that should be inspected rather than ignored.\n\nAge matters too. Wiring installed more than 20 years ago, especially with old-style rubber or fabric insulation rather than modern PVC, has usually degraded to the point where a full rewire is safer and cheaper in the long run than patching individual faults as they appear.\n\nA distribution board upgrade is often the more affordable first step. Modern boards use properly rated circuit breakers instead of old-style fuse wire, separate circuits more sensibly, and leave room to add new circuits for solar, backup power or an extension without overloading the whole board.\n\nIf any of this sounds familiar, it is worth having a qualified electrician assess your board and wiring before you add another major appliance to the circuit."
+  },
+  {
+    "slug": "lithium-vs-gel-batteries-solar-backup-power",
+    "title": "Lithium vs Gel Batteries for Solar and Backup Power: Which Should You Choose?",
+    "category": "Solar Energy",
+    "publishedAt": "2026-05-02T08:00:00Z",
+    "coverImagePath": "/images/products/deep-cycle-battery-range.jpeg",
+    "seoDescription": "A comparison of lithium (LiFePO4) and gel batteries for solar storage and backup power systems in Kenya.",
+    "excerpt": "Gel batteries have been the default choice for years, but lithium iron phosphate batteries are changing the maths on total cost of ownership.",
+    "content": "For years, gel batteries were the standard choice for solar and backup power in Kenya, largely because of their lower upfront price. That is still true today, a gel battery of a given capacity generally costs less to buy than an equivalent lithium (LiFePO4) battery. But upfront price is only part of the picture.\n\nGel batteries typically last 300 to 500 full charge cycles and should not be discharged below about 50 percent capacity without shortening their lifespan. LiFePO4 batteries comfortably deliver 2,000 to 6,000 cycles and can safely discharge to a much lower level, which means a lithium battery often works out cheaper per year of use even though it costs more to buy.\n\nLithium batteries also charge faster, weigh significantly less for the same capacity, and include a built-in battery management system that protects against overcharging, deep discharge and overheating automatically. Gel batteries need more careful charging behaviour to hit their rated lifespan.\n\nWhere gel still makes sense is tight upfront budgets and applications where the battery will not be cycled hard, for example a lightly used standby system that mostly sits fully charged. For daily solar cycling, frequent backup use, or anywhere weight and space are limited, lithium is now the better long-term investment for most households and businesses.\n\nWe stock both, and can walk you through the real cost per year for your specific usage pattern before you decide."
+  },
+  {
+    "slug": "why-earthing-lightning-protection-matter-kenya",
+    "title": "Why Earthing and Lightning Protection Matter for Kenyan Homes",
+    "category": "Electrical Safety",
+    "publishedAt": "2026-04-14T08:00:00Z",
+    "coverImagePath": "/images/products/copper-earthing-lightning-rods.jpeg",
+    "seoDescription": "Why proper earthing and lightning protection are essential for electrical safety in Kenyan homes and buildings.",
+    "excerpt": "Earthing is the part of an electrical installation nobody sees, and the part that keeps a simple fault from becoming a fire or a fatality.",
+    "content": "Earthing does not power anything or make a single appliance run better, which is exactly why it gets overlooked. Its job is to give fault current, the current that escapes when an appliance develops an internal fault, a safe path to ground instead of through a person who happens to touch it.\n\nWithout a properly installed earth, a faulty appliance casing can become live without tripping anything, sitting there as a shock risk until someone touches it and completes the circuit through their own body. A correctly earthed system, paired with the right circuit breakers, disconnects the fault automatically before that can happen.\n\nLightning protection works alongside earthing but solves a different problem: giving a lightning strike a deliberate, low-resistance path to ground via rods and conductors, rather than letting it find its own path through your building's wiring or structure. Kenya sees regular lightning activity in many regions, and buildings without protection are at real risk of strike damage to both structure and electronics.\n\nBoth of these are effectively invisible once installed correctly, which is exactly the point. You should never have to think about your earthing system, because it is quietly doing its job in the background every single day.\n\nIf your property was wired some years ago, or you are not sure whether it has a proper earth, it is worth having it tested rather than assuming it is fine."
+  },
+  {
+    "slug": "protect-appliances-from-kenya-power-fluctuations",
+    "title": "5 Ways to Protect Your Appliances from Kenya's Power Fluctuations",
+    "category": "Power Protection",
+    "publishedAt": "2026-03-20T08:00:00Z",
+    "coverImagePath": "/images/products/tronic-automatic-voltage-switcher-av30.jpeg",
+    "seoDescription": "Practical ways to protect refrigerators, electronics and appliances from voltage spikes and power fluctuations in Kenya.",
+    "excerpt": "Voltage spikes and brownouts quietly shorten the life of refrigerators, televisions and electronics. These five measures actually fix the problem.",
+    "content": "Unstable grid power is one of the most common causes of appliance failure in Kenya, and it is largely preventable with the right equipment.\n\nFirst, protect the refrigerator specifically. Compressors are especially sensitive to voltage swings and rapid power cycling, so a dedicated refrigerator guard with a built-in switching delay is one of the cheapest, highest-value pieces of protection you can buy.\n\nSecond, fit an automatic voltage switcher on circuits feeding electronics, televisions and computers. These monitor incoming voltage continuously and regulate it within a safe range before it ever reaches your equipment.\n\nThird, make sure your distribution board has correctly rated circuit breakers, not old fuse wire or breakers rated for a different load than what is actually connected. Undersized or oversized protection both create risk in different ways.\n\nFourth, consider a backup power system, even a small one. A portable power station or UPS keeps sensitive electronics running through short outages, which avoids the hard power-off and power-on cycling that wears down components over time.\n\nFifth, have your earthing checked. Voltage protection devices work best as part of a correctly earthed system; without a good earth, some protective devices cannot do their job properly.\n\nNone of these require a full system overhaul. Most can be added incrementally, starting with whichever appliance would be most expensive to replace."
+  }
+]

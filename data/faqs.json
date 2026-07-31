@@ -1,0 +1,74 @@
+[
+  {
+    "category": "Solar Installation",
+    "sortOrder": 1,
+    "question": "How long does a residential solar installation take?",
+    "answer": "Most residential solar water heater installations are completed in a single day. A full solar power system with panels, inverter and battery storage typically takes one to three days depending on roof access and system size."
+  },
+  {
+    "category": "Solar Installation",
+    "sortOrder": 2,
+    "question": "Will solar still work during Kenya's cloudy or rainy seasons?",
+    "answer": "Yes. Solar water heaters and solar panels still generate heat and power on cloudy days, just at a reduced rate compared to full sun. We size every system with a buffer so you are not left short during overcast weather, and hybrid solar inverters automatically draw from the grid or a battery when solar input drops."
+  },
+  {
+    "category": "Solar Installation",
+    "sortOrder": 3,
+    "question": "How much can I save on electricity bills with solar?",
+    "answer": "Savings depend on your household or business's current usage and the system installed, but a solar water heater alone typically removes one of the largest line items on a Kenyan electricity bill, since water heating is often the single biggest household power draw."
+  },
+  {
+    "category": "Electrical Installation",
+    "sortOrder": 4,
+    "question": "Do you handle full house and commercial building wiring?",
+    "answer": "Yes. We carry out complete electrical installations for residential, commercial and industrial properties, from first-fix wiring and distribution boards through to final fittings, switches, sockets and lighting."
+  },
+  {
+    "category": "Electrical Installation",
+    "sortOrder": 5,
+    "question": "Can you upgrade an old or overloaded distribution board?",
+    "answer": "Yes. Distribution board upgrades are one of our most common jobs, especially for older properties adding air conditioning, workshop equipment or backup power systems that the original board was never sized for."
+  },
+  {
+    "category": "Warranties",
+    "sortOrder": 6,
+    "question": "What warranty comes with the products you sell?",
+    "answer": "Warranty terms vary by manufacturer and product, ranging from one year on switches and control equipment up to five years on solar water heater tanks. The specific warranty period is listed on each product page, and we keep proof of purchase records to support any warranty claim."
+  },
+  {
+    "category": "Warranties",
+    "sortOrder": 7,
+    "question": "What should I do if a product develops a fault within warranty?",
+    "answer": "Contact us with your purchase details and a description of the fault. Most issues can be assessed on-site, and where a manufacturer replacement or repair is needed we handle that process on your behalf."
+  },
+  {
+    "category": "Maintenance",
+    "sortOrder": 8,
+    "question": "How often should a solar power system be serviced?",
+    "answer": "We recommend an annual check-up covering panel cleaning, connection tightness, battery health and inverter performance. Systems in dusty areas may benefit from panel cleaning more frequently."
+  },
+  {
+    "category": "Maintenance",
+    "sortOrder": 9,
+    "question": "Do you offer emergency electrical callout support?",
+    "answer": "Yes, we offer emergency electrical support for urgent faults such as tripped mains, exposed wiring or total power loss. Call us directly or message us on WhatsApp and we will advise on the fastest response available for your area."
+  },
+  {
+    "category": "Safety Standards",
+    "sortOrder": 10,
+    "question": "Are your installations compliant with Kenyan electrical safety standards?",
+    "answer": "Yes. All installation work follows standard Kenyan electrical safety practice, including correct earthing, appropriately rated circuit protection and, where applicable, lightning protection for the property."
+  },
+  {
+    "category": "Safety Standards",
+    "sortOrder": 11,
+    "question": "Why does proper earthing matter for my property?",
+    "answer": "Earthing gives fault current a safe path away from people and equipment. Without correct earthing, a simple fault in an appliance can turn into a serious shock or fire risk, which is why we treat earthing as a non-negotiable part of every installation, not an optional extra."
+  },
+  {
+    "category": "General",
+    "sortOrder": 12,
+    "question": "Which areas do you serve?",
+    "answer": "We are based in Nairobi and serve customers across Nairobi, Kiambu, Nakuru, Mombasa, Kisumu, Eldoret, Thika and Machakos, with nationwide delivery available for products."
+  }
+]

@@ -1,0 +1,350 @@
+[
+  {
+    "slug": "seven-stars-solar-water-heater",
+    "name": "Seven Stars Solar Water Heater",
+    "category": "Solar Energy Systems",
+    "brand": "Seven Stars",
+    "shortDescription": "Vacuum-tube solar water heater that turns sunlight into free hot water for homes, guesthouses and hostels.",
+    "description": "The Seven Stars solar water heater uses high-vacuum borosilicate glass tubes to absorb heat from the sun and store it in an insulated stainless steel tank, giving you hot water every morning without running up your electricity bill. It works well even on cloudy Kenyan days and needs almost no maintenance once installed. We supply and install the full range of tank sizes and can size a system to match your household or hostel's hot water demand.",
+    "imagePath": "/images/products/seven-stars-solar-water-heater.jpeg",
+    "specs": {
+      "Tank Capacity": "150L, 200L or 300L",
+      "Tube Type": "High-vacuum borosilicate glass",
+      "Tank Material": "Stainless steel, insulated",
+      "Warranty": "Up to 5 years on tank, 3 years on tubes",
+      "Installation": "Rooftop, pressurised or non-pressurised"
+    },
+    "featured": true
+  },
+  {
+    "slug": "lutan-solar-borehole-pump",
+    "name": "Lutan Solar Submersible Borehole Pump",
+    "category": "Solar Energy Systems",
+    "brand": "Lutan Pump",
+    "shortDescription": "DC solar-powered submersible pump for boreholes and deep wells, built for off-grid and farm water supply.",
+    "description": "This solar submersible screw pump draws water straight from a borehole or deep well using power from a connected solar panel array, no grid electricity required. It is a popular choice for farms, rural homes and institutions that need a dependable water supply in areas with unreliable power. We handle sizing, solar panel matching and full installation.",
+    "imagePath": "/images/products/lutan-solar-borehole-pump.jpeg",
+    "specs": {
+      "Model": "JZDC3S-24V-50",
+      "Voltage": "24V DC",
+      "Max Head": "50 metres",
+      "Flow Rate": "Up to 1.5 m3/h",
+      "Rated Current": "8A"
+    },
+    "featured": false
+  },
+  {
+    "slug": "vestwoods-200ah-lithium-battery",
+    "name": "Vestwoods 12.8V 200Ah Lithium-Ion Battery",
+    "category": "Solar Energy Systems",
+    "brand": "Vestwoods by Haier Energy",
+    "shortDescription": "Long-life LiFePO4 battery for solar and backup power storage, built for thousands of charge cycles.",
+    "description": "The Vestwoods VC12200 Plus is a 12.8V 200Ah lithium iron phosphate (LiFePO4) battery designed for solar storage and backup power systems. It charges faster, lasts longer and weighs less than an equivalent lead-acid battery, with a built-in battery management system for safe charging and discharging. A solid upgrade for anyone tired of replacing gel or acid batteries every couple of years.",
+    "imagePath": "/images/products/vestwoods-200ah-lithium-battery.jpeg",
+    "specs": {
+      "Model": "VC12200 Plus",
+      "Voltage": "12.8V",
+      "Capacity": "200Ah (2560Wh)",
+      "Chemistry": "LiFePO4",
+      "Certifications": "FCC, CE, MSDS, UN38.3"
+    },
+    "featured": true
+  },
+  {
+    "slug": "polycrystalline-solar-panels",
+    "name": "Polycrystalline Solar Panels",
+    "category": "Solar Energy Systems",
+    "brand": null,
+    "shortDescription": "Durable polycrystalline solar panels for residential, commercial and off-grid solar installations.",
+    "description": "We stock a range of polycrystalline solar panel wattages to match residential rooftop systems, commercial installations and off-grid setups like borehole pumping. All panels are supplied with standard mounting hardware and can be paired with our range of inverters, charge controllers and batteries for a complete solar solution.",
+    "imagePath": "/images/products/polycrystalline-solar-panels.jpeg",
+    "specs": {
+      "Panel Type": "Polycrystalline silicon",
+      "Common Wattages": "50W to 450W",
+      "Frame": "Anodised aluminium",
+      "Warranty": "Up to 10 years product, 25 years performance"
+    },
+    "featured": false
+  },
+  {
+    "slug": "vestwoods-power-station",
+    "name": "Vestwoods Portable Power Station",
+    "category": "Power Backup Systems",
+    "brand": "Vestwoods by Haier Energy",
+    "shortDescription": "Solar-ready portable power station with a 1kWh LiFePO4 battery, ideal for home backup and outdoor use.",
+    "description": "The Vestwoods Power Station is a compact, solar-ready battery bank that keeps essential appliances running during a blackout and doubles as portable power for outdoor use, small offices and shops. It charges from the wall, from a car socket, or straight from a solar panel, and its smart battery management system protects against overcharge and overheating.",
+    "imagePath": "/images/products/vestwoods-power-station.jpeg",
+    "specs": {
+      "Battery": "1kWh LiFePO4",
+      "Continuous Output": "500W",
+      "Solar Input": "300W MPPT solar ready",
+      "UPS Switchover": "Under 20ms",
+      "Protection": "Smart BMS"
+    },
+    "featured": true
+  },
+  {
+    "slug": "alltop-energy-bean-storage-system",
+    "name": "ALLTOP Energy Bean Energy Storage System",
+    "category": "Power Backup Systems",
+    "brand": "ALLTOP Electronics",
+    "shortDescription": "Wall-friendly energy storage unit that keeps power on tap for homes and small businesses.",
+    "description": "The Energy Bean is a compact energy storage system built for homes and small businesses that want reliable backup power without a large inverter and battery bank taking over a room. A single power button starts it up, and an onboard battery gauge shows charge level at a glance.",
+    "imagePath": "/images/products/alltop-energy-bean-storage-system.jpeg",
+    "specs": {
+      "Brand": "ALLTOP Electronics",
+      "Product Line": "Energy Bean Energy Storage System",
+      "Controls": "One-touch power button, battery level indicator"
+    },
+    "featured": false
+  },
+  {
+    "slug": "deep-cycle-battery-range",
+    "name": "Deep Cycle & Solar Gel Battery Range",
+    "category": "Power Backup Systems",
+    "brand": "Ranktop / Alltop",
+    "shortDescription": "Maintenance-free deep cycle gel and lithium batteries for UPS, solar and standby power systems.",
+    "description": "We stock a full range of deep cycle batteries for solar systems, UPS backup and standby power, from compact 12V units to high-capacity 100Ah+ gel and lithium options. These maintenance-free batteries are built for repeated deep discharge cycles, which makes them a better fit for solar and backup use than a standard car battery.",
+    "imagePath": "/images/products/deep-cycle-battery-range.jpeg",
+    "specs": {
+      "Types Available": "Deep cycle gel, LiFePO4, automotive/UPS",
+      "Capacity Range": "20Ah to 200Ah+",
+      "Common Use": "Solar storage, UPS backup, standby power"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-digital-timer-switch-dt25",
+    "name": "Tronic EM DT25 Digital Timer Switch",
+    "category": "Power Control Equipment",
+    "brand": "Tronic",
+    "shortDescription": "Programmable digital timer switch for automating lights, pumps and appliances on a daily or weekly schedule.",
+    "description": "The Tronic EM DT25 digital timer switch lets you automate any connected load, from security lighting to water pumps, on a precise daily or weekly programme. It mounts on a standard DIN rail and includes manual override so you are never locked out of controlling the load directly.",
+    "imagePath": "/images/products/tronic-digital-timer-switch-dt25.jpeg",
+    "specs": {
+      "Model": "EM DT25",
+      "Programming": "Weekly schedule with manual override",
+      "Mounting": "DIN rail",
+      "Display": "Digital LCD with clock"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-refrigerator-guard-fg13",
+    "name": "Tronic Refrigerator Guard VP FG13-BS",
+    "category": "Power Control Equipment",
+    "brand": "Tronic",
+    "shortDescription": "Plug-in voltage protector that shields refrigerators and similar appliances from power fluctuations.",
+    "description": "Kenya's power grid can spike or dip without warning, and that is exactly what damages a refrigerator's compressor. The Tronic Refrigerator Guard monitors voltage continuously and automatically cuts power during unsafe conditions, with a built-in delay function that prevents rapid on/off switching from harming the compressor.",
+    "imagePath": "/images/products/tronic-refrigerator-guard-fg13.jpeg",
+    "specs": {
+      "Model": "VP FG13-BS",
+      "Protection": "High and low voltage, auto cut-off",
+      "Delay Function": "Built-in compressor protection delay",
+      "Indicators": "OFF / WAIT / ON status lights"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-automatic-voltage-switcher-av30",
+    "name": "Tronic Automatic Voltage Switcher AVS30",
+    "category": "Power Control Equipment",
+    "brand": "Tronic",
+    "shortDescription": "Automatic voltage switcher with digital display that protects appliances from high and low voltage.",
+    "description": "The Tronic AVS30 continuously monitors incoming voltage and automatically regulates it within a safe range, protecting sensitive electronics and appliances from both surges and brownouts. A digital display shows real-time voltage and current, and a time-delay function adds an extra layer of protection during switching.",
+    "imagePath": "/images/products/tronic-automatic-voltage-switcher-av30.jpeg",
+    "specs": {
+      "Model": "VP AV30",
+      "Protection": "Over-voltage and under-voltage",
+      "Display": "Digital voltage and current readout",
+      "Extras": "Time delay function"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-motor-protection-circuit-breaker",
+    "name": "Tronic Motor Protection Circuit Breaker (MPCB)",
+    "category": "Power Control Equipment",
+    "brand": "Tronic",
+    "shortDescription": "Motor protection circuit breaker for overload and short-circuit protection on industrial and commercial motors.",
+    "description": "The Tronic MPCB protects three-phase motors from overload and short-circuit conditions, with manual start/stop controls and clear ON/OFF indication. It is a standard component in our industrial and commercial control panel installations for pumps, compressors and other motor-driven equipment.",
+    "imagePath": "/images/products/tronic-motor-protection-circuit-breaker.jpeg",
+    "specs": {
+      "Model": "MC MPCB-0914",
+      "Standards": "IEC 60947-2, IEC 60947-4-1",
+      "Protection": "Overload and short-circuit",
+      "Control": "Manual start / stop"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-manual-changeover-switch",
+    "name": "Tronic Manual Changeover Switch (CO KTKO)",
+    "category": "Power Control Equipment",
+    "brand": "Tronic",
+    "shortDescription": "Heavy-duty manual changeover switch for safely switching between mains and generator power.",
+    "description": "This manual changeover switch lets you safely switch a property's supply between mains power and a standby generator, preventing dangerous back-feed onto the grid. Available in 40A and 80A ratings to match different generator and load sizes, and built into an IP-rated enclosure for safe indoor or covered outdoor mounting.",
+    "imagePath": "/images/products/tronic-manual-changeover-switch.jpeg",
+    "specs": {
+      "Model": "CO KTKO",
+      "Amp Ratings": "40A and 80A",
+      "Use": "Mains / generator changeover",
+      "Warranty": "1 year"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-pvc-electrical-cables",
+    "name": "Tronic PVC Insulated Electrical Cables",
+    "category": "Electrical Products",
+    "brand": "Tronic",
+    "shortDescription": "Flame-retardant PVC insulated copper cables for residential and commercial wiring.",
+    "description": "We stock Tronic's PVC insulated single-core cables in the sizes used for everyday residential and commercial wiring, from lighting circuits to socket outlets. All cables use flame-retardant insulation over pure copper conductors and meet standard electrical safety requirements.",
+    "imagePath": "/images/products/tronic-pvc-electrical-cables.jpeg",
+    "specs": {
+      "Common Sizes": "1.5mm2 and 2.5mm2",
+      "Conductor": "99.9% pure copper",
+      "Insulation": "Flame-retardant PVC",
+      "Sold In": "90 metre coils"
+    },
+    "featured": false
+  },
+  {
+    "slug": "copper-earthing-lightning-rods",
+    "name": "Copper Earthing & Lightning Protection Rods",
+    "category": "Electrical Products",
+    "brand": null,
+    "shortDescription": "Copper earth rods and lightning arrestor kits for a safe, code-compliant electrical earthing system.",
+    "description": "Proper earthing protects people and equipment by giving fault current a safe path to ground, and it is one of the most overlooked parts of an electrical installation. We supply and install copper earth rods and multi-point lightning arrestor kits for residential, commercial and industrial buildings, sized to the property and soil conditions.",
+    "imagePath": "/images/products/copper-earthing-lightning-rods.jpeg",
+    "specs": {
+      "Material": "Solid copper",
+      "Use": "Earthing systems, lightning protection",
+      "Installation": "Ground rod driving and bonding included"
+    },
+    "featured": false
+  },
+  {
+    "slug": "tronic-light-control-sensor-photocell",
+    "name": "Tronic Light Control Sensor (Photocell)",
+    "category": "Lighting Solutions",
+    "brand": "Tronic",
+    "shortDescription": "Dusk-to-dawn photocell sensor that automatically switches outdoor lighting on and off.",
+    "description": "This weatherproof photocell automatically switches connected outdoor lights on at dusk and off at dawn, cutting energy waste from lights left running during the day. It is a simple, reliable add-on for compound lighting, security floodlights and street lighting.",
+    "imagePath": "/images/products/tronic-light-control-sensor-photocell.jpeg",
+    "specs": {
+      "Function": "Automatic dusk-to-dawn switching",
+      "Rating": "Weather resistant, outdoor use",
+      "Warranty": "3 years"
+    },
+    "featured": false
+  },
+  {
+    "slug": "alltop-solar-street-light",
+    "name": "ALLTOP All-in-One Solar LED Street Light",
+    "category": "Lighting Solutions",
+    "brand": "ALLTOP Electronics",
+    "shortDescription": "Integrated solar street light with radar motion sensor, built for estates, roads and compound lighting.",
+    "description": "This all-in-one solar street light combines the solar panel, battery, LED array and radar motion sensor in a single weatherproof housing, so there is no separate wiring or battery box to install. The radar sensor dims the light in standby mode and brightens automatically when it detects movement, stretching battery life through the night.",
+    "imagePath": "/images/products/alltop-solar-street-light.jpeg",
+    "specs": {
+      "Sensor": "Radar motion sensor",
+      "Protection Rating": "IP65 waterproof",
+      "Energy Saving": "Up to 80% via motion dimming",
+      "Runtime": "365 days a year, solar charged"
+    },
+    "featured": true
+  },
+  {
+    "slug": "atta-solar-flood-light",
+    "name": "ATTA Solar LED Flood Light",
+    "category": "Lighting Solutions",
+    "brand": "ATTA",
+    "shortDescription": "High-output solar flood light with remote control, ideal for compounds, car parks and building perimeters.",
+    "description": "A powerful solar flood light for lighting up compounds, car parks and building exteriors without adding to your electricity bill. It comes as a complete kit with a separate solar panel, mounting bracket and remote control, and is rated IP65 for outdoor use in all weather. Available in 300W and 400W output options.",
+    "imagePath": "/images/products/atta-solar-flood-light.jpeg",
+    "specs": {
+      "Output Options": "300W and 400W",
+      "Protection Rating": "IP65 waterproof",
+      "Control": "Remote control included",
+      "Warranty": "2 years"
+    },
+    "featured": true
+  },
+  {
+    "slug": "modi-gold-crystal-chandelier",
+    "name": "MODI Gold Crystal Chandelier",
+    "category": "Lighting Solutions",
+    "brand": "MODI",
+    "shortDescription": "Statement gold-finish crystal chandelier for living rooms, dining areas and hotel lobbies.",
+    "description": "A layered gold-finish chandelier with cascading crystal drops that adds a hotel-lobby feel to living rooms, dining areas and reception spaces. Available in multiple sizes to suit different ceiling heights and room proportions; ask us for the size guide when placing an order.",
+    "imagePath": "/images/products/modi-gold-crystal-chandelier.jpeg",
+    "specs": {
+      "Finish": "Gold-plated frame with crystal drops",
+      "Sizes Available": "300mm to 600mm",
+      "Use": "Living rooms, dining areas, hospitality spaces"
+    },
+    "featured": false
+  },
+  {
+    "slug": "modi-black-gold-chandelier",
+    "name": "MODI Black & Gold Crystal Chandelier",
+    "category": "Lighting Solutions",
+    "brand": "MODI",
+    "shortDescription": "Modern black and gold crystal chandelier for a bolder, contemporary statement ceiling light.",
+    "description": "This two-tone black and gold chandelier suits contemporary interiors that want a chandelier's drama without the fully traditional gold look. Layered crystal drops catch the light from every angle, making it a strong centrepiece for a living room, staircase void or hotel restaurant.",
+    "imagePath": "/images/products/modi-black-gold-chandelier.jpeg",
+    "specs": {
+      "Finish": "Black and gold frame with crystal drops",
+      "Size": "400mm x 400mm",
+      "Use": "Living rooms, hospitality interiors"
+    },
+    "featured": false
+  },
+  {
+    "slug": "mbg-crystal-wall-sconce",
+    "name": "Crystal LED Wall Sconce",
+    "category": "Lighting Solutions",
+    "brand": "MBG",
+    "shortDescription": "Decorative crystal wall sconce with warm LED glow, ideal for hallways, staircases and feature walls.",
+    "description": "A compact crystal wall sconce that adds a soft decorative glow to hallways, staircases and feature walls. Its faceted crystal shade throws a warm, layered light and suits both modern and classic interiors.",
+    "imagePath": "/images/products/mbg-crystal-wall-sconce.jpeg",
+    "specs": {
+      "Light Source": "Integrated warm white LED",
+      "Mounting": "Wall mounted",
+      "Use": "Hallways, staircases, feature walls"
+    },
+    "featured": false
+  },
+  {
+    "slug": "decorative-outdoor-lantern",
+    "name": "Decorative Outdoor Lantern Light",
+    "category": "Lighting Solutions",
+    "brand": null,
+    "shortDescription": "Classic lantern-style outdoor light for gate posts, driveways and garden pathways.",
+    "description": "A traditional lantern-style fitting with a weatherproof glass enclosure, well suited to gate posts, driveway pillars and garden pathway lighting. Pair it with our photocell sensor for automatic dusk-to-dawn operation.",
+    "imagePath": "/images/products/decorative-outdoor-lantern.jpeg",
+    "specs": {
+      "Style": "Classic lantern, post or wall mount",
+      "Enclosure": "Weatherproof glass panels",
+      "Use": "Gate posts, driveways, garden pathways"
+    },
+    "featured": false
+  },
+  {
+    "slug": "mcb-fire-extinguisher-hot-aerosol",
+    "name": "Shiyanshi Hot Aerosol Fire Extinguisher for MCBs",
+    "category": "Safety & Protection",
+    "brand": "Shiyanshi",
+    "shortDescription": "Automatic heat-aerosol fire suppression device that protects distribution boards from overheating faults.",
+    "description": "This compact device mounts inside a distribution board or MCB enclosure and automatically releases a non-toxic fire-suppressing aerosol within seconds of detecting overheating, well before an electrical fault can turn into a fire. It is maintenance-free and rated for up to 10 years of standby protection, a low-cost addition to any board upgrade or new installation.",
+    "imagePath": "/images/products/mcb-fire-extinguisher-hot-aerosol.jpeg",
+    "specs": {
+      "Model": "ORR-0.01G",
+      "Spray Release Time": "Under 6 seconds",
+      "Shelf Life": "Up to 10 years",
+      "Coverage": "100g/m3 extinguishing density"
+    },
+    "featured": false
+  }
+]
