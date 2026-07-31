@@ -33,3 +33,11 @@ export function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function TikTokIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M16.5 3h-2.75v12.4a2.85 2.85 0 1 1-2.02-2.73V9.6a5.6 5.6 0 1 0 4.77 5.54V9.3a6.9 6.9 0 0 0 4 1.28V7.83A4.15 4.15 0 0 1 16.5 3Z" />
+    </svg>
+  );
+}

@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { siteConfig } from "@/lib/site-config";
+import { useSiteSettings } from "@/components/shared/site-settings-provider";
 import { cn } from "@/lib/utils";
 
 export function CtaSection() {
+  const settings = useSiteSettings();
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-primary to-orange-600 py-16 sm:py-20">
       <div className="pointer-events-none absolute inset-0 opacity-10">
@@ -23,7 +26,7 @@ export function CtaSection() {
             Get a Free Quote
           </Link>
           <a
-            href={`tel:${siteConfig.phones.primary}`}
+            href={`tel:${settings.phonePrimary}`}
             className={cn(
               buttonVariants({ size: "lg", variant: "outline" }),
               "rounded-full border-white/40 bg-white/10 px-7 text-base text-white hover:bg-white/20 hover:text-white"

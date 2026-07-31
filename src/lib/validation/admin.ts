@@ -68,3 +68,23 @@ export const faqAdminSchema = z.object({
   sortOrder: z.number(),
 });
 export type FaqAdminValues = z.infer<typeof faqAdminSchema>;
+
+export const siteSettingsAdminSchema = z.object({
+  phonePrimary: z.string().min(7, "Primary phone number is required."),
+  phoneShop1: z.string().optional().or(z.literal("")),
+  phoneShop2: z.string().optional().or(z.literal("")),
+  whatsappNumber: z.string().min(7, "WhatsApp number is required."),
+  email: z.string().email("Enter a valid email address."),
+  addressLine1: z.string().min(2, "Address is required."),
+  addressLine2: z.string().optional().or(z.literal("")),
+  addressCity: z.string().min(2, "City is required."),
+  addressCountry: z.string().min(2, "Country is required."),
+  hoursText: z.string().optional().or(z.literal("")),
+  serviceAreasText: z.string().min(2, "Enter at least one service area."),
+  socialFacebook: z.string().optional().or(z.literal("")),
+  socialInstagram: z.string().optional().or(z.literal("")),
+  socialTiktok: z.string().optional().or(z.literal("")),
+  socialTwitter: z.string().optional().or(z.literal("")),
+  socialLinkedin: z.string().optional().or(z.literal("")),
+});
+export type SiteSettingsAdminValues = z.infer<typeof siteSettingsAdminSchema>;

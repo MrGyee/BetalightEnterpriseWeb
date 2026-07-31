@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { ContactForm } from "@/components/contact/contact-form";
-import { siteConfig } from "@/lib/site-config";
+import { getSiteSettings } from "@/lib/data/settings";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
-  const fullAddress = `${siteConfig.address.line1}, ${siteConfig.address.line2}, ${siteConfig.address.city}, ${siteConfig.address.country}`;
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+  const fullAddress = `${settings.addressLine1}, ${settings.addressLine2}, ${settings.addressCity}, ${settings.addressCountry}`;
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`;
 
   return (
@@ -38,36 +39,36 @@ export default function ContactPage() {
             <div className="rounded-2xl border border-border bg-card p-5">
               <Phone className="size-5 text-primary" />
               <p className="mt-2 text-sm font-semibold text-foreground">Call Us</p>
-              <a href={`tel:${siteConfig.phones.primary}`} className="text-sm text-muted-foreground hover:text-primary">
-                {siteConfig.phones.primary}
+              <a href={`tel:${settings.phonePrimary}`} className="text-sm text-muted-foreground hover:text-primary">
+                {settings.phonePrimary}
               </a>
               <br />
-              <a href={`tel:${siteConfig.phones.shop1}`} className="text-sm text-muted-foreground hover:text-primary">
-                {siteConfig.phones.shop1}
+              <a href={`tel:${settings.phoneShop1}`} className="text-sm text-muted-foreground hover:text-primary">
+                {settings.phoneShop1}
               </a>
               <br />
-              <a href={`tel:${siteConfig.phones.shop2}`} className="text-sm text-muted-foreground hover:text-primary">
-                {siteConfig.phones.shop2}
+              <a href={`tel:${settings.phoneShop2}`} className="text-sm text-muted-foreground hover:text-primary">
+                {settings.phoneShop2}
               </a>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5">
               <Mail className="size-5 text-primary" />
               <p className="mt-2 text-sm font-semibold text-foreground">Email Us</p>
-              <a href={`mailto:${siteConfig.email}`} className="text-sm text-muted-foreground hover:text-primary">
-                {siteConfig.email}
+              <a href={`mailto:${settings.email}`} className="text-sm text-muted-foreground hover:text-primary">
+                {settings.email}
               </a>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5">
               <MapPin className="size-5 text-primary" />
               <p className="mt-2 text-sm font-semibold text-foreground">Visit Our Store</p>
               <p className="text-sm text-muted-foreground">
-                {siteConfig.address.line1}, {siteConfig.address.line2}, {siteConfig.address.city}
+                {settings.addressLine1}, {settings.addressLine2}, {settings.addressCity}
               </p>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5">
               <Clock className="size-5 text-primary" />
               <p className="mt-2 text-sm font-semibold text-foreground">Business Hours</p>
-              {siteConfig.hours.map((h) => (
+              {settings.hours.map((h) => (
                 <p key={h.days} className="text-sm text-muted-foreground">
                   {h.days}: {h.time}
                 </p>
@@ -77,7 +78,7 @@ export default function ContactPage() {
 
           <div className="mt-8 rounded-2xl border border-border bg-secondary/30 p-5">
             <p className="text-sm font-semibold text-foreground">Areas We Serve</p>
-            <p className="mt-2 text-sm text-muted-foreground">{siteConfig.serviceAreas.join(", ")}, and nationwide delivery.</p>
+            <p className="mt-2 text-sm text-muted-foreground">{settings.serviceAreas.join(", ")}, and nationwide delivery.</p>
           </div>
         </div>
 

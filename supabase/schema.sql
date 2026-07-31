@@ -105,3 +105,32 @@ create table if not exists faqs (
   sort_order integer not null default 0
 );
 alter table faqs enable row level security;
+
+-- ── Site settings (contacts & socials) ──────────────────────────────────
+-- Singleton row (id is always 1) holding the contact details and social
+-- links shown across the header, footer and SEO schema. Edited from
+-- /admin/settings; src/lib/data/settings.ts falls back to the static
+-- defaults in src/lib/site-config.ts if this table is empty or missing.
+
+create table if not exists site_settings (
+  id smallint primary key default 1,
+  updated_at timestamptz not null default now(),
+  phone_primary text not null default '',
+  phone_shop1 text not null default '',
+  phone_shop2 text not null default '',
+  whatsapp_number text not null default '',
+  email text not null default '',
+  address_line1 text not null default '',
+  address_line2 text not null default '',
+  address_city text not null default '',
+  address_country text not null default '',
+  hours jsonb not null default '[]'::jsonb,
+  service_areas jsonb not null default '[]'::jsonb,
+  social_facebook text not null default '',
+  social_instagram text not null default '',
+  social_tiktok text not null default '',
+  social_twitter text not null default '',
+  social_linkedin text not null default '',
+  constraint site_settings_singleton check (id = 1)
+);
+alter table site_settings enable row level security;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { siteConfig } from "@/lib/site-config";
+import { getSiteSettings } from "@/lib/data/settings";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy-policy" },
 };
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ name: "Privacy Policy", url: "/privacy-policy" }]} />
@@ -34,7 +36,7 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           <strong className="text-foreground">Contact us:</strong> If you have questions about this policy or want
-          your information removed from our records, email us at {siteConfig.email}.
+          your information removed from our records, email us at {settings.email}.
         </p>
       </div>
     </div>

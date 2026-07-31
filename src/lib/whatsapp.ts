@@ -1,8 +1,8 @@
 import { siteConfig } from "@/lib/site-config";
 
-export function buildWhatsAppLink(message: string): string {
+export function buildWhatsAppLink(whatsappNumber: string, message: string): string {
   const encoded = encodeURIComponent(message);
-  return `https://wa.me/${siteConfig.whatsappNumber}?text=${encoded}`;
+  return `https://wa.me/${whatsappNumber}?text=${encoded}`;
 }
 
 export const defaultWhatsAppMessage = `Hello ${siteConfig.name}, I'd like to enquire about your products and services.`;

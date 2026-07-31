@@ -14,11 +14,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { productCategories } from "@/lib/nav";
 import { siteConfig } from "@/lib/site-config";
+import { useSiteSettings } from "@/components/shared/site-settings-provider";
 
 const selectClassName =
   "flex h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30";
 
 export function QuoteForm() {
+  const settings = useSiteSettings();
   const searchParams = useSearchParams();
   const productPrefill = searchParams.get("product") ?? "";
   const [success, setSuccess] = useState(false);
@@ -89,7 +91,7 @@ export function QuoteForm() {
             <option value="" disabled>
               Select your county
             </option>
-            {siteConfig.serviceAreas.map((area) => (
+            {settings.serviceAreas.map((area) => (
               <option key={area} value={area}>
                 {area}
               </option>

@@ -14,6 +14,8 @@ import { CookieConsent } from "@/components/shared/cookie-consent";
 import { JsonLd } from "@/components/shared/json-ld";
 import { organizationSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/site-config";
+import { getSiteSettings } from "@/lib/data/settings";
+import { SiteSettingsProvider } from "@/components/shared/site-settings-provider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -64,24 +66,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sora.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <JsonLd data={organizationSchema()} />
+        <JsonLd data={organizationSchema(settings)} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <TooltipProvider>
-            <div id="scroll-sentinel" className="h-px w-full" aria-hidden />
-            <Header />
-            <HeaderSpacer />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <WhatsAppButton />
-            <StickyMobileCta />
-            <BackToTop />
-            <CookieConsent />
-            <Toaster />
-          </TooltipProvider>
+          <SiteSettingsProvider settings={settings}>
+            <TooltipProvider>
+              <div id="scroll-sentinel" className="h-px w-full" aria-hidden />
+              <Header settings={settings} />
+              <HeaderSpacer />
+              <main className="flex-1">{children}</main>
+              <Footer settings={settings} />
+              <WhatsAppButton />
+              <StickyMobileCta />
+              <BackToTop />
+              <CookieConsent />
+              <Toaster />
+            </TooltipProvider>
+          </SiteSettingsProvider>
         </ThemeProvider>
       </body>
     </html>

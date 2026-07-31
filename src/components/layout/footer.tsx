@@ -4,7 +4,8 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { productCategories } from "@/lib/nav";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
-import { FacebookIcon, InstagramIcon, XIcon } from "@/components/shared/social-icons";
+import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from "@/components/shared/social-icons";
+import type { SiteSettingsRecord } from "@/lib/store/settings.store";
 
 const quickLinks = [
   { label: "About Us", href: "/about" },
@@ -20,8 +21,8 @@ const quickLinks = [
   { label: "Request a Quote", href: "/quote" },
 ];
 
-export function Footer() {
-  const hasSocial = siteConfig.social.facebook || siteConfig.social.instagram || siteConfig.social.twitter;
+export function Footer({ settings }: { settings: SiteSettingsRecord }) {
+  const hasSocial = settings.socialFacebook || settings.socialInstagram || settings.socialTiktok || settings.socialTwitter;
 
   return (
     <footer className="border-t border-border bg-secondary/40 pb-16 md:pb-0">
@@ -41,18 +42,23 @@ export function Footer() {
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">{siteConfig.description}</p>
             {hasSocial && (
               <div className="mt-5 flex gap-3">
-                {siteConfig.social.facebook && (
-                  <a href={siteConfig.social.facebook} aria-label="Facebook" className="rounded-full border border-border p-2 hover:bg-muted">
+                {settings.socialFacebook && (
+                  <a href={settings.socialFacebook} aria-label="Facebook" className="rounded-full border border-border p-2 hover:bg-muted">
                     <FacebookIcon className="size-4" />
                   </a>
                 )}
-                {siteConfig.social.instagram && (
-                  <a href={siteConfig.social.instagram} aria-label="Instagram" className="rounded-full border border-border p-2 hover:bg-muted">
+                {settings.socialInstagram && (
+                  <a href={settings.socialInstagram} aria-label="Instagram" className="rounded-full border border-border p-2 hover:bg-muted">
                     <InstagramIcon className="size-4" />
                   </a>
                 )}
-                {siteConfig.social.twitter && (
-                  <a href={siteConfig.social.twitter} aria-label="Twitter / X" className="rounded-full border border-border p-2 hover:bg-muted">
+                {settings.socialTiktok && (
+                  <a href={settings.socialTiktok} aria-label="TikTok" className="rounded-full border border-border p-2 hover:bg-muted">
+                    <TikTokIcon className="size-4" />
+                  </a>
+                )}
+                {settings.socialTwitter && (
+                  <a href={settings.socialTwitter} aria-label="Twitter / X" className="rounded-full border border-border p-2 hover:bg-muted">
                     <XIcon className="size-4" />
                   </a>
                 )}
@@ -95,25 +101,25 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
                 <span>
-                  {siteConfig.address.line1}, {siteConfig.address.line2}, {siteConfig.address.city}, {siteConfig.address.country}
+                  {settings.addressLine1}, {settings.addressLine2}, {settings.addressCity}, {settings.addressCountry}
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-primary" />
-                <a href={`tel:${siteConfig.phones.primary}`} className="hover:text-primary">
-                  {siteConfig.phones.primary}
+                <a href={`tel:${settings.phonePrimary}`} className="hover:text-primary">
+                  {settings.phonePrimary}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-primary" />
-                <a href={`tel:${siteConfig.phones.shop1}`} className="hover:text-primary">
-                  {siteConfig.phones.shop1} / {siteConfig.phones.shop2}
+                <a href={`tel:${settings.phoneShop1}`} className="hover:text-primary">
+                  {settings.phoneShop1} / {settings.phoneShop2}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="size-4 shrink-0 text-primary" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-primary">
-                  {siteConfig.email}
+                <a href={`mailto:${settings.email}`} className="hover:text-primary">
+                  {settings.email}
                 </a>
               </li>
             </ul>

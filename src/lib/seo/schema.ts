@@ -1,6 +1,7 @@
 import { siteConfig } from "@/lib/site-config";
+import type { SiteSettingsRecord } from "@/lib/store/settings.store";
 
-export function organizationSchema() {
+export function organizationSchema(settings: SiteSettingsRecord) {
   return {
     "@context": "https://schema.org",
     "@type": "ElectricalContractor",
@@ -9,17 +10,17 @@ export function organizationSchema() {
     alternateName: "Betalight Enterprises",
     description: siteConfig.description,
     url: siteConfig.url,
-    telephone: siteConfig.phones.primary,
-    email: siteConfig.email,
+    telephone: settings.phonePrimary,
+    email: settings.email,
     slogan: siteConfig.tagline,
     address: {
       "@type": "PostalAddress",
-      streetAddress: `${siteConfig.address.line1}, ${siteConfig.address.line2}`,
-      addressLocality: siteConfig.address.city,
+      streetAddress: `${settings.addressLine1}, ${settings.addressLine2}`,
+      addressLocality: settings.addressCity,
       addressCountry: "KE",
     },
-    areaServed: siteConfig.serviceAreas.map((area) => ({ "@type": "City", name: area })),
-    openingHoursSpecification: siteConfig.hours.map((h) => ({
+    areaServed: settings.serviceAreas.map((area) => ({ "@type": "City", name: area })),
+    openingHoursSpecification: settings.hours.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: h.days,
       opens: h.time.split(" – ")[0],

@@ -4,15 +4,17 @@ import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { buildWhatsAppLink, defaultWhatsAppMessage } from "@/lib/whatsapp";
+import { useSiteSettings } from "@/components/shared/site-settings-provider";
 
 export function WhatsAppButton() {
+  const settings = useSiteSettings();
   return (
     <div className="fixed bottom-5 right-5 z-50 hidden md:block">
       <Tooltip>
         <TooltipTrigger
           render={
             <motion.a
-              href={buildWhatsAppLink(defaultWhatsAppMessage)}
+              href={buildWhatsAppLink(settings.whatsappNumber, defaultWhatsAppMessage)}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat with us on WhatsApp"

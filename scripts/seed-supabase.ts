@@ -170,6 +170,39 @@ async function seedFaqs() {
   );
 }
 
+// Unlike the tables above (plain insert, run-once-only), this upserts a
+// singleton row (id 1), so it's safe to run again any time to reset the
+// contacts/socials back to these defaults.
+async function seedSiteSettings() {
+  const { error } = await supabase.from("site_settings").upsert(
+    {
+      id: 1,
+      phone_primary: "+254720100045",
+      phone_shop1: "+254727672252",
+      phone_shop2: "+254735807904",
+      whatsapp_number: "254735807904",
+      email: "sales.megenterprises@gmail.com",
+      address_line1: "Mwangaza Arcade, 1st Floor, Room 101",
+      address_line2: "Charles Rubia Road, Nyamakima",
+      address_city: "Nairobi",
+      address_country: "Kenya",
+      hours: [
+        { days: "Monday – Saturday", time: "8:00 AM – 6:00 PM" },
+        { days: "Sunday", time: "10:00 AM – 4:00 PM" },
+      ],
+      service_areas: ["Nairobi", "Kiambu", "Nakuru", "Mombasa", "Kisumu", "Eldoret", "Thika", "Machakos"],
+      social_facebook: "https://facebook.com/betalightenterprises",
+      social_instagram: "https://instagram.com/betalightenterprises",
+      social_tiktok: "https://tiktok.com/@betalightenterprises",
+      social_twitter: "",
+      social_linkedin: "",
+    },
+    { onConflict: "id" }
+  );
+  if (error) throw new Error(`[site_settings] upsert failed: ${error.message}`);
+  console.log("  site_settings: seeded default row");
+}
+
 async function main() {
   console.log(`Seeding ${url} from data/*.json ...\n`);
   await seedProducts();
@@ -177,6 +210,7 @@ async function main() {
   await seedBlogPosts();
   await seedTestimonials();
   await seedFaqs();
+  await seedSiteSettings();
   console.log("\nDone.");
 }
 

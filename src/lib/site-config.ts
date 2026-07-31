@@ -24,8 +24,9 @@ export const siteConfig = {
   serviceAreas: ["Nairobi", "Kiambu", "Nakuru", "Mombasa", "Kisumu", "Eldoret", "Thika", "Machakos"],
   social: {
     linkedin: "",
-    facebook: "",
-    instagram: "",
+    facebook: "https://facebook.com/betalightenterprises",
+    instagram: "https://instagram.com/betalightenterprises",
+    tiktok: "https://tiktok.com/@betalightenterprises",
     twitter: "",
   },
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "",

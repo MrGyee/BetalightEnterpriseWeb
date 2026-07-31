@@ -1,26 +1,26 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { FacebookIcon, InstagramIcon, LinkedInIcon } from "@/components/shared/social-icons";
-import { siteConfig } from "@/lib/site-config";
+import { FacebookIcon, InstagramIcon, LinkedInIcon, TikTokIcon } from "@/components/shared/social-icons";
+import type { SiteSettingsRecord } from "@/lib/store/settings.store";
 
-export function TopUtilityBar() {
-  const hasSocial = siteConfig.social.linkedin || siteConfig.social.facebook || siteConfig.social.instagram;
+export function TopUtilityBar({ settings }: { settings: SiteSettingsRecord }) {
+  const hasSocial = settings.socialLinkedin || settings.socialFacebook || settings.socialInstagram || settings.socialTiktok;
 
   return (
     <div className="hidden h-10 items-center justify-between bg-[#1F2937] px-12 text-xs text-white/80 md:flex lg:px-16">
       <div className="flex items-center gap-3">
-        <a href={`tel:${siteConfig.phones.primary}`} className="flex items-center gap-1.5 transition-colors hover:text-primary">
+        <a href={`tel:${settings.phonePrimary}`} className="flex items-center gap-1.5 transition-colors hover:text-primary">
           <Phone className="size-3.5" />
-          {siteConfig.phones.primary}
+          {settings.phonePrimary}
         </a>
         <span className="text-white/20">|</span>
-        <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-1.5 transition-colors hover:text-primary">
+        <a href={`mailto:${settings.email}`} className="flex items-center gap-1.5 transition-colors hover:text-primary">
           <Mail className="size-3.5" />
-          {siteConfig.email}
+          {settings.email}
         </a>
         <span className="text-white/20">|</span>
         <span className="flex items-center gap-1.5">
           <MapPin className="size-3.5" />
-          {siteConfig.address.city}, {siteConfig.address.country}
+          {settings.addressCity}, {settings.addressCountry}
         </span>
       </div>
 
@@ -31,19 +31,24 @@ export function TopUtilityBar() {
         </span>
         {hasSocial && (
           <div className="flex items-center gap-3">
-            {siteConfig.social.linkedin && (
-              <a href={siteConfig.social.linkedin} aria-label="LinkedIn" className="transition-all hover:scale-110 hover:text-primary">
+            {settings.socialLinkedin && (
+              <a href={settings.socialLinkedin} aria-label="LinkedIn" className="transition-all hover:scale-110 hover:text-primary">
                 <LinkedInIcon className="size-3.5" />
               </a>
             )}
-            {siteConfig.social.facebook && (
-              <a href={siteConfig.social.facebook} aria-label="Facebook" className="transition-all hover:scale-110 hover:text-primary">
+            {settings.socialFacebook && (
+              <a href={settings.socialFacebook} aria-label="Facebook" className="transition-all hover:scale-110 hover:text-primary">
                 <FacebookIcon className="size-3.5" />
               </a>
             )}
-            {siteConfig.social.instagram && (
-              <a href={siteConfig.social.instagram} aria-label="Instagram" className="transition-all hover:scale-110 hover:text-primary">
+            {settings.socialInstagram && (
+              <a href={settings.socialInstagram} aria-label="Instagram" className="transition-all hover:scale-110 hover:text-primary">
                 <InstagramIcon className="size-3.5" />
+              </a>
+            )}
+            {settings.socialTiktok && (
+              <a href={settings.socialTiktok} aria-label="TikTok" className="transition-all hover:scale-110 hover:text-primary">
+                <TikTokIcon className="size-3.5" />
               </a>
             )}
           </div>

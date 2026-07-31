@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { siteConfig } from "@/lib/site-config";
+import { getSiteSettings } from "@/lib/data/settings";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/terms" },
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ name: "Terms of Service", url: "/terms" }]} />
@@ -38,7 +40,7 @@ export default function TermsPage() {
         </p>
         <p>
           <strong className="text-foreground">Contact:</strong> Questions about these terms can be sent to{" "}
-          {siteConfig.email}.
+          {settings.email}.
         </p>
       </div>
     </div>

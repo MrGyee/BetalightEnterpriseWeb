@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, MessageCircle } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
-import { siteConfig } from "@/lib/site-config";
+import { getSiteSettings } from "@/lib/data/settings";
 import { buttonVariants } from "@/components/ui/button";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,8 @@ const roles = [
   "Warehouse and logistics support",
 ];
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ name: "Careers", url: "/careers" }]} />
@@ -51,12 +52,15 @@ export default function CareersPage() {
           Send us your CV with a short note about your experience, and we&apos;ll reach out if a suitable role comes up.
         </p>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-          <a href={`mailto:${siteConfig.email}?subject=Job Application`} className={cn(buttonVariants(), "rounded-full")}>
+          <a href={`mailto:${settings.email}?subject=Job Application`} className={cn(buttonVariants(), "rounded-full")}>
             <Mail className="size-4" />
             Email Your CV
           </a>
           <a
-            href={buildWhatsAppLink("Hello, I'd like to enquire about job opportunities at Betalight Enterprises Ltd.")}
+            href={buildWhatsAppLink(
+              settings.whatsappNumber,
+              "Hello, I'd like to enquire about job opportunities at Betalight Enterprises Ltd."
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "outline" }), "rounded-full")}

@@ -12,9 +12,10 @@ import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { TopUtilityBar } from "@/components/layout/top-utility-bar";
 import { primaryNav, productCategories, servicesMenu } from "@/lib/nav";
 import { siteConfig } from "@/lib/site-config";
+import type { SiteSettingsRecord } from "@/lib/store/settings.store";
 import { cn } from "@/lib/utils";
 
-export function Header() {
+export function Header({ settings }: { settings: SiteSettingsRecord }) {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
@@ -42,7 +43,7 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <TopUtilityBar />
+      <TopUtilityBar settings={settings} />
       <div
         className={cn(
           "transition-all duration-300",
@@ -153,7 +154,7 @@ export function Header() {
           <div className="hidden shrink-0 items-center gap-2 xl:flex">
             <ThemeToggle className={transparent ? "text-white hover:bg-white/10 hover:text-white" : ""} />
             <a
-              href={`tel:${siteConfig.phones.primary}`}
+              href={`tel:${settings.phonePrimary}`}
               className={cn(
                 "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white",
                 transparent ? "border-white/30 bg-white/10 text-white" : "border-border bg-white text-foreground"
@@ -264,11 +265,11 @@ export function Header() {
                       Request a Quote
                     </SheetClose>
                     <a
-                      href={`tel:${siteConfig.phones.primary}`}
+                      href={`tel:${settings.phonePrimary}`}
                       className="flex items-center justify-center gap-1.5 rounded-full border border-border px-3 py-2.5 text-sm font-medium"
                     >
                       <Phone className="size-4" />
-                      Call {siteConfig.phones.primary}
+                      Call {settings.phonePrimary}
                     </a>
                   </div>
                 </div>
