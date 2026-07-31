@@ -71,6 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <JsonLd data={organizationSchema()} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TooltipProvider>
+            <div id="scroll-sentinel" className="h-px w-full" aria-hidden />
             <Header />
             <HeaderSpacer />
             <main className="flex-1">{children}</main>

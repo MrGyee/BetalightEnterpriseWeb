@@ -24,13 +24,18 @@ export function Header() {
   const transparent = isHome && !scrolled;
 
   useEffect(() => {
-    function onScroll() {
+    const sentinel = document.getElementById("scroll-sentinel");
+    if (!sentinel) {
       setScrolled(window.scrollY > 8);
+      return;
     }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const observer = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
+      threshold: 0,
+      rootMargin: "-8px 0px 0px 0px",
+    });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   const navLinkColor = transparent ? "text-white/90 hover:text-primary" : "text-foreground hover:text-primary";
   const navLinkActiveColor = "text-primary";
@@ -56,10 +61,10 @@ export function Header() {
                 priority
               />
               <span className="hidden leading-tight sm:block">
-                <span className={cn("block font-heading text-lg font-bold transition-colors", transparent ? "text-white" : "text-foreground")}>
+                <span className={cn("block font-heading text-lg font-bold transition-colors duration-300", transparent ? "text-white" : "text-foreground")}>
                   {siteConfig.name}
                 </span>
-                <span className={cn("block text-[11px] font-medium transition-colors", transparent ? "text-white/70" : "text-muted-foreground")}>
+                <span className={cn("block text-[11px] font-medium transition-colors duration-300", transparent ? "text-white/70" : "text-muted-foreground")}>
                   {siteConfig.tagline}
                 </span>
               </span>
@@ -80,7 +85,7 @@ export function Header() {
                     onMouseEnter={() => setOpenDropdown(item.dropdown!)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    <Link href={item.href} className={cn("group relative flex items-center gap-1 py-2 text-[15px] font-semibold transition-colors", colorClass)}>
+                    <Link href={item.href} className={cn("group relative flex items-center gap-1 py-2 text-[15px] font-semibold transition-colors duration-300", colorClass)}>
                       {item.label}
                       <ChevronDown className="size-3.5" />
                       <span
@@ -132,7 +137,7 @@ export function Header() {
               }
 
               return (
-                <Link key={item.href} href={item.href} className={cn("group relative py-2 text-[15px] font-semibold transition-colors", colorClass)}>
+                <Link key={item.href} href={item.href} className={cn("group relative py-2 text-[15px] font-semibold transition-colors duration-300", colorClass)}>
                   {item.label}
                   <span
                     className={cn(
@@ -150,7 +155,7 @@ export function Header() {
             <a
               href={`tel:${siteConfig.phones.primary}`}
               className={cn(
-                "flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all hover:border-primary hover:bg-primary hover:text-white",
+                "flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white",
                 transparent ? "border-white/30 bg-white/10 text-white" : "border-border bg-white text-foreground"
               )}
             >
