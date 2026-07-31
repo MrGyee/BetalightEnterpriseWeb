@@ -11,7 +11,7 @@ import { FormField } from "@/components/shared/form-field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ImageField } from "@/components/admin/image-field";
+import { ImageUploadField } from "@/components/admin/image-upload-field";
 
 export function TestimonialForm({ testimonial }: { testimonial?: TestimonialRecord }) {
   const router = useRouter();
@@ -60,7 +60,7 @@ export function TestimonialForm({ testimonial }: { testimonial?: TestimonialReco
       <FormField label="Rating (1-5)" htmlFor="rating">
         <Input id="rating" type="number" min={1} max={5} {...register("rating", { valueAsNumber: true })} />
       </FormField>
-      <ImageField label="Photo (optional)" htmlFor="photoPath" value={photoPath ?? ""} onChange={(v) => setValue("photoPath", v)} />
+      <ImageUploadField label="Photo (optional)" value={photoPath ?? ""} onChange={(v) => setValue("photoPath", v)} />
       <Button type="submit" size="lg" disabled={isSubmitting} className="w-fit rounded-full">
         {isSubmitting ? "Saving..." : testimonial ? "Save Changes" : "Create Testimonial"}
       </Button>

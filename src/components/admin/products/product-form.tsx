@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ImageField } from "@/components/admin/image-field";
+import { ImageUploadField } from "@/components/admin/image-upload-field";
 
 export function ProductForm({ product }: { product?: ProductRecord }) {
   const router = useRouter();
@@ -84,7 +84,7 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
       <FormField label="Full Description" htmlFor="description">
         <Textarea id="description" rows={5} {...register("description")} />
       </FormField>
-      <ImageField label="Image" htmlFor="imagePath" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <ImageUploadField label="Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
       <FormField label="Specs (JSON key/value pairs)" htmlFor="specsJson">
         <Textarea id="specsJson" rows={6} className="font-mono text-xs" {...register("specsJson")} />
       </FormField>

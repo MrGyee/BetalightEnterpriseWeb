@@ -11,7 +11,7 @@ import { FormField } from "@/components/shared/form-field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ImageField } from "@/components/admin/image-field";
+import { ImageUploadField } from "@/components/admin/image-upload-field";
 
 export function ProjectForm({ project }: { project?: ProjectRecord }) {
   const router = useRouter();
@@ -67,7 +67,7 @@ export function ProjectForm({ project }: { project?: ProjectRecord }) {
       <FormField label="Description" htmlFor="description">
         <Textarea id="description" rows={4} {...register("description")} />
       </FormField>
-      <ImageField label="Image" htmlFor="imagePath" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <ImageUploadField label="Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
       <FormField label="Completed Date (optional)" htmlFor="completedDate">
         <Input id="completedDate" type="date" {...register("completedDate")} />
       </FormField>

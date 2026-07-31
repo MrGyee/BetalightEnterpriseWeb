@@ -11,7 +11,7 @@ import { FormField } from "@/components/shared/form-field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ImageField } from "@/components/admin/image-field";
+import { ImageUploadField } from "@/components/admin/image-upload-field";
 
 function toDatetimeLocal(iso: string) {
   const date = new Date(iso);
@@ -87,7 +87,7 @@ export function BlogForm({ post }: { post?: BlogPostRecord }) {
         <Textarea id="content" rows={12} {...register("content")} />
       </FormField>
       <p className="-mt-4 text-xs text-muted-foreground">Separate paragraphs with a blank line.</p>
-      <ImageField label="Cover Image (optional)" htmlFor="coverImagePath" value={coverImagePath ?? ""} onChange={(v) => setValue("coverImagePath", v)} />
+      <ImageUploadField label="Cover Image (optional)" value={coverImagePath ?? ""} onChange={(v) => setValue("coverImagePath", v)} />
       <FormField label="SEO Description" htmlFor="seoDescription">
         <Textarea id="seoDescription" rows={2} {...register("seoDescription")} />
       </FormField>
