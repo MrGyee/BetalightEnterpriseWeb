@@ -51,20 +51,20 @@ export function Header() {
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-6 md:h-24 xl:gap-6 xl:px-10">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <Link href="/" className="flex shrink-0 items-center gap-3">
+            <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3">
               <Image
                 src="/images/brand/betalight-logo.jpeg"
                 alt={`${siteConfig.name} logo`}
                 width={56}
                 height={56}
-                className="rounded-full"
+                className="size-10 shrink-0 rounded-full sm:size-14"
                 priority
               />
-              <span className="hidden leading-tight sm:block">
-                <span className={cn("block font-heading text-lg font-bold transition-colors duration-300", transparent ? "text-white" : "text-foreground")}>
+              <span className="min-w-0 leading-tight">
+                <span className={cn("block truncate font-heading text-sm font-bold transition-colors duration-300 sm:text-lg", transparent ? "text-white" : "text-foreground")}>
                   {siteConfig.name}
                 </span>
-                <span className={cn("block text-[11px] font-medium transition-colors duration-300", transparent ? "text-white/70" : "text-muted-foreground")}>
+                <span className={cn("block truncate text-[9px] font-medium transition-colors duration-300 sm:text-[11px]", transparent ? "text-white/70" : "text-muted-foreground")}>
                   {siteConfig.tagline}
                 </span>
               </span>
