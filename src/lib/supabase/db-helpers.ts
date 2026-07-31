@@ -29,6 +29,12 @@ export async function selectBySlug<Row, T>(
   return data ? mapRow(data as Row) : null;
 }
 
+export async function selectById<Row, T>(table: string, id: string, mapRow: (row: Row) => T): Promise<T | null> {
+  const { data, error } = await getSupabaseClient().from(table).select("*").eq("id", id).maybeSingle();
+  if (error) throw new Error(`[${table}] selectById: ${error.message}`);
+  return data ? mapRow(data as Row) : null;
+}
+
 export async function insertOne<Row, T>(
   table: string,
   row: Record<string, unknown>,
@@ -48,4 +54,22 @@ export async function upsertMany<Row>(table: string, rows: Record<string, unknow
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error } = await (getSupabaseClient().from(table) as any).upsert(rows, { onConflict: conflictKey });
   if (error) throw new Error(`[${table}] upsert: ${error.message}`);
+}
+
+export async function updateByKey<Row, T>(
+  table: string,
+  key: "id" | "slug",
+  keyValue: string,
+  row: Record<string, unknown>,
+  mapRow: (row: Row) => T
+): Promise<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data, error } = await (getSupabaseClient().from(table) as any).update(row).eq(key, keyValue).select().single();
+  if (error) throw new Error(`[${table}] update: ${error.message}`);
+  return mapRow(data as Row);
+}
+
+export async function deleteByKey(table: string, key: "id" | "slug", keyValue: string): Promise<void> {
+  const { error } = await getSupabaseClient().from(table).delete().eq(key, keyValue);
+  if (error) throw new Error(`[${table}] delete: ${error.message}`);
 }

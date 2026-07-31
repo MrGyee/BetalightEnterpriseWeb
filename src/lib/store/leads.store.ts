@@ -1,4 +1,4 @@
-import { insertOne } from "@/lib/supabase/db-helpers";
+import { insertOne, selectAll } from "@/lib/supabase/db-helpers";
 import type { ContactFormValues, QuoteFormValues } from "@/lib/validation/forms";
 
 interface WithMeta {
@@ -90,5 +90,23 @@ export const leadsStore = {
   },
   addNewsletterSubscriber(email: string) {
     return insertOne("newsletter_subscribers", { email }, mapNewsletterSubscriber);
+  },
+
+  listContactMessages() {
+    return selectAll("contact_messages", mapContactMessage);
+  },
+  listQuoteRequests() {
+    return selectAll("quote_requests", mapQuoteRequest);
+  },
+  listNewsletterSubscribers() {
+    return selectAll("newsletter_subscribers", mapNewsletterSubscriber);
+  },
+  async getAll() {
+    const [quoteRequests, contactMessages, newsletterSubscribers] = await Promise.all([
+      this.listQuoteRequests(),
+      this.listContactMessages(),
+      this.listNewsletterSubscribers(),
+    ]);
+    return { quoteRequests, contactMessages, newsletterSubscribers };
   },
 };
