@@ -89,3 +89,21 @@ export const siteSettingsAdminSchema = z.object({
   socialLinkedin: z.string().optional().or(z.literal("")),
 });
 export type SiteSettingsAdminValues = z.infer<typeof siteSettingsAdminSchema>;
+
+export const heroContentAdminSchema = z.object({
+  badgeText: z.string().min(2, "Badge text is required."),
+  headline: z.string().min(5, "Headline is required."),
+  subheadline: z.string().min(5, "Subheadline is required."),
+  trustPointsText: z.string().min(2, "Enter at least one trust point."),
+  statsText: z.string().min(2, "Enter at least one stat."),
+});
+export type HeroContentAdminValues = z.infer<typeof heroContentAdminSchema>;
+
+export const heroSlideAdminSchema = z.object({
+  imagePath: z.string().min(1, "Image is required."),
+  title: z.string().min(2, "Title is required."),
+  location: z.string().min(2, "Location is required."),
+  alt: z.string().optional().or(z.literal("")),
+  sortOrder: z.number(),
+});
+export type HeroSlideAdminValues = z.infer<typeof heroSlideAdminSchema>;

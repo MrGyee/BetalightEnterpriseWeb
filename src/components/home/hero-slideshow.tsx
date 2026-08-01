@@ -4,51 +4,22 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Zap, ShieldCheck, Sun, MapPinned } from "lucide-react";
-
-const slides = [
-  {
-    src: "/images/projects/solar-water-heater-installation.jpeg",
-    alt: "Rooftop solar water heater installation in Nairobi",
-    title: "Rooftop Solar Water Heater Installation",
-    location: "Nairobi",
-  },
-  {
-    src: "/images/projects/srne-solar-inverter-installation.jpeg",
-    alt: "Residential hybrid solar inverter and battery installation",
-    title: "Hybrid Solar Inverter & Battery Installation",
-    location: "Nairobi",
-  },
-  {
-    src: "/images/projects/eae-hybrid-inverter-installation.jpeg",
-    alt: "Home backup power system with hybrid solar inverter",
-    title: "Home Backup Power System",
-    location: "Nairobi",
-  },
-  {
-    src: "/images/projects/automatic-transfer-switch-installation.jpeg",
-    alt: "Automatic transfer switch control panel installation",
-    title: "Automatic Transfer Switch Control Panel",
-    location: "Nairobi",
-  },
-  {
-    src: "/images/products/vestwoods-power-station-lifestyle.jpeg",
-    alt: "Portable solar power station for home and outdoor backup power",
-    title: "Smart Portable Power Solutions",
-    location: "Kenya",
-  },
-];
+import type { HeroSlideRecord } from "@/lib/store/hero.store";
 
 const SLIDE_DURATION = 6000;
 
-export function HeroSlideshow() {
+export function HeroSlideshow({ slides }: { slides: HeroSlideRecord[] }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    if (slides.length <= 1) return;
     const timer = setInterval(() => setIndex((i) => (i + 1) % slides.length), SLIDE_DURATION);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
-  const current = slides[index];
+  const current = slides[index % slides.length];
+
+  if (!current) return null;
 
   return (
     <div className="relative">
@@ -73,7 +44,7 @@ export function HeroSlideshow() {
               className="absolute inset-0"
             >
               <Image
-                src={current.src}
+                src={current.imagePath}
                 alt={current.alt}
                 fill
                 priority={index === 0}

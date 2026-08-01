@@ -8,22 +8,25 @@ import { Testimonials } from "@/components/home/testimonials";
 import { FaqPreview } from "@/components/home/faq-preview";
 import { CtaSection } from "@/components/home/cta-section";
 import { getProducts, getProjects, getTestimonials, getFaqs } from "@/lib/data/catalog";
+import { getHeroContent, getHeroSlides } from "@/lib/data/hero";
 
 export const revalidate = 300;
 
 export default async function Home() {
-  const [products, projects, testimonials, faqs] = await Promise.all([
+  const [products, projects, testimonials, faqs, heroContent, heroSlides] = await Promise.all([
     getProducts().catch(() => []),
     getProjects().catch(() => []),
     getTestimonials().catch(() => []),
     getFaqs().catch(() => []),
+    getHeroContent(),
+    getHeroSlides(),
   ]);
 
   const featuredProducts = products.filter((p) => p.featured);
 
   return (
     <>
-      <Hero />
+      <Hero content={heroContent} slides={heroSlides} />
       <SolutionsGrid />
       <FeaturedProducts products={featuredProducts} />
       <Industries />

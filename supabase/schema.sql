@@ -135,3 +135,28 @@ create table if not exists site_settings (
   constraint site_settings_singleton check (id = 1)
 );
 alter table site_settings enable row level security;
+
+-- ── Homepage hero (text + rotating photo slideshow) ─────────────────────
+
+create table if not exists hero_content (
+  id smallint primary key default 1,
+  updated_at timestamptz not null default now(),
+  badge_text text not null default '',
+  headline text not null default '',
+  subheadline text not null default '',
+  trust_points jsonb not null default '[]'::jsonb,
+  stats jsonb not null default '[]'::jsonb,
+  constraint hero_content_singleton check (id = 1)
+);
+alter table hero_content enable row level security;
+
+create table if not exists hero_slides (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  image_path text not null,
+  alt text not null,
+  title text not null,
+  location text not null,
+  sort_order integer not null default 0
+);
+alter table hero_slides enable row level security;

@@ -7,18 +7,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
 import { HeroSlideshow } from "@/components/home/hero-slideshow";
 import { useSiteSettings } from "@/components/shared/site-settings-provider";
+import type { HeroContentRecord, HeroSlideRecord } from "@/lib/store/hero.store";
 import { cn } from "@/lib/utils";
 
-const trustPoints = ["Licensed & Certified", "Genuine Products", "Fast Response Times", "Nationwide Delivery"];
-
-const stats = [
-  { label: "Projects Completed", value: 150, suffix: "+" },
-  { label: "Years of Experience", value: 5, suffix: "+" },
-  { label: "Electrical Products", value: 500, suffix: "+" },
-  { label: "Counties Served", value: 8, suffix: "" },
-];
-
-export function Hero() {
+export function Hero({ content, slides }: { content: HeroContentRecord; slides: HeroSlideRecord[] }) {
   const settings = useSiteSettings();
   const doubledBrands = [...settings.brands, ...settings.brands];
 
@@ -96,7 +88,7 @@ export function Hero() {
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-orange-200 backdrop-blur"
           >
             <span className="size-1.5 animate-pulse rounded-full bg-primary" />
-            Trusted Electrical &amp; Solar Partner
+            {content.badgeText}
           </motion.div>
 
           <motion.h1
@@ -105,7 +97,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-heading text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-[3.25rem]"
           >
-            Powering Kenya with Reliable Electrical &amp; Solar Solutions
+            {content.headline}
           </motion.h1>
 
           <motion.p
@@ -114,9 +106,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mx-auto mt-6 max-w-xl text-base text-slate-200 sm:text-lg lg:mx-0"
           >
-            Betalight Enterprises Ltd delivers premium electrical products, solar energy systems, power control
-            equipment and professional installation services designed for reliability, safety, and long-term
-            performance.
+            {content.subheadline}
           </motion.p>
 
           <motion.div
@@ -155,7 +145,7 @@ export function Hero() {
             </div>
             <div className="hidden h-4 w-px bg-white/20 sm:block" />
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
-              {trustPoints.map((point) => (
+              {content.trustPoints.map((point) => (
                 <span key={point} className="flex items-center gap-1.5 text-xs font-medium text-slate-300 sm:text-sm">
                   <CheckCircle2 className="size-3.5 text-green" />
                   {point}
@@ -171,7 +161,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/10 pt-8 sm:grid-cols-4 lg:border-t-0 lg:pt-0"
           >
-            {stats.map((stat) => (
+            {content.stats.map((stat) => (
               <div key={stat.label}>
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} className="text-3xl text-white sm:text-4xl" />
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-slate-400 sm:text-xs">
@@ -189,7 +179,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mx-auto w-full max-w-md lg:max-w-none"
         >
-          <HeroSlideshow />
+          <HeroSlideshow slides={slides} />
         </motion.div>
       </div>
 

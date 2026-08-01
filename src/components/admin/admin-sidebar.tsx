@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Briefcase, Newspaper, Quote, HelpCircle, Inbox, Settings } from "lucide-react";
+import { LayoutDashboard, Package, Briefcase, Newspaper, Quote, HelpCircle, Inbox, Settings, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navGroups = [
   {
     label: "Overview",
     items: [{ href: "/admin", label: "Dashboard", icon: LayoutDashboard }],
+  },
+  {
+    label: "Homepage",
+    items: [{ href: "/admin/hero", label: "Hero Section", icon: Sparkles }],
   },
   {
     label: "Catalogue",
