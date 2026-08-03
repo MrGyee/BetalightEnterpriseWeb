@@ -93,6 +93,7 @@ export async function createHeroSlideAction(values: HeroSlideAdminValues): Promi
     imagePath: parsed.data.imagePath,
     title: parsed.data.title,
     location: parsed.data.location,
+    category: parsed.data.category || "",
     alt: parsed.data.alt || parsed.data.title,
     sortOrder: parsed.data.sortOrder,
   });
@@ -113,6 +114,7 @@ export async function updateHeroSlideAction(id: string, values: HeroSlideAdminVa
     imagePath: parsed.data.imagePath,
     title: parsed.data.title,
     location: parsed.data.location,
+    category: parsed.data.category || "",
     alt: parsed.data.alt || parsed.data.title,
     sortOrder: parsed.data.sortOrder,
   });

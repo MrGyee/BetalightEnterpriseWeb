@@ -18,8 +18,15 @@ export function HeroSlideForm({ slide }: { slide?: HeroSlideRecord }) {
 
   const { register, handleSubmit, watch, setValue } = useForm<HeroSlideAdminValues>({
     defaultValues: slide
-      ? { imagePath: slide.imagePath, title: slide.title, location: slide.location, alt: slide.alt, sortOrder: slide.sortOrder }
-      : { imagePath: "", title: "", location: "", alt: "", sortOrder: 0 },
+      ? {
+          imagePath: slide.imagePath,
+          title: slide.title,
+          location: slide.location,
+          category: slide.category,
+          alt: slide.alt,
+          sortOrder: slide.sortOrder,
+        }
+      : { imagePath: "", title: "", location: "", category: "", alt: "", sortOrder: 0 },
   });
 
   const imagePath = watch("imagePath");
@@ -53,6 +60,9 @@ export function HeroSlideForm({ slide }: { slide?: HeroSlideRecord }) {
           <Input id="location" {...register("location")} />
         </FormField>
       </div>
+      <FormField label="Category (shown as a small tag on the photo)" htmlFor="category">
+        <Input id="category" placeholder="e.g. Residential Solar" {...register("category")} />
+      </FormField>
       <FormField label="Alt Text (optional, defaults to title)" htmlFor="alt">
         <Input id="alt" {...register("alt")} />
       </FormField>

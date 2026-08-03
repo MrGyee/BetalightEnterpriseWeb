@@ -29,6 +29,7 @@ export default async function AdminHeroSlidesPage() {
               <TableHead>Photo</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Location</TableHead>
+              <TableHead>Category</TableHead>
               <TableHead>Order</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -43,6 +44,7 @@ export default async function AdminHeroSlidesPage() {
                 </TableCell>
                 <TableCell className="max-w-xs whitespace-normal font-medium text-foreground">{slide.title}</TableCell>
                 <TableCell className="text-muted-foreground">{slide.location}</TableCell>
+                <TableCell className="text-muted-foreground">{slide.category || "—"}</TableCell>
                 <TableCell className="text-muted-foreground">{slide.sortOrder}</TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">

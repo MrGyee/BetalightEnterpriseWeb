@@ -23,6 +23,7 @@ const FALLBACK_HERO_SLIDES: HeroSlideRecord[] = [
     alt: "Rooftop solar water heater installation in Nairobi",
     title: "Rooftop Solar Water Heater Installation",
     location: "Nairobi",
+    category: "Residential Solar",
     sortOrder: 0,
   },
   {
@@ -31,6 +32,7 @@ const FALLBACK_HERO_SLIDES: HeroSlideRecord[] = [
     alt: "Residential hybrid solar inverter and battery installation",
     title: "Hybrid Solar Inverter & Battery Installation",
     location: "Nairobi",
+    category: "Residential Solar",
     sortOrder: 1,
   },
   {
@@ -39,6 +41,7 @@ const FALLBACK_HERO_SLIDES: HeroSlideRecord[] = [
     alt: "Home backup power system with hybrid solar inverter",
     title: "Home Backup Power System",
     location: "Nairobi",
+    category: "Power Backup Systems",
     sortOrder: 2,
   },
   {
@@ -47,6 +50,7 @@ const FALLBACK_HERO_SLIDES: HeroSlideRecord[] = [
     alt: "Automatic transfer switch control panel installation",
     title: "Automatic Transfer Switch Control Panel",
     location: "Nairobi",
+    category: "Power Control Systems",
     sortOrder: 3,
   },
   {
@@ -55,6 +59,7 @@ const FALLBACK_HERO_SLIDES: HeroSlideRecord[] = [
     alt: "Portable solar power station for home and outdoor backup power",
     title: "Smart Portable Power Solutions",
     location: "Kenya",
+    category: "Power Backup Systems",
     sortOrder: 4,
   },
 ];

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Zap, ShieldCheck, Sun, MapPinned } from "lucide-react";
 import type { HeroSlideRecord } from "@/lib/store/hero.store";
+import { cn } from "@/lib/utils";
 
 const SLIDE_DURATION = 6000;
 
@@ -55,9 +56,13 @@ export function HeroSlideshow({ slides }: { slides: HeroSlideRecord[] }) {
           </motion.div>
         </AnimatePresence>
 
-        {/* Readability overlay */}
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+        {/* Readability overlay: only darkens toward the bottom, keeping the photo vivid elsewhere */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 via-45% to-transparent to-70%" />
+
+        {/* Editorial slide index */}
+        <div className="absolute right-5 top-5 font-heading text-xs font-semibold tracking-wide text-white/80">
+          {String(index + 1).padStart(2, "0")} <span className="text-white/40">— {String(slides.length).padStart(2, "0")}</span>
+        </div>
 
         {/* Current project caption */}
         <div className="absolute inset-x-0 bottom-0 p-6">
@@ -69,8 +74,27 @@ export function HeroSlideshow({ slides }: { slides: HeroSlideRecord[] }) {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4 }}
             >
+              {current.category && (
+                <span className="mb-2 inline-block rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+                  {current.category}
+                </span>
+              )}
               <p className="text-sm font-semibold text-white">{current.title}</p>
               <p className="text-xs text-white/70">{current.location}</p>
+
+              {slides.length > 1 && (
+                <div className="mt-3 flex items-center gap-1.5">
+                  {slides.map((s, i) => (
+                    <span
+                      key={s.id}
+                      className={cn(
+                        "h-1 rounded-full transition-all duration-300",
+                        i === index ? "w-5 bg-primary" : "w-1.5 bg-white/40"
+                      )}
+                    />
+                  ))}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>

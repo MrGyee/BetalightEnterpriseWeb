@@ -103,6 +103,7 @@ export const heroSlideAdminSchema = z.object({
   imagePath: z.string().min(1, "Image is required."),
   title: z.string().min(2, "Title is required."),
   location: z.string().min(2, "Location is required."),
+  category: z.string().optional().or(z.literal("")),
   alt: z.string().optional().or(z.literal("")),
   sortOrder: z.number(),
 });

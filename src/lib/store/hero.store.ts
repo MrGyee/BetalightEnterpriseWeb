@@ -52,6 +52,7 @@ export interface HeroSlideRecord {
   alt: string;
   title: string;
   location: string;
+  category: string;
   sortOrder: number;
 }
 
@@ -61,6 +62,7 @@ interface HeroSlideRow {
   alt: string;
   title: string;
   location: string;
+  category: string;
   sort_order: number;
 }
 
@@ -70,6 +72,7 @@ const mapHeroSlide = (row: HeroSlideRow): HeroSlideRecord => ({
   alt: row.alt,
   title: row.title,
   location: row.location,
+  category: row.category,
   sortOrder: row.sort_order,
 });
 
@@ -79,6 +82,7 @@ function heroSlideToRow(values: Omit<HeroSlideRecord, "id">) {
     alt: values.alt,
     title: values.title,
     location: values.location,
+    category: values.category,
     sort_order: values.sortOrder,
   };
 }

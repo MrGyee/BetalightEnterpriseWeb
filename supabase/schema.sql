@@ -157,6 +157,7 @@ create table if not exists hero_slides (
   alt text not null,
   title text not null,
   location text not null,
+  category text not null default '',
   sort_order integer not null default 0
 );
 alter table hero_slides enable row level security;
