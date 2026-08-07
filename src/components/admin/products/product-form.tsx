@@ -12,7 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
+import { productCategories } from "@/lib/nav";
 
 export function ProductForm({ product }: { product?: ProductRecord }) {
   const router = useRouter();
@@ -46,6 +48,7 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
 
   const imagePath = watch("imagePath");
   const featured = watch("featured");
+  const category = watch("category");
 
   async function onSubmit(values: ProductAdminValues) {
     setIsSubmitting(true);
@@ -72,7 +75,18 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <FormField label="Category" htmlFor="category">
-          <Input id="category" {...register("category")} />
+          <Select value={category || undefined} onValueChange={(v) => setValue("category", v as string)}>
+            <SelectTrigger id="category" className="w-full">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              {productCategories.map((cat) => (
+                <SelectItem key={cat.slug} value={cat.name}>
+                  {cat.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </FormField>
         <FormField label="Brand (optional)" htmlFor="brand">
           <Input id="brand" {...register("brand")} />
