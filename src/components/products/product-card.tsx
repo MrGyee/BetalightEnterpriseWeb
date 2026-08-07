@@ -1,10 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { QuickViewDialog } from "@/components/products/quick-view-dialog";
+import { ProductShareButton } from "@/components/products/product-share-button";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { useSiteSettings } from "@/components/shared/site-settings-provider";
+import { trackEvent } from "@/lib/analytics";
+import { absoluteProductUrl, buildWhatsAppQuoteMessage } from "@/lib/share";
+import { cn } from "@/lib/utils";
 import type { ProductRecord } from "@/lib/store/catalog.store";
 
 export function ProductCard({ product }: { product: ProductRecord }) {
+  const settings = useSiteSettings();
+
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/products/${product.slug}`} className="relative aspect-square w-full overflow-hidden bg-muted">
@@ -19,15 +31,39 @@ export function ProductCard({ product }: { product: ProductRecord }) {
           {product.category}
         </Badge>
       </Link>
-      <QuickViewDialog product={product} />
-      <Link href={`/products/${product.slug}`} className="flex flex-1 flex-col p-4">
+
+      <div className="absolute right-3 top-3 flex flex-col gap-2">
+        <QuickViewDialog product={product} />
+        <ProductShareButton product={product} />
+      </div>
+
+      <Link href={`/products/${product.slug}`} className="flex flex-1 flex-col p-4 pb-0">
         {product.brand && <p className="text-xs font-semibold uppercase tracking-wide text-primary">{product.brand}</p>}
         <h3 className="mt-1 font-heading text-base font-bold leading-snug text-foreground">{product.name}</h3>
         <p className="mt-1.5 flex-1 text-sm text-muted-foreground line-clamp-2">{product.shortDescription}</p>
-        <span className="mt-3 inline-flex w-fit items-center rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-          Request Quote
-        </span>
       </Link>
+
+      <div className="flex gap-2 p-4">
+        <Link
+          href={`/quote?product=${product.slug}`}
+          className={cn(buttonVariants({ size: "sm" }), "flex-1 rounded-full")}
+        >
+          Request Quote
+        </Link>
+        <a
+          href={buildWhatsAppLink(settings.whatsappNumber, buildWhatsAppQuoteMessage(product, absoluteProductUrl(product.slug)))}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent("whatsapp_quote_started", { product_slug: product.slug })}
+          className={cn(
+            buttonVariants({ variant: "outline", size: "sm" }),
+            "flex-1 rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+          )}
+        >
+          <MessageCircle className="size-3.5" fill="currentColor" strokeWidth={0} />
+          WhatsApp
+        </a>
+      </div>
     </div>
   );
 }

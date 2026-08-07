@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { ProductCard } from "@/components/products/product-card";
+import { ProductShareButton } from "@/components/products/product-share-button";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { getProductBySlug, getProducts } from "@/lib/data/catalog";
@@ -18,14 +19,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) return {};
 
+  const keywords = [product.name, product.category, product.brand, "Betalight Enterprises", "Kenya"].filter(
+    (v): v is string => Boolean(v)
+  );
+
   return {
     title: product.name,
     description: product.shortDescription,
+    keywords,
     alternates: { canonical: `/products/${product.slug}` },
+    // openGraph.images is intentionally omitted here — the sibling
+    // opengraph-image.tsx file is auto-detected by Next.js and takes
+    // priority over anything set manually.
     openGraph: {
       title: product.name,
       description: product.shortDescription,
-      images: [{ url: product.imagePath }],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.shortDescription,
     },
   };
 }
@@ -46,6 +60,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
         <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
           <Image src={product.imagePath} alt={product.name} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" priority />
+          <div className="absolute right-4 top-4">
+            <ProductShareButton
+              product={product}
+              className="flex size-11 items-center justify-center rounded-full bg-white/95 text-foreground shadow-lg transition-transform hover:scale-105"
+            />
+          </div>
         </div>
 
         <div>

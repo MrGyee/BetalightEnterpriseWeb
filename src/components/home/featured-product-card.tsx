@@ -2,37 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { Share2, MessageCircle } from "lucide-react";
-import { toast } from "sonner";
+import { MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { QuickViewDialog } from "@/components/products/quick-view-dialog";
+import { ProductShareButton } from "@/components/products/product-share-button";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { useSiteSettings } from "@/components/shared/site-settings-provider";
-import { siteConfig } from "@/lib/site-config";
+import { trackEvent } from "@/lib/analytics";
+import { absoluteProductUrl, buildWhatsAppQuoteMessage } from "@/lib/share";
 import { cn } from "@/lib/utils";
 import type { ProductRecord } from "@/lib/store/catalog.store";
 
 export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRecord; delay?: number }) {
   const settings = useSiteSettings();
-
-  async function handleShare(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    const url = `${siteConfig.url}/products/${product.slug}`;
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({ title: product.name, url });
-      } catch {
-        // user cancelled the native share sheet — no-op
-      }
-      return;
-    }
-    await navigator.clipboard.writeText(url);
-    toast.success("Product link copied.");
-  }
 
   return (
     <motion.div
@@ -58,14 +42,7 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
 
       <div className="absolute right-3 top-3 flex flex-col gap-2">
         <QuickViewDialog product={product} />
-        <button
-          type="button"
-          aria-label={`Share ${product.name}`}
-          onClick={handleShare}
-          className="flex size-9 items-center justify-center rounded-full bg-white/90 text-foreground shadow transition-transform hover:scale-105"
-        >
-          <Share2 className="size-4" />
-        </button>
+        <ProductShareButton product={product} />
       </div>
 
       <div className="flex flex-1 flex-col p-4">
@@ -83,9 +60,10 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
             Request Quote
           </Link>
           <a
-            href={buildWhatsAppLink(settings.whatsappNumber, `Hello, I'm interested in the ${product.name}.`)}
+            href={buildWhatsAppLink(settings.whatsappNumber, buildWhatsAppQuoteMessage(product, absoluteProductUrl(product.slug)))}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("whatsapp_quote_started", { product_slug: product.slug })}
             className={cn(
               buttonVariants({ variant: "outline", size: "sm" }),
               "flex-1 rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
