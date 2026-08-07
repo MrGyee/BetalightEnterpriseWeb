@@ -61,7 +61,10 @@ export function ProductCard({ product }: { product: ProductRecord }) {
           )}
         >
           <MessageCircle className="size-3.5" fill="currentColor" strokeWidth={0} />
-          WhatsApp
+          {/* Cards drop to ~162px wide in the 2-col mobile grid, which can't
+              fit the full label without clipping. */}
+          <span className="md:hidden">WhatsApp</span>
+          <span className="hidden md:inline">Order on WhatsApp</span>
         </a>
       </div>
     </div>

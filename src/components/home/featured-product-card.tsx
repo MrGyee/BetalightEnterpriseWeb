@@ -70,7 +70,7 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
             )}
           >
             <MessageCircle className="size-3.5" fill="currentColor" strokeWidth={0} />
-            WhatsApp
+            Order on WhatsApp
           </a>
         </div>
       </div>
