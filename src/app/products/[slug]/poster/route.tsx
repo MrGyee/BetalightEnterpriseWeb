@@ -84,8 +84,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
         <div style={{ display: "flex", justifyContent: "center", marginTop: 28, padding: "0 56px" }}>
           <div
             style={{
-              width: 620,
-              height: 620,
+              width: 780,
+              height: 780,
               borderRadius: 32,
               overflow: "hidden",
               display: "flex",
@@ -94,21 +94,21 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
           >
             {productImageUri && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={productImageUri} width={620} height={620} style={{ objectFit: "cover" }} alt="" />
+              <img src={productImageUri} width={780} height={780} style={{ objectFit: "cover" }} alt="" />
             )}
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "36px 72px 0", textAlign: "center" }}>
-          <span style={{ fontSize: 46, fontWeight: 800, color: "#111827", lineHeight: 1.15, display: "flex" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "40px 72px 0", textAlign: "center" }}>
+          <span style={{ fontSize: 54, fontWeight: 800, color: "#111827", lineHeight: 1.15, display: "flex" }}>
             {product.name}
           </span>
-          <span style={{ marginTop: 16, fontSize: 26, color: "#4B5563", lineHeight: 1.4, display: "flex" }}>
+          <span style={{ marginTop: 18, fontSize: 28, color: "#4B5563", lineHeight: 1.4, display: "flex" }}>
             {product.shortDescription}
           </span>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 32 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 36 }}>
           {features.map((feature) => (
             <span
               key={feature}
@@ -118,9 +118,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
                 gap: 8,
                 background: "#F0FDF4",
                 color: "#2E7D32",
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: 600,
-                padding: "10px 20px",
+                padding: "12px 22px",
                 borderRadius: 999,
               }}
             >
@@ -132,6 +132,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
           ))}
         </div>
 
+        {/* Soaks up leftover height so the CTA sits at the bottom for
+            products with shorter descriptions. */}
         <div style={{ display: "flex", flex: 1 }} />
 
         <div
@@ -151,18 +153,18 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
           </span>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", padding: "32px 0 40px" }}>
+        <div style={{ display: "flex", justifyContent: "center", padding: "36px 0 44px" }}>
           <div
             style={{
               display: "flex",
-              padding: 12,
+              padding: 14,
               background: "#ffffff",
               borderRadius: 16,
               border: "1px solid #E5E7EB",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrUri} width={160} height={160} alt="" />
+            <img src={qrUri} width={184} height={184} alt="" />
           </div>
         </div>
       </div>
