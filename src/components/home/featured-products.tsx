@@ -1,9 +1,25 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { ProductCard } from "@/components/products/product-card";
+import { FeaturedProductCard } from "@/components/home/featured-product-card";
+import { cn } from "@/lib/utils";
 import type { ProductRecord } from "@/lib/store/catalog.store";
 
 export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(products.map((p) => p.category.trim()))).sort();
+    return ["All", ...unique];
+  }, [products]);
+
+  const filtered = useMemo(
+    () => (activeCategory === "All" ? products : products.filter((p) => p.category.trim() === activeCategory)),
+    [products, activeCategory]
+  );
+
   if (products.length === 0) return null;
 
   return (
@@ -13,17 +29,43 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
           <div>
             <h2 className="font-heading text-3xl font-extrabold text-foreground sm:text-4xl">Featured Products</h2>
             <p className="mt-3 max-w-xl text-muted-foreground">
-              A selection of the genuine, in-stock products our customers ask for most.
+              Browse our most popular electrical, solar and plumbing products from trusted global brands.
             </p>
           </div>
-          <Link href="/products" className="inline-flex items-center gap-1.5 font-semibold text-primary">
-            View all products <ArrowRight className="size-4" />
+          <Link
+            href="/products"
+            className="inline-flex shrink-0 items-center gap-1.5 font-semibold text-primary transition-colors hover:text-primary/80"
+          >
+            View All Products <ArrowRight className="size-4" />
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+        {categories.length > 2 && (
+          <div className="mt-8 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveCategory(category)}
+                className={cn(
+                  "shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  activeCategory === category
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                )}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div
+          key={activeCategory}
+          className="mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+        >
+          {filtered.map((product, i) => (
+            <FeaturedProductCard key={product.slug} product={product} delay={(i % 4) * 0.08} />
           ))}
         </div>
       </div>

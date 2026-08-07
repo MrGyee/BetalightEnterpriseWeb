@@ -27,11 +27,11 @@ export default async function Home() {
   return (
     <>
       <Hero content={heroContent} slides={heroSlides} />
-      <SolutionsGrid />
       <FeaturedProducts products={featuredProducts} />
-      <Industries />
+      <SolutionsGrid />
       <WhyChooseUs />
       <ProjectsGallery projects={projects.slice(0, 6)} />
+      <Industries />
       <Testimonials testimonials={testimonials} />
       <FaqPreview faqs={faqs} />
       <CtaSection />
