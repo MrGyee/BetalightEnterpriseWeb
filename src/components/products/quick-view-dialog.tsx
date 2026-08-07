@@ -18,7 +18,7 @@ export function QuickViewDialog({ product }: { product: ProductRecord }) {
           <button
             type="button"
             aria-label={`Quick view ${product.name}`}
-            className="absolute right-3 top-3 flex size-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow transition-transform hover:scale-105"
+            className="flex size-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow transition-transform hover:scale-105"
           />
         }
       >

@@ -52,10 +52,10 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
         </Link>
         <p className="mt-1.5 line-clamp-1 text-sm text-muted-foreground">{product.shortDescription}</p>
 
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex flex-col gap-2">
           <Link
             href={`/quote?product=${product.slug}`}
-            className={cn(buttonVariants({ size: "sm" }), "flex-1 rounded-full")}
+            className={cn(buttonVariants({ size: "sm" }), "w-full rounded-full")}
           >
             Request Quote
           </Link>
@@ -66,7 +66,7 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
             onClick={() => trackEvent("whatsapp_quote_started", { product_slug: product.slug })}
             className={cn(
               buttonVariants({ variant: "outline", size: "sm" }),
-              "flex-1 rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+              "w-full rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
             )}
           >
             <MessageCircle className="size-3.5" fill="currentColor" strokeWidth={0} />

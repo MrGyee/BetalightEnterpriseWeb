@@ -43,10 +43,10 @@ export function ProductCard({ product }: { product: ProductRecord }) {
         <p className="mt-1.5 flex-1 text-sm text-muted-foreground line-clamp-2">{product.shortDescription}</p>
       </Link>
 
-      <div className="flex gap-2 p-4">
+      <div className="flex flex-col gap-2 p-4">
         <Link
           href={`/quote?product=${product.slug}`}
-          className={cn(buttonVariants({ size: "sm" }), "flex-1 rounded-full")}
+          className={cn(buttonVariants({ size: "sm" }), "w-full rounded-full")}
         >
           Request Quote
         </Link>
@@ -57,7 +57,7 @@ export function ProductCard({ product }: { product: ProductRecord }) {
           onClick={() => trackEvent("whatsapp_quote_started", { product_slug: product.slug })}
           className={cn(
             buttonVariants({ variant: "outline", size: "sm" }),
-            "flex-1 rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+            "w-full rounded-full border-[#25D366]/40 text-[#25D366] hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
           )}
         >
           <MessageCircle className="size-3.5" fill="currentColor" strokeWidth={0} />
