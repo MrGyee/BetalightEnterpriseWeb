@@ -63,7 +63,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="absolute right-4 top-4">
             <ProductShareButton
               product={product}
-              className="flex size-11 items-center justify-center rounded-full bg-white/95 text-foreground shadow-lg transition-transform hover:scale-105"
+              className="flex size-11 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform hover:scale-105"
             />
           </div>
         </div>

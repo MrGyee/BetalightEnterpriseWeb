@@ -42,7 +42,7 @@ export function ProductShareButton({ product, className }: { product: ProductRec
         type="button"
         aria-label={`Share ${product.name}`}
         onClick={handleClick}
-        className={className ?? "flex size-9 items-center justify-center rounded-full bg-white/90 text-foreground shadow transition-transform hover:scale-105"}
+        className={className ?? "flex size-9 items-center justify-center rounded-full bg-background/90 text-foreground shadow transition-transform hover:scale-105"}
       >
         <Share2 className="size-4" />
       </button>

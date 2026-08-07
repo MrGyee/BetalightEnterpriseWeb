@@ -35,7 +35,7 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 78vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
         />
-        <Badge className="absolute left-3 top-3 bg-white/95 text-foreground shadow" variant="secondary">
+        <Badge className="absolute left-3 top-3 bg-background/95 text-foreground shadow" variant="secondary">
           {product.category}
         </Badge>
       </Link>
