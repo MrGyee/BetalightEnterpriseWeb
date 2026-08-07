@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { getProductBySlug, getProducts } from "@/lib/data/catalog";
 import { productSchema } from "@/lib/seo/schema";
+import { absoluteProductUrl } from "@/lib/share";
 import { cn } from "@/lib/utils";
 
 export const revalidate = 300;
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: product.name,
       description: product.shortDescription,
+      url: absoluteProductUrl(product.slug),
       type: "website",
     },
     twitter: {
