@@ -145,3 +145,20 @@
     transform: translateX(-50%);
   }
 }
+
+/* Track for a seamless looping row. The markup must render the items twice so
+   one copy is exactly half the track width, which is what -50% wraps to.
+   Set --marquee-duration per instance to keep different rows at equal px/s. */
+.marquee-track {
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+}
+
+.group:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

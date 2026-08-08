@@ -110,7 +110,10 @@ export function SolutionsGrid() {
         {/* Each card carries its own trailing margin rather than the track using
             `gap`, so one copy's width is exactly 50% of the track and the
             -50% loop is seamless. */}
-        <div className="flex w-max animate-[marquee_60s_linear_infinite] items-stretch group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+        <div
+          className="marquee-track flex w-max items-stretch"
+          style={{ "--marquee-duration": "60s" } as React.CSSProperties}
+        >
           {solutions.map((item) => (
             <SolutionCard key={item.title} item={item} />
           ))}

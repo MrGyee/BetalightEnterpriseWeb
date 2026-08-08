@@ -29,8 +29,8 @@ export default async function Home() {
       <Hero content={heroContent} slides={heroSlides} />
       <FeaturedProducts products={featuredProducts} />
       <SolutionsGrid />
-      <WhyChooseUs />
       <ProjectsGallery projects={projects.slice(0, 6)} />
+      <WhyChooseUs />
       <Industries />
       <Testimonials testimonials={testimonials} />
       <FaqPreview faqs={faqs} />
