@@ -76,6 +76,24 @@ const solutions = [
   },
 ];
 
+function SolutionCard({ item }: { item: (typeof solutions)[number] }) {
+  return (
+    <Link
+      href={item.href}
+      className="group mr-5 flex w-[280px] shrink-0 flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg"
+    >
+      <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <item.icon className="size-6" />
+      </div>
+      <h3 className="mt-4 font-heading text-lg font-bold text-foreground">{item.title}</h3>
+      <p className="mt-2 flex-1 text-sm text-muted-foreground">{item.description}</p>
+      <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-transform group-hover:gap-2">
+        Learn More <ArrowRight className="size-4" />
+      </span>
+    </Link>
+  );
+}
+
 export function SolutionsGrid() {
   return (
     <section className="py-20 sm:py-24">
@@ -86,27 +104,25 @@ export function SolutionsGrid() {
             End-to-end electrical and solar solutions, from the products on the shelf to the crew on site.
           </p>
         </div>
+      </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-3">
+      <div className="group relative mt-10 overflow-hidden sm:mt-12">
+        {/* Each card carries its own trailing margin rather than the track using
+            `gap`, so one copy's width is exactly 50% of the track and the
+            -50% loop is seamless. */}
+        <div className="flex w-max animate-[marquee_60s_linear_infinite] items-stretch group-hover:[animation-play-state:paused] motion-reduce:animate-none">
           {solutions.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className="group flex flex-col rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg sm:p-6"
-            >
-              <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary sm:size-12">
-                <item.icon className="size-5 sm:size-6" />
-              </div>
-              <h3 className="mt-3 font-heading text-sm font-bold leading-snug text-foreground sm:mt-4 sm:text-lg">
-                {item.title}
-              </h3>
-              <p className="mt-2 hidden flex-1 text-sm text-muted-foreground sm:block">{item.description}</p>
-              <span className="mt-4 hidden items-center gap-1 text-sm font-semibold text-primary transition-transform group-hover:gap-2 sm:inline-flex">
-                Learn More <ArrowRight className="size-4" />
-              </span>
-            </Link>
+            <SolutionCard key={item.title} item={item} />
           ))}
+          <div className="flex items-stretch" aria-hidden>
+            {solutions.map((item) => (
+              <SolutionCard key={item.title} item={item} />
+            ))}
+          </div>
         </div>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-background to-transparent sm:w-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-background to-transparent sm:w-20" />
       </div>
     </section>
   );
