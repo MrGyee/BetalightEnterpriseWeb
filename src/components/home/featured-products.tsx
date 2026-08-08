@@ -1,14 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { FeaturedProductCard } from "@/components/home/featured-product-card";
 import { cn } from "@/lib/utils";
 import type { ProductRecord } from "@/lib/store/catalog.store";
 
 export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const categories = useMemo(() => {
     const unique = Array.from(new Set(products.map((p) => p.category.trim()))).sort();
@@ -20,7 +25,58 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
     [products, activeCategory]
   );
 
+  const syncScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Above the lg breakpoint the track is a grid, not a scroller — nothing to sync.
+    const scrollable = el.scrollWidth - el.clientWidth;
+    setCanScrollLeft(el.scrollLeft > 8);
+    setCanScrollRight(scrollable > 8 && el.scrollLeft < scrollable - 8);
+
+    let nearest = 0;
+    let shortestDistance = Infinity;
+    Array.from(el.children).forEach((child, index) => {
+      const distance = Math.abs((child as HTMLElement).offsetLeft - el.scrollLeft);
+      if (distance < shortestDistance) {
+        shortestDistance = distance;
+        nearest = index;
+      }
+    });
+    setActiveIndex(nearest);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setActiveIndex(0);
+    syncScrollState();
+    el.addEventListener("scroll", syncScrollState, { passive: true });
+    window.addEventListener("resize", syncScrollState);
+
+    // The first sync runs before card images have loaded, when the track is
+    // still narrower than its final width — without this the arrows and edge
+    // fades stay hidden until the user happens to scroll or resize.
+    const observer = new ResizeObserver(syncScrollState);
+    observer.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", syncScrollState);
+      window.removeEventListener("resize", syncScrollState);
+      observer.disconnect();
+    };
+  }, [syncScrollState, activeCategory, filtered.length]);
+
+  const scrollToIndex = useCallback((index: number) => {
+    const el = scrollRef.current;
+    const target = el?.children[index] as HTMLElement | undefined;
+    if (!el || !target) return;
+    el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+  }, []);
+
   if (products.length === 0) return null;
+
+  const showCarouselControls = filtered.length > 1;
 
   return (
     <section className="bg-secondary/30 py-20 sm:py-24">
@@ -60,14 +116,70 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
           </div>
         )}
 
-        <div
-          key={activeCategory}
-          className="mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden"
-        >
-          {filtered.map((product, i) => (
-            <FeaturedProductCard key={product.slug} product={product} delay={(i % 4) * 0.08} />
-          ))}
+        <div className="relative mt-8">
+          {/* Edge fades hinting at more content — carousel only, and only on the side that can still scroll */}
+          {showCarouselControls && canScrollLeft && (
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-secondary/80 to-transparent lg:hidden" />
+          )}
+          {showCarouselControls && canScrollRight && (
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-secondary/80 to-transparent lg:hidden" />
+          )}
+
+          {showCarouselControls && canScrollLeft && (
+            <button
+              type="button"
+              aria-label="Previous products"
+              onClick={() => scrollToIndex(Math.max(activeIndex - 1, 0))}
+              className="absolute left-1 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform hover:scale-105 lg:hidden"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+          )}
+          {showCarouselControls && canScrollRight && (
+            <button
+              type="button"
+              aria-label="Next products"
+              onClick={() => scrollToIndex(Math.min(activeIndex + 1, filtered.length - 1))}
+              className="absolute right-1 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform hover:scale-105 lg:hidden"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          )}
+
+          <div
+            ref={scrollRef}
+            key={activeCategory}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
+          >
+            {filtered.map((product, i) => (
+              <FeaturedProductCard key={product.slug} product={product} delay={(i % 4) * 0.08} />
+            ))}
+          </div>
         </div>
+
+        {showCarouselControls && (
+          <div className="mt-5 flex items-center justify-center gap-2 lg:hidden">
+            {filtered.map((product, i) => (
+              <button
+                key={product.slug}
+                type="button"
+                onClick={() => scrollToIndex(i)}
+                aria-label={`Go to product ${i + 1} of ${filtered.length}`}
+                aria-current={i === activeIndex ? "true" : undefined}
+                className="flex h-6 items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                <motion.span
+                  animate={{ width: i === activeIndex ? 24 : 8 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={cn(
+                    "block h-2 rounded-full",
+                    i === activeIndex ? "bg-primary" : "bg-[#D1D5DB] dark:bg-muted-foreground/40"
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

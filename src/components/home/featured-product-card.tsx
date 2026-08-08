@@ -25,7 +25,7 @@ export function FeaturedProductCard({ product, delay = 0 }: { product: ProductRe
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -6 }}
-      className="group relative flex w-[78vw] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl dark:bg-card sm:w-auto sm:shrink"
+      className="group relative flex w-[78vw] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl dark:bg-card sm:w-[44vw] lg:w-auto lg:shrink"
     >
       <Link href={`/products/${product.slug}`} className="relative aspect-square w-full overflow-hidden bg-muted">
         <Image
