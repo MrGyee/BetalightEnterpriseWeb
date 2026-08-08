@@ -4,10 +4,17 @@ import { notFound } from "next/navigation";
 import { CalendarDays } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { JsonLd } from "@/components/shared/json-ld";
-import { getBlogPostBySlug } from "@/lib/data/catalog";
+import { getBlogPostBySlug, getBlogPosts } from "@/lib/data/catalog";
 import { articleSchema } from "@/lib/seo/schema";
 
 export const revalidate = 300;
+
+// See the note in products/[slug] — pre-rendering avoids a Supabase round trip
+// on every post view. Posts published later still render on demand.
+export async function generateStaticParams() {
+  const posts = await getBlogPosts().catch(() => []);
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

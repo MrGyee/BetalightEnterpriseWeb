@@ -25,25 +25,35 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
     [products, activeCategory]
   );
 
+  // Scroll fires far more often than once a frame during a momentum swipe, and
+  // each run reads layout (scrollLeft/offsetLeft), so coalesce to one read per
+  // frame and hoist the reads out of the loop.
+  const frameRef = useRef<number | null>(null);
   const syncScrollState = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    if (frameRef.current !== null) return;
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      const el = scrollRef.current;
+      if (!el) return;
 
-    // Above the lg breakpoint the track is a grid, not a scroller — nothing to sync.
-    const scrollable = el.scrollWidth - el.clientWidth;
-    setCanScrollLeft(el.scrollLeft > 8);
-    setCanScrollRight(scrollable > 8 && el.scrollLeft < scrollable - 8);
+      // Above the lg breakpoint the track is a grid, not a scroller — nothing to sync.
+      const scrollLeft = el.scrollLeft;
+      const scrollable = el.scrollWidth - el.clientWidth;
+      setCanScrollLeft(scrollLeft > 8);
+      setCanScrollRight(scrollable > 8 && scrollLeft < scrollable - 8);
 
-    let nearest = 0;
-    let shortestDistance = Infinity;
-    Array.from(el.children).forEach((child, index) => {
-      const distance = Math.abs((child as HTMLElement).offsetLeft - el.scrollLeft);
-      if (distance < shortestDistance) {
-        shortestDistance = distance;
-        nearest = index;
+      let nearest = 0;
+      let shortestDistance = Infinity;
+      const cards = el.children;
+      for (let index = 0; index < cards.length; index++) {
+        const distance = Math.abs((cards[index] as HTMLElement).offsetLeft - scrollLeft);
+        if (distance < shortestDistance) {
+          shortestDistance = distance;
+          nearest = index;
+        }
       }
+      setActiveIndex(nearest);
     });
-    setActiveIndex(nearest);
   }, []);
 
   useEffect(() => {
@@ -64,6 +74,10 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
       el.removeEventListener("scroll", syncScrollState);
       window.removeEventListener("resize", syncScrollState);
       observer.disconnect();
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
     };
   }, [syncScrollState, activeCategory, filtered.length]);
 

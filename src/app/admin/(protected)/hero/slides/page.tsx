@@ -39,7 +39,7 @@ export default async function AdminHeroSlidesPage() {
               <TableRow key={slide.id}>
                 <TableCell>
                   <div className="relative size-12 overflow-hidden rounded-md border border-border">
-                    <Image src={slide.imagePath} alt={slide.alt} fill className="object-cover" />
+                    <Image src={slide.imagePath} alt={slide.alt} fill sizes="48px" className="object-cover" />
                   </div>
                 </TableCell>
                 <TableCell className="max-w-xs whitespace-normal font-medium text-foreground">{slide.title}</TableCell>

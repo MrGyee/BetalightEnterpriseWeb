@@ -29,7 +29,8 @@ export default async function OpengraphImage({ params }: { params: Promise<{ slu
   const { slug } = await params;
   const product = await getProductBySlug(slug).catch(() => null);
 
-  const logoUri = await toDataUri("/images/brand/betalight-logo.jpeg").catch(() => null);
+  // 160px variant — the full logo is 1600x1600/210KB and renders here at 56px.
+  const logoUri = await toDataUri("/images/brand/betalight-logo-mark.jpeg").catch(() => null);
   const productImageUri = product ? await toDataUri(product.imagePath).catch(() => null) : null;
 
   return new ImageResponse(

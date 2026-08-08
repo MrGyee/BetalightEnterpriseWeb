@@ -40,7 +40,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
   const productUrl = absoluteProductUrl(product.slug);
 
   const [logoUri, productImageUri, qrUri] = await Promise.all([
-    toDataUri("/images/brand/betalight-logo.jpeg"),
+    // 160px variant — the full logo is 1600x1600/210KB and renders here at 72px.
+    toDataUri("/images/brand/betalight-logo-mark.jpeg"),
     toDataUri(product.imagePath),
     QRCode.toDataURL(productUrl, { margin: 1, width: 240, color: { dark: "#1F2937", light: "#FFFFFF" } }),
   ]);
