@@ -87,24 +87,24 @@ export function SolutionsGrid() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-3">
           {solutions.map((item) => (
-            <div
+            <Link
               key={item.title}
-              className="group flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+              href={item.href}
+              className="group flex flex-col rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg sm:p-6"
             >
-              <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <item.icon className="size-6" />
+              <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary sm:size-12">
+                <item.icon className="size-5 sm:size-6" />
               </div>
-              <h3 className="mt-4 font-heading text-lg font-bold text-foreground">{item.title}</h3>
-              <p className="mt-2 flex-1 text-sm text-muted-foreground">{item.description}</p>
-              <Link
-                href={item.href}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-transform group-hover:gap-2"
-              >
+              <h3 className="mt-3 font-heading text-sm font-bold leading-snug text-foreground sm:mt-4 sm:text-lg">
+                {item.title}
+              </h3>
+              <p className="mt-2 hidden flex-1 text-sm text-muted-foreground sm:block">{item.description}</p>
+              <span className="mt-4 hidden items-center gap-1 text-sm font-semibold text-primary transition-transform group-hover:gap-2 sm:inline-flex">
                 Learn More <ArrowRight className="size-4" />
-              </Link>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </div>

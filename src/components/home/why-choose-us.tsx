@@ -19,14 +19,16 @@ export function WhyChooseUs() {
           <h2 className="font-heading text-3xl font-extrabold text-foreground sm:text-4xl">Why Choose Betalight</h2>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
           {reasons.map((reason) => (
-            <div key={reason.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-              <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div key={reason.title} className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
+              <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary sm:size-11">
                 <reason.icon className="size-5" />
               </div>
-              <h3 className="mt-4 font-heading text-base font-bold text-foreground">{reason.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{reason.description}</p>
+              <h3 className="mt-3 font-heading text-sm font-bold leading-snug text-foreground sm:mt-4 sm:text-base">
+                {reason.title}
+              </h3>
+              <p className="mt-1.5 hidden text-sm text-muted-foreground sm:block">{reason.description}</p>
             </div>
           ))}
         </div>
