@@ -12,6 +12,7 @@ import {
   ClipboardCheck,
   ArrowRight,
 } from "lucide-react";
+import { Marquee } from "@/components/shared/marquee";
 
 const solutions = [
   {
@@ -106,26 +107,13 @@ export function SolutionsGrid() {
         </div>
       </div>
 
-      <div className="group relative mt-10 overflow-hidden sm:mt-12">
-        {/* Each card carries its own trailing margin rather than the track using
-            `gap`, so one copy's width is exactly 50% of the track and the
-            -50% loop is seamless. */}
-        <div
-          className="marquee-track flex w-max items-stretch"
-          style={{ "--marquee-duration": "60s" } as React.CSSProperties}
-        >
+      <div className="mt-10 sm:mt-12">
+        {/* 10 cards x 300px = 3000px per copy, at the page's 50px/s. */}
+        <Marquee durationSeconds={60}>
           {solutions.map((item) => (
             <SolutionCard key={item.title} item={item} />
           ))}
-          <div className="flex items-stretch" aria-hidden>
-            {solutions.map((item) => (
-              <SolutionCard key={item.title} item={item} />
-            ))}
-          </div>
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-background to-transparent sm:w-20" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-background to-transparent sm:w-20" />
+        </Marquee>
       </div>
     </section>
   );

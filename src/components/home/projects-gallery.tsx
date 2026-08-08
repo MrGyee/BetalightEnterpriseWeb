@@ -39,7 +39,7 @@ export function ProjectsGallery({ projects }: { projects: ProjectRecord[] }) {
           {/* Swipe carousel below lg with uniform cards; masonry on desktop. */}
           <div
             ref={scrollRef}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] lg:block lg:columns-3 lg:gap-5 lg:overflow-visible lg:pb-0 lg:[&>*]:mb-5 lg:[&>*]:break-inside-avoid [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden pb-4 [scrollbar-width:none] lg:block lg:columns-3 lg:gap-5 lg:overflow-visible lg:pb-0 lg:[&>*]:mb-5 lg:[&>*]:break-inside-avoid [&::-webkit-scrollbar]:hidden"
           >
             {projects.map((project) => (
               <Link

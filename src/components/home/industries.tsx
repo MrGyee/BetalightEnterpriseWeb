@@ -10,6 +10,7 @@ import {
   Sprout,
   Cog,
 } from "lucide-react";
+import { Marquee } from "@/components/shared/marquee";
 
 const industries = [
   { icon: Home, name: "Residential" },
@@ -35,11 +36,15 @@ export function Industries() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      </div>
+
+      <div className="mt-10 sm:mt-12">
+        {/* 10 cards x 180px = 1800px per copy, at the page's 50px/s. */}
+        <Marquee durationSeconds={36}>
           {industries.map((industry) => (
             <div
               key={industry.name}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+              className="mr-5 flex w-[160px] shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card p-6 text-center shadow-sm"
             >
               <div className="flex size-12 items-center justify-center rounded-full bg-green/10 text-green">
                 <industry.icon className="size-6" />
@@ -47,7 +52,7 @@ export function Industries() {
               <p className="text-sm font-semibold text-foreground">{industry.name}</p>
             </div>
           ))}
-        </div>
+        </Marquee>
       </div>
     </section>
   );

@@ -82,7 +82,11 @@ export function FeaturedProducts({ products }: { products: ProductRecord[] }) {
           <div
             ref={scrollRef}
             key={activeCategory}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
+            // overflow-y must be pinned: `overflow-x: auto` alone computes
+            // overflow-y to `auto`, and the cards' entrance transform makes the
+            // track a few px vertically scrollable — enough that a downward
+            // swipe scrolls the track instead of the page.
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
           >
             {filtered.map((product, i) => (
               <FeaturedProductCard key={product.slug} product={product} delay={(i % 4) * 0.08} />

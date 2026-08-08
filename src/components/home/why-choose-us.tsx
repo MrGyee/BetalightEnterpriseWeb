@@ -1,4 +1,5 @@
 import { BadgeCheck, Gem, Wallet, Timer, MapPinned, HeadphonesIcon, Leaf, ShieldCheck } from "lucide-react";
+import { Marquee } from "@/components/shared/marquee";
 
 const reasons = [
   { icon: BadgeCheck, title: "Certified Professionals", description: "Trained electricians and technicians on every job." },
@@ -32,34 +33,13 @@ export function WhyChooseUs() {
         </div>
       </div>
 
-      <div className="group relative mt-10 overflow-hidden sm:mt-12">
-        {/* Each card carries its own trailing margin rather than the track using
-            `gap`, so one copy is exactly 50% of the track and the -50% loop is
-            seamless. 48s keeps this at the same px/s as the Solutions row. */}
-        <div
-          className="marquee-track flex w-max items-stretch"
-          style={{ "--marquee-duration": "48s" } as React.CSSProperties}
-        >
+      <div className="mt-10 sm:mt-12">
+        {/* 8 cards x 300px = 2400px per copy, at the page's 50px/s. */}
+        <Marquee durationSeconds={48} tinted>
           {reasons.map((reason) => (
             <ReasonCard key={reason.title} reason={reason} />
           ))}
-          <div className="flex items-stretch" aria-hidden>
-            {reasons.map((reason) => (
-              <ReasonCard key={reason.title} reason={reason} />
-            ))}
-          </div>
-        </div>
-
-        {/* Two stacked layers so the fade matches this section's tinted
-            background (opaque base + the same 30% secondary wash). */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 sm:w-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-background to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 to-transparent" />
-        </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 sm:w-20">
-          <div className="absolute inset-0 bg-gradient-to-l from-background to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-l from-secondary/30 to-transparent" />
-        </div>
+        </Marquee>
       </div>
     </section>
   );
