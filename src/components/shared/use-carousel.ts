@@ -69,11 +69,14 @@ export function useCarousel(itemCount: number, resetKey: string | number = "") {
     };
   }, [sync, resetKey, itemCount]);
 
-  const scrollToIndex = useCallback((index: number) => {
+  // `behavior` is worth overriding when the jump isn't to a neighbour — looping
+  // from the last item back to the first would otherwise smooth-scroll the
+  // whole track, sweeping past everything in between.
+  const scrollToIndex = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
     const el = scrollRef.current;
     const target = el?.children[index] as HTMLElement | undefined;
     if (!el || !target) return;
-    el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+    el.scrollTo({ left: target.offsetLeft, behavior });
   }, []);
 
   return { scrollRef, activeIndex, canScrollLeft, canScrollRight, scrollToIndex };

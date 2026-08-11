@@ -51,7 +51,12 @@ function Gallery({ project, photos }: { project: ProjectRecord; photos: string[]
   useEffect(() => {
     if (!isPlaying) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setTimeout(() => scrollToIndex((activeIndex + 1) % photos.length), 4000);
+    const id = setTimeout(() => {
+      const next = (activeIndex + 1) % photos.length;
+      // Sliding forward one photo reads as a transition; sliding all the way
+      // back to the first reads as a glitch, so wrap instantly instead.
+      scrollToIndex(next, next === 0 ? "auto" : "smooth");
+    }, 4000);
     return () => clearTimeout(id);
   }, [isPlaying, activeIndex, photos.length, scrollToIndex]);
 
