@@ -23,7 +23,9 @@ export function ProjectCardPhotos({ project }: { project: ProjectRecord }) {
   useEffect(() => {
     if (photos.length < 2 || !inView) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % photos.length), 3500);
+    // Slow on purpose: this is ambient, playing unprompted behind whatever the
+    // visitor is actually reading, so it should register as barely moving.
+    const id = setInterval(() => setIndex((i) => (i + 1) % photos.length), 7000);
     return () => clearInterval(id);
   }, [photos.length, inView]);
 
@@ -36,7 +38,7 @@ export function ProjectCardPhotos({ project }: { project: ProjectRecord }) {
         height={1000}
         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
         className={cn(
-          "h-auto w-full object-cover transition-opacity duration-700",
+          "h-auto w-full object-cover transition-opacity duration-1000",
           index === 0 ? "opacity-100" : "opacity-0"
         )}
       />
@@ -49,7 +51,7 @@ export function ProjectCardPhotos({ project }: { project: ProjectRecord }) {
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className={cn(
-            "absolute inset-0 object-cover transition-opacity duration-700",
+            "absolute inset-0 object-cover transition-opacity duration-1000",
             index === i + 1 ? "opacity-100" : "opacity-0"
           )}
         />
