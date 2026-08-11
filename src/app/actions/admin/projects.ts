@@ -32,6 +32,7 @@ export async function createProjectAction(values: ProjectAdminValues): Promise<A
     description: parsed.data.description,
     location: parsed.data.location,
     imagePath: parsed.data.imagePath,
+    gallery: parsed.data.gallery.filter(Boolean),
     completedDate: parsed.data.completedDate || null,
   });
   revalidateProjectPaths(parsed.data.slug);
@@ -54,6 +55,7 @@ export async function updateProjectAction(slug: string, values: ProjectAdminValu
     description: parsed.data.description,
     location: parsed.data.location,
     imagePath: parsed.data.imagePath,
+    gallery: parsed.data.gallery.filter(Boolean),
     completedDate: parsed.data.completedDate || null,
   });
   revalidateProjectPaths(slug);

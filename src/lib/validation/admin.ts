@@ -32,7 +32,11 @@ export const projectAdminSchema = z.object({
   category: z.string().min(2, "Category is required."),
   description: z.string().min(5, "Description is required."),
   location: z.string().min(2, "Location is required."),
-  imagePath: z.string().min(1, "Image is required."),
+  imagePath: z.string().min(1, "Cover image is required."),
+  // Not `.default([])` — that makes the schema's input and output types differ,
+  // which breaks useForm<ProjectAdminValues>({ resolver: zodResolver(...) }).
+  // The form always supplies an array, so a plain required array is correct.
+  gallery: z.array(z.string()),
   completedDate: z.string().optional().or(z.literal("")),
 });
 export type ProjectAdminValues = z.infer<typeof projectAdminSchema>;

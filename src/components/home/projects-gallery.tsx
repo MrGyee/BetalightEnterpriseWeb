@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, Images } from "lucide-react";
 import { CarouselOverlays, CarouselDots } from "@/components/shared/carousel-controls";
 import { useCarousel } from "@/components/shared/use-carousel";
 import type { ProjectRecord } from "@/lib/store/catalog.store";
@@ -57,6 +57,11 @@ export function ProjectsGallery({ projects }: { projects: ProjectRecord[] }) {
                     className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-105 lg:relative lg:h-auto"
                   />
                 </div>
+                {project.gallery.length > 0 && (
+                  <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold text-white">
+                    <Images className="size-3.5" />+{project.gallery.length}
+                  </span>
+                )}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5">
                   <span className="inline-block rounded-full bg-primary/90 px-2.5 py-1 text-xs font-semibold text-white">
                     {project.category}

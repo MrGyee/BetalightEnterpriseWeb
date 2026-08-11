@@ -4,19 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Upload, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { uploadFile } from "@/components/admin/upload-file";
 import { cn } from "@/lib/utils";
-
-async function uploadFile(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append("file", file);
-  const res = await fetch("/api/upload", { method: "POST", body: formData });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? "Upload failed");
-  }
-  const body = (await res.json()) as { url: string };
-  return body.url;
-}
 
 export function ImageUploadField({ label, value, onChange }: { label: string; value: string; onChange: (url: string) => void }) {
   const inputRef = useRef<HTMLInputElement>(null);

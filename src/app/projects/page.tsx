@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { MapPin, Calendar } from "lucide-react";
+import { MapPin, Calendar, Images } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { ProjectLightbox } from "@/components/projects/project-lightbox";
 import { getProjects } from "@/lib/data/catalog";
 
 export const revalidate = 300;
@@ -30,9 +31,24 @@ export default async function ProjectsPage() {
         <div className="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
           {projects.map((project) => (
             <div key={project.slug} id={project.slug} className="scroll-mt-24 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-              <div className="relative w-full">
-                <Image src={project.imagePath} alt={project.title} width={800} height={1000} className="h-auto w-full object-cover" />
-              </div>
+              <ProjectLightbox project={project}>
+                <div className="group relative w-full">
+                  <Image
+                    src={project.imagePath}
+                    alt={project.title}
+                    width={800}
+                    height={1000}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  {project.gallery.length > 0 && (
+                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold text-white">
+                      <Images className="size-3.5" />+{project.gallery.length} photo
+                      {project.gallery.length === 1 ? "" : "s"}
+                    </span>
+                  )}
+                </div>
+              </ProjectLightbox>
               <div className="p-5">
                 <span className="inline-block rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
                   {project.category}

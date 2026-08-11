@@ -19,6 +19,8 @@ export interface ProjectRecord {
   description: string;
   location: string;
   imagePath: string;
+  /** Extra photos beyond the cover, in display order. */
+  gallery: string[];
   completedDate: string | null;
 }
 
@@ -69,6 +71,7 @@ interface ProjectRow {
   description: string;
   location: string;
   image_path: string;
+  gallery: string[] | null;
   completed_date: string | null;
 }
 
@@ -119,6 +122,7 @@ const mapProject = (row: ProjectRow): ProjectRecord => ({
   description: row.description,
   location: row.location,
   imagePath: row.image_path,
+  gallery: row.gallery ?? [],
   completedDate: row.completed_date,
 });
 
@@ -172,6 +176,7 @@ function projectToRow(p: ProjectRecord) {
     description: p.description,
     location: p.location,
     image_path: p.imagePath,
+    gallery: p.gallery,
     completed_date: p.completedDate,
   };
 }

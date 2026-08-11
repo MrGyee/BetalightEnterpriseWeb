@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
+import { MultiImageUploadField } from "@/components/admin/multi-image-upload-field";
 
 export function ProjectForm({ project }: { project?: ProjectRecord }) {
   const router = useRouter();
@@ -26,12 +27,14 @@ export function ProjectForm({ project }: { project?: ProjectRecord }) {
           description: project.description,
           location: project.location,
           imagePath: project.imagePath,
+          gallery: project.gallery,
           completedDate: project.completedDate ?? "",
         }
-      : { slug: "", title: "", category: "", description: "", location: "", imagePath: "", completedDate: "" },
+      : { slug: "", title: "", category: "", description: "", location: "", imagePath: "", gallery: [], completedDate: "" },
   });
 
   const imagePath = watch("imagePath");
+  const gallery = watch("gallery");
 
   async function onSubmit(values: ProjectAdminValues) {
     setIsSubmitting(true);
@@ -67,7 +70,13 @@ export function ProjectForm({ project }: { project?: ProjectRecord }) {
       <FormField label="Description" htmlFor="description">
         <Textarea id="description" rows={4} {...register("description")} />
       </FormField>
-      <ImageUploadField label="Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <ImageUploadField label="Cover Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <MultiImageUploadField
+        label="More Photos"
+        hint="Shown in the gallery when someone opens this project. The cover above is always first."
+        value={gallery ?? []}
+        onChange={(v) => setValue("gallery", v)}
+      />
       <FormField label="Completed Date (optional)" htmlFor="completedDate">
         <Input id="completedDate" type="date" {...register("completedDate")} />
       </FormField>

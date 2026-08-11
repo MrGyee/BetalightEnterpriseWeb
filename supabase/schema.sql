@@ -67,9 +67,13 @@ create table if not exists projects (
   description text not null,
   location text not null,
   image_path text not null,
+  -- Extra photos beyond the cover, in display order.
+  gallery jsonb not null default '[]'::jsonb,
   completed_date date
 );
 alter table projects enable row level security;
+-- Migration for databases created before gallery existed:
+-- alter table projects add column if not exists gallery jsonb not null default '[]'::jsonb;
 
 create table if not exists blog_posts (
   id uuid primary key default gen_random_uuid(),
