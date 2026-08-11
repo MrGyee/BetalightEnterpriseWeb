@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { MapPin, ArrowRight, Images } from "lucide-react";
 import { CarouselOverlays, CarouselDots } from "@/components/shared/carousel-controls";
+import { ProjectCardPhotos } from "@/components/projects/project-card-photos";
 import { useCarousel } from "@/components/shared/use-carousel";
 import type { ProjectRecord } from "@/lib/store/catalog.store";
 
@@ -47,16 +47,15 @@ export function ProjectsGallery({ projects }: { projects: ProjectRecord[] }) {
                 href={`/projects#${project.slug}`}
                 className="group relative block w-[78vw] shrink-0 snap-center overflow-hidden rounded-2xl border border-border bg-card shadow-sm sm:w-[44vw] lg:w-auto lg:shrink"
               >
-                <div className="relative aspect-[4/5] w-full lg:aspect-auto">
-                  <Image
-                    src={project.imagePath}
-                    alt={project.title}
-                    width={800}
-                    height={1000}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 44vw, 78vw"
-                    className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-105 lg:relative lg:h-auto"
-                  />
-                </div>
+                <ProjectCardPhotos
+                  project={project}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 44vw, 78vw"
+                  // Uniform cards in the swipe track, natural heights in the
+                  // desktop masonry — so the first photo only rejoins the
+                  // layout flow at lg.
+                  className="aspect-[4/5] lg:aspect-auto"
+                  firstClassName="absolute inset-0 size-full lg:relative lg:h-auto lg:w-full"
+                />
                 {project.gallery.length > 0 && (
                   <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold text-white">
                     <Images className="size-3.5" />+{project.gallery.length}

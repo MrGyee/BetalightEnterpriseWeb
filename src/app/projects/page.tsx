@@ -33,7 +33,10 @@ export default async function ProjectsPage() {
             <div key={project.slug} id={project.slug} className="scroll-mt-24 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <ProjectLightbox project={project}>
                 <div className="relative w-full">
-                  <ProjectCardPhotos project={project} />
+                  <ProjectCardPhotos
+                    project={project}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  />
                   {project.gallery.length > 0 && (
                     <span className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold text-white">
                       <Images className="size-3.5" />+{project.gallery.length} photo
