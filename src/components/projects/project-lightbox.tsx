@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { CarouselDots } from "@/components/shared/carousel-controls";
@@ -10,17 +10,50 @@ import type { ProjectRecord } from "@/lib/store/catalog.store";
 
 function Gallery({ project, photos }: { project: ProjectRecord; photos: string[] }) {
   const { scrollRef, activeIndex, canScrollLeft, canScrollRight, scrollToIndex } = useCarousel(photos.length);
+  const [isPlaying, setIsPlaying] = useState(photos.length > 1);
 
-  // A lightbox is a focused view, so it never advances on its own — but the
-  // keys people reach for in one still need to work.
+  // Any deliberate move hands control over for good. Someone who reached for a
+  // photo is studying it, and having it slide away under them is the whole
+  // reason auto-advancing galleries annoy people.
+  const goTo = useCallback(
+    (index: number) => {
+      setIsPlaying(false);
+      scrollToIndex(index);
+    },
+    [scrollToIndex]
+  );
+
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if (event.key === "ArrowLeft") scrollToIndex(Math.max(activeIndex - 1, 0));
-      if (event.key === "ArrowRight") scrollToIndex(Math.min(activeIndex + 1, photos.length - 1));
+      if (event.key === "ArrowLeft") goTo(Math.max(activeIndex - 1, 0));
+      if (event.key === "ArrowRight") goTo(Math.min(activeIndex + 1, photos.length - 1));
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [activeIndex, photos.length, scrollToIndex]);
+  }, [activeIndex, photos.length, goTo]);
+
+  // A swipe or a scroll counts as taking over too, and neither goes through
+  // goTo — the track scrolls natively.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const stop = () => setIsPlaying(false);
+    el.addEventListener("pointerdown", stop);
+    el.addEventListener("wheel", stop, { passive: true });
+    return () => {
+      el.removeEventListener("pointerdown", stop);
+      el.removeEventListener("wheel", stop);
+    };
+  }, [scrollRef]);
+
+  // Keyed on activeIndex, so each photo gets its own full dwell time rather
+  // than sharing one repeating clock.
+  useEffect(() => {
+    if (!isPlaying) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setTimeout(() => scrollToIndex((activeIndex + 1) % photos.length), 4000);
+    return () => clearTimeout(id);
+  }, [isPlaying, activeIndex, photos.length, scrollToIndex]);
 
   return (
     <>
@@ -46,7 +79,7 @@ function Gallery({ project, photos }: { project: ProjectRecord; photos: string[]
           <button
             type="button"
             aria-label="Previous photo"
-            onClick={() => scrollToIndex(Math.max(activeIndex - 1, 0))}
+            onClick={() => goTo(Math.max(activeIndex - 1, 0))}
             className="absolute left-2 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg"
           >
             <ChevronLeft className="size-5" />
@@ -56,7 +89,7 @@ function Gallery({ project, photos }: { project: ProjectRecord; photos: string[]
           <button
             type="button"
             aria-label="Next photo"
-            onClick={() => scrollToIndex(Math.min(activeIndex + 1, photos.length - 1))}
+            onClick={() => goTo(Math.min(activeIndex + 1, photos.length - 1))}
             className="absolute right-2 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg"
           >
             <ChevronRight className="size-5" />
@@ -69,7 +102,7 @@ function Gallery({ project, photos }: { project: ProjectRecord; photos: string[]
           Photo {activeIndex + 1} of {photos.length}
         </p>
         {/* CarouselDots hides itself at lg, where the arrows above still work. */}
-        <CarouselDots count={photos.length} activeIndex={activeIndex} onSelect={scrollToIndex} label="photo" />
+        <CarouselDots count={photos.length} activeIndex={activeIndex} onSelect={goTo} label="photo" />
       </div>
     </>
   );
