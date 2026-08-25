@@ -121,6 +121,12 @@ export default async function OpengraphImage({ params }: { params: Promise<{ slu
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      // This PNG exists only for social-card crawlers (WhatsApp, Facebook,
+      // LinkedIn) to fetch via og:image — it must stay public and un-auth'd,
+      // but Google indexing it as a standalone result is noise, not a page.
+      headers: { "X-Robots-Tag": "noindex" },
+    }
   );
 }

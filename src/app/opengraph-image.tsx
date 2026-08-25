@@ -35,6 +35,11 @@ export default function OpengraphImage() {
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      // Public for social-card crawlers, but not a page — keep it out of
+      // Google's index rather than let it surface as a bare image result.
+      headers: { "X-Robots-Tag": "noindex" },
+    }
   );
 }
