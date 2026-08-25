@@ -18,19 +18,28 @@ export function ProductCatalog({ products }: { products: ProductRecord[] }) {
     return unique;
   }, [products]);
 
+  const brands = useMemo(() => {
+    // Trimmed so a stray leading/trailing space typed in admin can't split one
+    // brand into two chips — brand has no dropdown, so it's free text.
+    const unique = Array.from(new Set(products.map((p) => p.brand?.trim()).filter((b): b is string => !!b)));
+    return unique.sort((a, b) => a.localeCompare(b));
+  }, [products]);
+
   const [activeCategory, setActiveCategory] = useState<string | null>(
     initialCategory ? (categories.find((c) => categoryToSlug(c) === initialCategory) ?? null) : null
   );
+  const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
   const filtered = products.filter((p) => {
     const matchesCategory = !activeCategory || p.category === activeCategory;
+    const matchesBrand = !activeBrand || p.brand?.trim() === activeBrand;
     const matchesQuery =
       !query ||
       p.name.toLowerCase().includes(query.toLowerCase()) ||
       p.shortDescription.toLowerCase().includes(query.toLowerCase()) ||
       (p.brand ?? "").toLowerCase().includes(query.toLowerCase());
-    return matchesCategory && matchesQuery;
+    return matchesCategory && matchesBrand && matchesQuery;
   });
 
   return (
@@ -67,6 +76,29 @@ export function ProductCatalog({ products }: { products: ProductRecord[] }) {
           </Badge>
         ))}
       </div>
+
+      {brands.length > 1 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Brand:</span>
+          <Badge
+            onClick={() => setActiveBrand(null)}
+            variant={activeBrand === null ? "default" : "outline"}
+            className="cursor-pointer select-none px-3 py-1 text-xs"
+          >
+            All Brands
+          </Badge>
+          {brands.map((brand) => (
+            <Badge
+              key={brand}
+              onClick={() => setActiveBrand(brand)}
+              variant={activeBrand === brand ? "default" : "outline"}
+              className="cursor-pointer select-none px-3 py-1 text-xs"
+            >
+              {brand}
+            </Badge>
+          ))}
+        </div>
+      )}
 
       {filtered.length === 0 ? (
         <p className="mt-16 text-center text-muted-foreground">No products match your search. Try a different keyword.</p>
