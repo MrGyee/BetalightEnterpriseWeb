@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
+import { MultiImageUploadField } from "@/components/admin/multi-image-upload-field";
 import { productCategories } from "@/lib/nav";
 
 export function ProductForm({ product }: { product?: ProductRecord }) {
@@ -30,6 +31,7 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
           shortDescription: product.shortDescription,
           description: product.description,
           imagePath: product.imagePath,
+          gallery: product.gallery,
           specsJson: JSON.stringify(product.specs, null, 2),
           featured: product.featured,
         }
@@ -41,12 +43,14 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
           shortDescription: "",
           description: "",
           imagePath: "",
+          gallery: [],
           specsJson: "{}",
           featured: false,
         },
   });
 
   const imagePath = watch("imagePath");
+  const gallery = watch("gallery");
   const featured = watch("featured");
   const category = watch("category");
 
@@ -98,7 +102,13 @@ export function ProductForm({ product }: { product?: ProductRecord }) {
       <FormField label="Full Description" htmlFor="description">
         <Textarea id="description" rows={5} {...register("description")} />
       </FormField>
-      <ImageUploadField label="Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <ImageUploadField label="Cover Image" value={imagePath} onChange={(v) => setValue("imagePath", v)} />
+      <MultiImageUploadField
+        label="More Photos"
+        hint="Shown in the carousel on the product page. The cover above is always first."
+        value={gallery ?? []}
+        onChange={(v) => setValue("gallery", v)}
+      />
       <FormField label="Specs (JSON key/value pairs)" htmlFor="specsJson">
         <Textarea id="specsJson" rows={6} className="font-mono text-xs" {...register("specsJson")} />
       </FormField>

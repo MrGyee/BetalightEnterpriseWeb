@@ -1,15 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 import { Eye } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { buttonVariants } from "@/components/ui/button";
+import { ProductImageCarousel } from "@/components/products/product-image-carousel";
 import { cn } from "@/lib/utils";
 import type { ProductRecord } from "@/lib/store/catalog.store";
 
 export function QuickViewDialog({ product }: { product: ProductRecord }) {
+  const photos = [product.imagePath, ...product.gallery];
+
   return (
     <Dialog>
       <DialogTrigger
@@ -27,9 +29,7 @@ export function QuickViewDialog({ product }: { product: ProductRecord }) {
       <DialogContent className="sm:max-w-2xl">
         <DialogTitle className="sr-only">{product.name}</DialogTitle>
         <div className="grid gap-6 sm:grid-cols-2">
-          <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
-            <Image src={product.imagePath} alt={product.name} fill sizes="400px" className="object-cover" />
-          </div>
+          <ProductImageCarousel photos={photos} alt={product.name} sizes="400px" className="rounded-xl" />
           <div className="flex flex-col">
             {product.brand && <p className="text-xs font-semibold uppercase tracking-wide text-primary">{product.brand}</p>}
             <h3 className="mt-1 font-heading text-xl font-bold text-foreground">{product.name}</h3>

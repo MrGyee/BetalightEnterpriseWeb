@@ -11,6 +11,10 @@ export const productAdminSchema = z.object({
   shortDescription: z.string().min(5, "Short description is required."),
   description: z.string().min(5, "Description is required."),
   imagePath: z.string().min(1, "Image is required."),
+  // Not `.default([])` — that makes the schema's input and output types differ,
+  // which breaks useForm<ProductAdminValues>({ resolver: zodResolver(...) }).
+  // The form always supplies an array, so a plain required array is correct.
+  gallery: z.array(z.string()),
   specsJson: z.string().refine((val) => {
     try {
       const parsed = JSON.parse(val || "{}");

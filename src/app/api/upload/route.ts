@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { v2 as cloudinary } from "cloudinary";
 import { decrypt, SESSION_COOKIE } from "@/lib/auth/session";
+import { MAX_IMAGE_UPLOAD_BYTES, MAX_IMAGE_UPLOAD_MB } from "@/lib/upload";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -31,6 +32,9 @@ export async function POST(request: Request) {
   }
   if (!file.type.startsWith("image/")) {
     return NextResponse.json({ error: "File must be an image" }, { status: 400 });
+  }
+  if (file.size > MAX_IMAGE_UPLOAD_BYTES) {
+    return NextResponse.json({ error: `Image must be under ${MAX_IMAGE_UPLOAD_MB}MB` }, { status: 413 });
   }
 
   const arrayBuffer = await file.arrayBuffer();

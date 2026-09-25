@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { Images, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { QuickViewDialog } from "@/components/products/quick-view-dialog";
@@ -30,6 +30,11 @@ export function ProductCard({ product }: { product: ProductRecord }) {
         <Badge className="absolute left-3 top-3 bg-background/90 text-foreground shadow" variant="secondary">
           {product.category}
         </Badge>
+        {product.gallery.length > 0 && (
+          <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold text-white">
+            <Images className="size-3.5" />+{product.gallery.length}
+          </span>
+        )}
       </Link>
 
       <div className="absolute right-3 top-3 flex flex-col gap-2">
