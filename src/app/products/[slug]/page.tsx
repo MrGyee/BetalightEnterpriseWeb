@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { ProductCard } from "@/components/products/product-card";
+import { ProductImageCarousel } from "@/components/products/product-image-carousel";
 import { ProductShareButton } from "@/components/products/product-share-button";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
@@ -62,6 +62,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   const allProducts = await getProducts().catch(() => []);
   const related = allProducts.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 4);
+  const photos = [product.imagePath, ...product.gallery];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -69,15 +70,20 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <Breadcrumbs items={[{ name: "Products", url: "/products" }, { name: product.name, url: `/products/${product.slug}` }]} />
 
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-          <Image src={product.imagePath} alt={product.name} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" priority />
-          <div className="absolute right-4 top-4">
-            <ProductShareButton
-              product={product}
-              className="flex size-11 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform hover:scale-105"
-            />
-          </div>
-        </div>
+        <ProductImageCarousel
+          photos={photos}
+          alt={product.name}
+          sizes="(min-width: 1024px) 45vw, 100vw"
+          priority
+          overlay={
+            <div className="absolute right-4 top-4">
+              <ProductShareButton
+                product={product}
+                className="flex size-11 items-center justify-center rounded-full bg-background/95 text-foreground shadow-lg transition-transform hover:scale-105"
+              />
+            </div>
+          }
+        />
 
         <div>
           <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">

@@ -8,6 +8,8 @@ export interface ProductRecord {
   shortDescription: string;
   description: string;
   imagePath: string;
+  /** Extra photos beyond the cover, in display order. */
+  gallery: string[];
   specs: Record<string, string>;
   featured: boolean;
 }
@@ -60,6 +62,7 @@ interface ProductRow {
   short_description: string;
   description: string;
   image_path: string;
+  gallery: string[] | null;
   specs: Record<string, string>;
   featured: boolean;
 }
@@ -111,6 +114,7 @@ const mapProduct = (row: ProductRow): ProductRecord => ({
   shortDescription: row.short_description,
   description: row.description,
   imagePath: row.image_path,
+  gallery: row.gallery ?? [],
   specs: row.specs ?? {},
   featured: row.featured,
 });
@@ -163,6 +167,7 @@ function productToRow(p: Omit<ProductRecord, "slug"> & { slug: string }) {
     short_description: p.shortDescription,
     description: p.description,
     image_path: p.imagePath,
+    gallery: p.gallery,
     specs: p.specs,
     featured: p.featured,
   };

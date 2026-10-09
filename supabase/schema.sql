@@ -53,10 +53,14 @@ create table if not exists products (
   short_description text not null,
   description text not null,
   image_path text not null,
+  -- Extra photos beyond the cover, in display order.
+  gallery jsonb not null default '[]'::jsonb,
   specs jsonb not null default '{}'::jsonb,
   featured boolean not null default false
 );
 alter table products enable row level security;
+-- Migration for databases created before gallery existed:
+-- alter table products add column if not exists gallery jsonb not null default '[]'::jsonb;
 
 create table if not exists projects (
   id uuid primary key default gen_random_uuid(),

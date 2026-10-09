@@ -34,6 +34,7 @@ export async function createProductAction(values: ProductAdminValues): Promise<A
     shortDescription: parsed.data.shortDescription,
     description: parsed.data.description,
     imagePath: parsed.data.imagePath,
+    gallery: parsed.data.gallery,
     specs: JSON.parse(parsed.data.specsJson || "{}"),
     featured: parsed.data.featured,
   });
@@ -58,6 +59,7 @@ export async function updateProductAction(slug: string, values: ProductAdminValu
     shortDescription: parsed.data.shortDescription,
     description: parsed.data.description,
     imagePath: parsed.data.imagePath,
+    gallery: parsed.data.gallery,
     specs: JSON.parse(parsed.data.specsJson || "{}"),
     featured: parsed.data.featured,
   });
