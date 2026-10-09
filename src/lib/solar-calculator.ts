@@ -179,3 +179,100 @@ export function calculateSolarEstimate(
 export function formatKsh(amount: number): string {
   return `KSh ${Math.round(amount).toLocaleString("en-KE")}`;
 }
+
+// ── Quick sizing tools ──────────────────────────────────────────────────
+// Standalone, single-purpose versions of the sizing steps inside
+// calculateSolarEstimate, for a visitor (or technician) who already knows
+// one number and wants one answer — not a full appliance-by-appliance
+// estimate. Deliberately size-only, no KSh: a breaker or inverter size
+// alone isn't worth a priced line item, and these point back to the full
+// estimate or WhatsApp for pricing.
+
+// IEC 60898 standard miniature circuit breaker ratings — a calculated
+// current gets rounded up to the next one of these, not to an arbitrary step.
+const STANDARD_BREAKER_AMPS = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200] as const;
+
+// Anchors "how many batteries/panels" to what Betalight actually stocks,
+// rather than an abstract number — Vestwoods VC12200 Plus (12.8V 200Ah) and
+// the top of JINKO bifacial's listed wattage range.
+export const REFERENCE_BATTERY_KWH = 2.56;
+export const REFERENCE_PANEL_WATTS = 450;
+
+function roundUpToNearest(value: number, options: readonly number[]): number {
+  return options.find((option) => option >= value) ?? options[options.length - 1];
+}
+
+export interface InverterSizeResult {
+  minimumKva: number;
+  recommendedKva: number;
+  surgeWatts: number;
+}
+
+/** Peak load -> minimum and recommended (rounded-up) inverter capacity. */
+export function sizeInverter(params: { peakLoadWatts: number; headroomPercent?: number }): InverterSizeResult | null {
+  if (params.peakLoadWatts <= 0) return null;
+  const headroom = 1 + (params.headroomPercent ?? (INVERTER_SURGE_HEADROOM - 1) * 100) / 100;
+  const minimumKva = (params.peakLoadWatts * headroom) / 1000;
+  return {
+    minimumKva,
+    recommendedKva: Math.max(MIN_INVERTER_KVA, roundUpToStep(minimumKva, INVERTER_STEP_KVA)),
+    surgeWatts: params.peakLoadWatts * headroom,
+  };
+}
+
+export interface BatterySizeResult {
+  batteryKwh: number;
+  referenceBatteryCount: number;
+}
+
+/** Daily energy + autonomy + chemistry -> usable battery bank size. */
+export function sizeBattery(params: {
+  dailyEnergyWh: number;
+  autonomyDays: number;
+  chemistry: BatteryChemistry;
+}): BatterySizeResult | null {
+  if (params.dailyEnergyWh <= 0 || params.autonomyDays <= 0) return null;
+  const dod = DEPTH_OF_DISCHARGE[params.chemistry];
+  const batteryKwh = (params.dailyEnergyWh * params.autonomyDays) / dod / 1000;
+  return { batteryKwh, referenceBatteryCount: Math.ceil(batteryKwh / REFERENCE_BATTERY_KWH) };
+}
+
+export interface PanelArraySizeResult {
+  arrayWp: number;
+  panelCount: number;
+}
+
+/** Daily energy -> panel array size, against Kenya's ~5 peak sun hours. */
+export function sizePanelArray(params: { dailyEnergyWh: number; panelWattage?: number }): PanelArraySizeResult | null {
+  if (params.dailyEnergyWh <= 0) return null;
+  const arrayWp = params.dailyEnergyWh / (PEAK_SUN_HOURS * SYSTEM_DERATE);
+  const panelWattage = params.panelWattage ?? REFERENCE_PANEL_WATTS;
+  return { arrayWp, panelCount: Math.ceil(arrayWp / panelWattage) };
+}
+
+export type ElectricalPhase = "single" | "three";
+
+export interface BreakerSizeResult {
+  currentA: number;
+  currentWithMarginA: number;
+  recommendedBreakerA: number;
+}
+
+/**
+ * Output watts + voltage/phase -> breaker rating, via P = V x I (single
+ * phase) or P = V x I x sqrt(3) (three phase, power factor of 1 assumed —
+ * the same simplifying assumption used throughout this calculator).
+ */
+export function sizeBreaker(params: {
+  outputWatts: number;
+  voltage: number;
+  phase: ElectricalPhase;
+  marginPercent?: number;
+}): BreakerSizeResult | null {
+  if (params.outputWatts <= 0 || params.voltage <= 0) return null;
+  const divisor = params.phase === "three" ? params.voltage * Math.sqrt(3) : params.voltage;
+  const currentA = params.outputWatts / divisor;
+  const margin = 1 + (params.marginPercent ?? (INVERTER_SURGE_HEADROOM - 1) * 100) / 100;
+  const currentWithMarginA = currentA * margin;
+  return { currentA, currentWithMarginA, recommendedBreakerA: roundUpToNearest(currentWithMarginA, STANDARD_BREAKER_AMPS) };
+}

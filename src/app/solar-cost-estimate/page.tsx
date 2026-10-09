@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { JsonLd } from "@/components/shared/json-ld";
-import { SolarCalculator } from "@/components/solar-calculator/solar-calculator";
+import { SolarToolsSection } from "@/components/solar-calculator/solar-tools-section";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getSolarCalculatorSettings } from "@/lib/data/solar-calculator";
 import { faqSchema } from "@/lib/seo/schema";
@@ -40,6 +40,11 @@ const faqs = [
     question: "Do you deliver and install?",
     answer: "Yes. Send us your estimate on WhatsApp and we'll arrange sizing confirmation, delivery and installation.",
   },
+  {
+    question: "I already know what size I need — can I just check one number?",
+    answer:
+      "Yes. Switch to the Quick Tools tab for standalone inverter, battery, panel and breaker size calculators — each gives a size on its own, without the full appliance walkthrough.",
+  },
 ];
 
 export default async function SolarCostEstimatePage() {
@@ -59,7 +64,7 @@ export default async function SolarCostEstimatePage() {
       </div>
 
       <div className="mt-10">
-        <SolarCalculator pricing={pricing} />
+        <SolarToolsSection pricing={pricing} />
       </div>
 
       <div className="mt-20 max-w-3xl">
