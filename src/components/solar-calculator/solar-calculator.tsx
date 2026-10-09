@@ -156,8 +156,9 @@ export function SolarCalculator({ pricing }: { pricing: SolarCalculatorSettingsR
               <TableHeader>
                 <TableRow>
                   <TableHead>Item</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead className="text-right">Cost</TableHead>
+                  <TableHead>Qty</TableHead>
+                  <TableHead className="text-right">Unit Price</TableHead>
+                  <TableHead className="text-right">Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -165,6 +166,7 @@ export function SolarCalculator({ pricing }: { pricing: SolarCalculatorSettingsR
                   <TableRow key={line.label}>
                     <TableCell className="text-xs sm:text-sm">{line.label}</TableCell>
                     <TableCell className="text-xs text-muted-foreground sm:text-sm">{line.quantity}</TableCell>
+                    <TableCell className="text-right text-xs text-muted-foreground sm:text-sm">{formatKsh(line.unitPrice)}</TableCell>
                     <TableCell className="text-right text-xs sm:text-sm">{formatKsh(line.total)}</TableCell>
                   </TableRow>
                 ))}
