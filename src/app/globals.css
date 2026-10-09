@@ -51,6 +51,11 @@
 }
 
 :root {
+  /* Tells the browser which palette to use for native widgets it renders
+     itself — select dropdown popups, scrollbars, date pickers — so they
+     don't default to a light/OS palette and read as invisible text when a
+     dark-themed <select> trigger is paired with a light-rendered popup. */
+  color-scheme: light;
   /* Betalight Enterprises Ltd brand palette: orange (energy/power),
      green (sustainability/renewable), white, dark charcoal. */
   --background: #ffffff;
@@ -90,6 +95,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: #12161c;
   --foreground: #f3f4f6;
   --card: #1a2029;

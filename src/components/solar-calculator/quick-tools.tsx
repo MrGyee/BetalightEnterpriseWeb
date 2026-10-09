@@ -14,8 +14,14 @@ import {
 } from "@/lib/solar-calculator";
 import { cn } from "@/lib/utils";
 
+// A translucent background (the original bg-transparent + dark:bg-input/30)
+// looks fine on the closed trigger, but browsers paint the native dropdown
+// popup using that same author-set background — so the popup rendered
+// near-white while this text color stayed light for contrast against the
+// dark card behind it, making options unreadable. bg-background is opaque
+// and already theme-correct in both modes, so the popup matches the trigger.
 const selectClassName =
-  "flex h-9 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30";
+  "flex h-9 w-full rounded-lg border border-input bg-background px-2.5 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 function ToolCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (

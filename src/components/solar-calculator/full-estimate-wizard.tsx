@@ -24,8 +24,12 @@ import {
 import type { SolarCalculatorSettingsRecord } from "@/lib/store/solar-calculator.store";
 import { cn } from "@/lib/utils";
 
+// See quick-tools.tsx for why this is bg-background (opaque) rather than a
+// translucent bg-transparent/dark:bg-input combo — the native dropdown
+// popup paints with the select's own background, and a translucent one
+// made options unreadable in dark mode.
 const selectClassName =
-  "flex h-9 w-full max-w-xs rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30";
+  "flex h-9 w-full max-w-xs rounded-lg border border-input bg-background px-2.5 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 type ItemState = Record<string, { enabled: boolean; watts: number; hoursPerDay: number; surgeMultiplier?: number }>;
 type InputMode = "appliances" | "usage";
