@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Sun, Battery, Droplets, Home as HomeIcon, CheckCircle2 } from "lucide-react";
+import { Sun, Battery, Droplets, Home as HomeIcon, CheckCircle2, Calculator, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -69,7 +69,27 @@ export default function SolarSolutionsPage() {
         ))}
       </div>
 
-      <div className="mt-16 rounded-3xl border border-border bg-secondary/30 p-8 sm:p-10">
+      <div className="mt-12 flex flex-col items-start gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="flex items-start gap-4">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Calculator className="size-6" />
+          </div>
+          <div>
+            <h2 className="font-heading text-lg font-bold text-foreground">Not sure what size system you need?</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tick what you want to power and get a panel, battery and inverter sizing with an estimated cost in minutes.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/solar-cost-estimate"
+          className={cn(buttonVariants(), "w-full shrink-0 gap-1.5 rounded-full sm:w-auto")}
+        >
+          Get a Cost Estimate <ArrowRight className="size-4" />
+        </Link>
+      </div>
+
+      <div className="mt-12 rounded-3xl border border-border bg-secondary/30 p-8 sm:p-10">
         <h2 className="font-heading text-2xl font-extrabold text-foreground">How a Solar Installation Works With Us</h2>
         <ul className="mt-6 space-y-3">
           {process.map((step, i) => (

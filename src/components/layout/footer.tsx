@@ -11,6 +11,7 @@ const quickLinks = [
   { label: "About Us", href: "/about" },
   { label: "Products", href: "/products" },
   { label: "Solar Solutions", href: "/solar-solutions" },
+  { label: "Solar Cost Estimate", href: "/solar-cost-estimate" },
   { label: "Electrical Services", href: "/electrical-services" },
   { label: "Projects", href: "/projects" },
   { label: "Industries", href: "/industries" },

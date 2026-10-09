@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Briefcase, Newspaper, Quote, HelpCircle, Inbox, Settings, Sparkles } from "lucide-react";
+import { LayoutDashboard, Package, Briefcase, Newspaper, Quote, HelpCircle, Inbox, Settings, Sparkles, Calculator } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navGroups = [
@@ -33,6 +33,7 @@ const navGroups = [
     label: "Business",
     items: [
       { href: "/admin/leads", label: "Leads", icon: Inbox },
+      { href: "/admin/solar-calculator", label: "Solar Calculator", icon: Calculator },
       { href: "/admin/settings", label: "Contacts & Socials", icon: Settings },
     ],
   },

@@ -9,6 +9,7 @@ export const productCategories = [
 
 export const servicesMenu = [
   { name: "Solar Installation", href: "/solar-solutions" },
+  { name: "Solar Cost Estimate", href: "/solar-cost-estimate" },
   { name: "Electrical Installation", href: "/electrical-services#installation" },
   { name: "Industrial Services", href: "/electrical-services#industrial" },
   { name: "Electrical Maintenance", href: "/electrical-services#maintenance" },

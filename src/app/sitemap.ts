@@ -10,6 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteConfig.url}/about`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${siteConfig.url}/products`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteConfig.url}/solar-solutions`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteConfig.url}/solar-cost-estimate`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteConfig.url}/electrical-services`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteConfig.url}/projects`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${siteConfig.url}/industries`, changeFrequency: "monthly", priority: 0.5 },

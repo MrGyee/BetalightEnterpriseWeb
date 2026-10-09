@@ -165,3 +165,23 @@ create table if not exists hero_slides (
   sort_order integer not null default 0
 );
 alter table hero_slides enable row level security;
+
+-- ── Solar cost estimate calculator ──────────────────────────────────────
+-- Unit prices are a separate table from `products` on purpose: products
+-- deliberately carry no price (the business quotes per request), but the
+-- calculator needs a per-Wp/per-kWh/per-kVA rate to size a cost from.
+-- Ships with placeholder figures (see FALLBACK in lib/data/solar-calculator.ts)
+-- — edit them in /admin/solar-calculator before this is real to customers.
+
+create table if not exists solar_calculator_settings (
+  id smallint primary key default 1,
+  updated_at timestamptz not null default now(),
+  panel_price_per_watt numeric not null default 60,
+  lithium_price_per_kwh numeric not null default 18000,
+  gel_price_per_kwh numeric not null default 9000,
+  inverter_price_per_kva numeric not null default 20000,
+  bos_percent numeric not null default 12,
+  vat_percent numeric not null default 16,
+  constraint solar_calculator_settings_singleton check (id = 1)
+);
+alter table solar_calculator_settings enable row level security;

@@ -31,6 +31,36 @@ export function buildWhatsAppQuoteMessage(product: { name: string }, url: string
   ].join("\n");
 }
 
+// The calculator's total is a rough estimate off placeholder/admin-set unit
+// rates, not a quote — the message asks for confirmation rather than
+// asserting the number as final, same posture as buildWhatsAppQuoteMessage.
+export function buildSolarEstimateWhatsAppMessage(params: {
+  dailyEnergyWh: number;
+  panelArrayWp: number;
+  batteryKwh: number;
+  batteryChemistry: "lithium" | "gel";
+  inverterKva: number;
+  autonomyDays: number;
+  estimatedTotal: string;
+}): string {
+  const batteryLabel = params.batteryChemistry === "lithium" ? "Lithium (LiFePO4)" : "Gel";
+  return [
+    `Hello ${siteConfig.name},`,
+    "",
+    "I used your solar cost estimate tool and got this result:",
+    "",
+    `• Daily energy need: ${Math.round(params.dailyEnergyWh)} Wh`,
+    `• Solar panel array: ${Math.round(params.panelArrayWp)} Wp`,
+    `• Battery bank: ${params.batteryKwh.toFixed(2)} kWh (${batteryLabel}), ${params.autonomyDays} day(s) autonomy`,
+    `• Hybrid inverter: ${params.inverterKva} kVA`,
+    `• Estimated materials cost: ${params.estimatedTotal}`,
+    "",
+    "Could you confirm this sizing and give me an accurate quote, including installation?",
+    "",
+    "Thank you.",
+  ].join("\n");
+}
+
 export interface ShareUrls {
   whatsapp: string;
   facebook: string;
