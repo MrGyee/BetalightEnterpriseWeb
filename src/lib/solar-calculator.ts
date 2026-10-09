@@ -1,35 +1,118 @@
 import type { SolarCalculatorSettingsRecord } from "@/lib/store/solar-calculator.store";
 
 export type BatteryChemistry = "lithium" | "gel";
-export type AutonomyDays = 1 | 2 | 3;
+export type AutonomyDays = 1 | 2 | 3 | 4 | 5;
+export type PropertyType = "home" | "business" | "farm" | "institution";
+export type Goal = "reduce-bill" | "backup-only" | "off-grid";
+
+export const PROPERTY_TYPES: { id: PropertyType; label: string }[] = [
+  { id: "home", label: "Home / Residential" },
+  { id: "business", label: "Business / Office" },
+  { id: "farm", label: "Farm / Agricultural" },
+  { id: "institution", label: "Institution (school, church, clinic)" },
+];
+
+export const GOALS: { id: Goal; label: string; description: string; defaultAutonomyDays: AutonomyDays }[] = [
+  {
+    id: "backup-only",
+    label: "Backup power during outages",
+    description: "Stay on the grid, switch to solar when KPLC is off.",
+    defaultAutonomyDays: 1,
+  },
+  {
+    id: "reduce-bill",
+    label: "Cut my monthly electricity bill",
+    description: "Stay grid-tied, run appliances off solar during the day to buy less power.",
+    defaultAutonomyDays: 1,
+  },
+  {
+    id: "off-grid",
+    label: "Go fully off-grid",
+    description: "No reliance on KPLC at all — needs more battery margin for cloudy runs.",
+    defaultAutonomyDays: 3,
+  },
+];
 
 export interface ApplianceDefinition {
   id: string;
   label: string;
   watts: number;
   defaultHours: number;
+  /**
+   * Motor-driven loads (compressors, pumps) draw a brief starting surge far
+   * above their running watts — this is that surge as a multiple of running
+   * watts. Omitted for resistive/electronic loads, where it's ~1x.
+   */
+  surgeMultiplier?: number;
 }
 
-// Common Kenyan household/commercial loads, matched to what Betalight's own
-// catalog targets (residential backup, light-commercial, boreholes) rather
-// than an exhaustive appliance database. "Other" rows cover anything missing.
-export const APPLIANCES: ApplianceDefinition[] = [
-  { id: "led-bulbs", label: "LED Bulbs (x10)", watts: 100, defaultHours: 6 },
-  { id: "phone-laptop", label: "Phone & Laptop Charging", watts: 60, defaultHours: 8 },
-  { id: "router", label: "Wi-Fi Router", watts: 15, defaultHours: 24 },
-  { id: "tv", label: "TV", watts: 120, defaultHours: 5 },
-  { id: "fridge", label: "Fridge / Freezer", watts: 150, defaultHours: 24 },
-  { id: "washing-machine", label: "Washing Machine", watts: 500, defaultHours: 1 },
-  { id: "iron", label: "Pressing Iron", watts: 1000, defaultHours: 0.5 },
-  { id: "microwave", label: "Microwave", watts: 1200, defaultHours: 0.5 },
-  { id: "desktop", label: "Desktop Computer", watts: 200, defaultHours: 6 },
-  { id: "cctv", label: "CCTV System", watts: 40, defaultHours: 24 },
-  { id: "water-pump", label: "Water Pump", watts: 750, defaultHours: 1 },
-  { id: "borehole-pump", label: "Borehole Pump", watts: 1100, defaultHours: 2 },
+export interface ApplianceCategory {
+  id: string;
+  label: string;
+  appliances: ApplianceDefinition[];
+}
+
+// Grouped and sized to match what Betalight's own catalog targets
+// (residential backup, light-commercial, boreholes) rather than an
+// exhaustive appliance database.
+export const APPLIANCE_CATEGORIES: ApplianceCategory[] = [
+  {
+    id: "everyday",
+    label: "Everyday Electronics",
+    appliances: [
+      { id: "led-bulbs", label: "LED Bulbs (x10)", watts: 100, defaultHours: 6 },
+      { id: "phone-laptop", label: "Phone & Laptop Charging", watts: 60, defaultHours: 8 },
+      { id: "router", label: "Wi-Fi Router", watts: 15, defaultHours: 24 },
+      { id: "tv", label: "TV", watts: 120, defaultHours: 5 },
+      { id: "desktop", label: "Desktop Computer", watts: 200, defaultHours: 6 },
+      { id: "cctv", label: "CCTV System", watts: 40, defaultHours: 24 },
+    ],
+  },
+  {
+    id: "refrigeration",
+    label: "Refrigeration & Cooling",
+    appliances: [
+      { id: "fridge", label: "Fridge / Freezer", watts: 150, defaultHours: 24, surgeMultiplier: 3 },
+      { id: "fan", label: "Standing Fan", watts: 60, defaultHours: 6 },
+      { id: "ac", label: "Air Conditioner (1hp)", watts: 750, defaultHours: 4, surgeMultiplier: 4 },
+    ],
+  },
+  {
+    id: "kitchen",
+    label: "Kitchen",
+    appliances: [
+      { id: "microwave", label: "Microwave", watts: 1200, defaultHours: 0.5 },
+      { id: "kettle", label: "Electric Kettle", watts: 2000, defaultHours: 0.5 },
+      { id: "blender", label: "Blender", watts: 400, defaultHours: 0.25, surgeMultiplier: 2 },
+    ],
+  },
+  {
+    id: "heating-pumps",
+    label: "Heating & Pumps",
+    appliances: [
+      { id: "iron", label: "Pressing Iron", watts: 1000, defaultHours: 0.5 },
+      { id: "washing-machine", label: "Washing Machine", watts: 500, defaultHours: 1, surgeMultiplier: 3 },
+      { id: "water-pump", label: "Water Pump", watts: 750, defaultHours: 1, surgeMultiplier: 4 },
+      { id: "borehole-pump", label: "Borehole Pump", watts: 1100, defaultHours: 2, surgeMultiplier: 4 },
+    ],
+  },
+  {
+    id: "business-workshop",
+    label: "Business & Workshop",
+    appliances: [
+      { id: "pos", label: "POS / Till System", watts: 30, defaultHours: 10 },
+      { id: "printer", label: "Printer / Photocopier", watts: 500, defaultHours: 2 },
+      { id: "power-tool", label: "Power Drill / Grinder", watts: 800, defaultHours: 1, surgeMultiplier: 3 },
+      { id: "welding", label: "Welding Machine", watts: 3000, defaultHours: 1, surgeMultiplier: 2 },
+    ],
+  },
 ];
 
+/** Flat list, for callers (like the quick tools) that don't need the grouping. */
+export const APPLIANCES: ApplianceDefinition[] = APPLIANCE_CATEGORIES.flatMap((c) => c.appliances);
+
 export type SolarCalculatorInput = (
-  | { mode: "appliances"; items: { label: string; watts: number; hoursPerDay: number }[] }
+  | { mode: "appliances"; items: { label: string; watts: number; hoursPerDay: number; surgeMultiplier?: number }[] }
   // For visitors who know their usage but not their appliance wattages —
   // only daily energy is known, not what's running at once, so the inverter
   // line this produces is a rougher, clearly-labelled estimate (see
@@ -99,6 +182,12 @@ export function calculateSolarEstimate(
   let dailyEnergyWh: number;
   let peakLoadWatts: number;
   let peakLoadIsEstimated: boolean;
+  // The single biggest motor-starting surge among selected appliances, over
+  // and above its own running watts — e.g. a fridge at 150W with a 3x surge
+  // contributes 300W of "extra" here, not the full 450W. Only one appliance
+  // is assumed to hard-start at a time; several compressors kicking in at
+  // the exact same instant is the edge case this simplification accepts.
+  let worstCaseExtraSurgeWatts = 0;
 
   if (input.mode === "appliances") {
     const activeItems = input.items.filter((item) => item.watts > 0 && item.hoursPerDay > 0);
@@ -106,6 +195,10 @@ export function calculateSolarEstimate(
     dailyEnergyWh = activeItems.reduce((sum, item) => sum + item.watts * item.hoursPerDay, 0);
     peakLoadWatts = activeItems.reduce((sum, item) => sum + item.watts, 0);
     peakLoadIsEstimated = false;
+    worstCaseExtraSurgeWatts = Math.max(
+      0,
+      ...activeItems.map((item) => item.watts * ((item.surgeMultiplier ?? 1) - 1))
+    );
   } else {
     if (input.dailyEnergyWh <= 0) return null;
     dailyEnergyWh = input.dailyEnergyWh;
@@ -126,10 +219,14 @@ export function calculateSolarEstimate(
   const panelArrayWp = dailyEnergyWh / (PEAK_SUN_HOURS * SYSTEM_DERATE);
 
   // Inverter: sized off worst-case simultaneous load (every selected
-  // appliance running at once), not daily energy.
+  // appliance running at once), not daily energy. Two candidate "worst
+  // moments" — flat headroom over everything running, or everything running
+  // plus the single biggest motor actually starting — and the larger wins.
+  const headroomCaseWatts = peakLoadWatts * INVERTER_SURGE_HEADROOM;
+  const motorSurgeCaseWatts = peakLoadWatts + worstCaseExtraSurgeWatts;
   const inverterKva = Math.max(
     MIN_INVERTER_KVA,
-    roundUpToStep((peakLoadWatts * INVERTER_SURGE_HEADROOM) / 1000, INVERTER_STEP_KVA)
+    roundUpToStep(Math.max(headroomCaseWatts, motorSurgeCaseWatts) / 1000, INVERTER_STEP_KVA)
   );
 
   const panelCost = panelArrayWp * pricing.panelPricePerWatt;

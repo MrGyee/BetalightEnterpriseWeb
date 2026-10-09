@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SolarCalculator } from "@/components/solar-calculator/solar-calculator";
+import { FullEstimateWizard } from "@/components/solar-calculator/full-estimate-wizard";
 import { QuickToolsGrid } from "@/components/solar-calculator/quick-tools";
 import type { SolarCalculatorSettingsRecord } from "@/lib/store/solar-calculator.store";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,7 @@ export function SolarToolsSection({ pricing }: { pricing: SolarCalculatorSetting
         </button>
       </div>
 
-      <div className="mt-8">{section === "estimate" ? <SolarCalculator pricing={pricing} /> : <QuickToolsGrid />}</div>
+      <div className="mt-8">{section === "estimate" ? <FullEstimateWizard pricing={pricing} /> : <QuickToolsGrid />}</div>
     </div>
   );
 }

@@ -44,6 +44,9 @@ export function buildSolarEstimateWhatsAppMessage(params: {
   estimatedTotal: string;
   /** True if the visitor used "I know my usage" — no real appliance list, so the inverter figure needs confirming. */
   peakLoadIsEstimated: boolean;
+  /** Lead-qualification context — doesn't change the sizing, just tells the sales team who's asking. */
+  propertyTypeLabel?: string;
+  goalLabel?: string;
 }): string {
   const batteryLabel = params.batteryChemistry === "lithium" ? "Lithium (LiFePO4)" : "Gel";
   return [
@@ -51,6 +54,8 @@ export function buildSolarEstimateWhatsAppMessage(params: {
     "",
     "I used your solar cost estimate tool and got this result:",
     "",
+    ...(params.propertyTypeLabel ? [`• Property: ${params.propertyTypeLabel}`] : []),
+    ...(params.goalLabel ? [`• Goal: ${params.goalLabel}`] : []),
     `• Daily energy need: ${Math.round(params.dailyEnergyWh)} Wh`,
     `• Solar panel array: ${Math.round(params.panelArrayWp)} Wp`,
     `• Battery bank: ${params.batteryKwh.toFixed(2)} kWh (${batteryLabel}), ${params.autonomyDays} day(s) autonomy`,
