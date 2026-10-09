@@ -14,6 +14,7 @@ const FALLBACK_SOLAR_CALCULATOR_SETTINGS: SolarCalculatorSettingsRecord = {
   inverterPricePerKva: 20000,
   bosPercent: 12,
   vatPercent: 16,
+  gridTariffPerKwh: 25,
 };
 
 // Falls back to the placeholders above if the `solar_calculator_settings`

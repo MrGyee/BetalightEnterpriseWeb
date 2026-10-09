@@ -28,11 +28,17 @@ export const APPLIANCES: ApplianceDefinition[] = [
   { id: "borehole-pump", label: "Borehole Pump", watts: 1100, defaultHours: 2 },
 ];
 
-export interface SolarCalculatorInput {
-  items: { label: string; watts: number; hoursPerDay: number }[];
+export type SolarCalculatorInput = (
+  | { mode: "appliances"; items: { label: string; watts: number; hoursPerDay: number }[] }
+  // For visitors who know their usage but not their appliance wattages —
+  // only daily energy is known, not what's running at once, so the inverter
+  // line this produces is a rougher, clearly-labelled estimate (see
+  // peakLoadIsEstimated below), not sized off a real simultaneous load.
+  | { mode: "usage"; dailyEnergyWh: number }
+) & {
   autonomyDays: AutonomyDays;
   batteryChemistry: BatteryChemistry;
-}
+};
 
 export interface SolarEstimateLineItem {
   label: string;
@@ -44,6 +50,8 @@ export interface SolarEstimateLineItem {
 export interface SolarEstimate {
   dailyEnergyWh: number;
   peakLoadWatts: number;
+  /** True in "usage" mode — the inverter line is a rough estimate, not sized off a real appliance list. */
+  peakLoadIsEstimated: boolean;
   panelArrayWp: number;
   batteryKwh: number;
   inverterKva: number;
@@ -54,9 +62,12 @@ export interface SolarEstimate {
   total: number;
 }
 
-// Nairobi-area average; the national range runs roughly 4-6 depending on
-// region, 4.5 is a reasonably conservative middle figure.
-const PEAK_SUN_HOURS = 4.5;
+// City-level PV yield data for Nairobi, Mombasa, Kisumu, Eldoret and Nakuru
+// (NASA POWER-derived) clusters around 5.3-6.9 kWh/kW/day across seasons —
+// tightly enough that per-city numbers would be false precision given we
+// aren't modelling season at all. 5 matches the Kenya-wide planning default
+// used by AfroTools' own Kenya solar ROI calculator.
+const PEAK_SUN_HOURS = 5;
 // Combined wiring/temperature/inverter-conversion derate applied when sizing
 // the panel array from daily energy need — standard off-grid sizing practice.
 const SYSTEM_DERATE = 0.8;
@@ -65,6 +76,12 @@ const SYSTEM_DERATE = 0.8;
 const INVERTER_SURGE_HEADROOM = 1.25;
 const INVERTER_STEP_KVA = 0.5;
 const MIN_INVERTER_KVA = 1;
+// "Usage" mode only knows daily energy, not what runs at once — this treats
+// that energy as if drawn over a typical mixed-household active window, to
+// get a peak load worth sizing an inverter around. Deliberately conservative
+// (shorter window -> higher implied peak) since undersizing an inverter is
+// the worse failure mode.
+const ASSUMED_USAGE_WINDOW_HOURS = 6;
 
 const DEPTH_OF_DISCHARGE: Record<BatteryChemistry, number> = {
   lithium: 0.9,
@@ -79,11 +96,22 @@ export function calculateSolarEstimate(
   input: SolarCalculatorInput,
   pricing: SolarCalculatorSettingsRecord
 ): SolarEstimate | null {
-  const activeItems = input.items.filter((item) => item.watts > 0 && item.hoursPerDay > 0);
-  if (activeItems.length === 0) return null;
+  let dailyEnergyWh: number;
+  let peakLoadWatts: number;
+  let peakLoadIsEstimated: boolean;
 
-  const dailyEnergyWh = activeItems.reduce((sum, item) => sum + item.watts * item.hoursPerDay, 0);
-  const peakLoadWatts = activeItems.reduce((sum, item) => sum + item.watts, 0);
+  if (input.mode === "appliances") {
+    const activeItems = input.items.filter((item) => item.watts > 0 && item.hoursPerDay > 0);
+    if (activeItems.length === 0) return null;
+    dailyEnergyWh = activeItems.reduce((sum, item) => sum + item.watts * item.hoursPerDay, 0);
+    peakLoadWatts = activeItems.reduce((sum, item) => sum + item.watts, 0);
+    peakLoadIsEstimated = false;
+  } else {
+    if (input.dailyEnergyWh <= 0) return null;
+    dailyEnergyWh = input.dailyEnergyWh;
+    peakLoadWatts = dailyEnergyWh / ASSUMED_USAGE_WINDOW_HOURS;
+    peakLoadIsEstimated = true;
+  }
 
   // Battery: sized directly off the real daily energy need and how many days
   // of autonomy are wanted, inflated for how much of the chemistry's capacity
@@ -123,12 +151,29 @@ export function calculateSolarEstimate(
       unitPrice: batteryRate,
       total: batteryCost,
     },
-    { label: "Hybrid inverter", quantity: `${inverterKva} kVA`, unitPrice: pricing.inverterPricePerKva, total: inverterCost },
+    {
+      label: peakLoadIsEstimated ? "Hybrid inverter (estimated from usage)" : "Hybrid inverter",
+      quantity: `${inverterKva} kVA`,
+      unitPrice: pricing.inverterPricePerKva,
+      total: inverterCost,
+    },
     { label: `Balance of system (mounting, cabling, breakers, earthing — ${pricing.bosPercent}%)`, quantity: "1", unitPrice: bosCost, total: bosCost },
     { label: `VAT (${pricing.vatPercent}%)`, quantity: "1", unitPrice: vatAmount, total: vatAmount },
   ];
 
-  return { dailyEnergyWh, peakLoadWatts, panelArrayWp, batteryKwh, inverterKva, lineItems, subtotal, bosCost, vatAmount, total };
+  return {
+    dailyEnergyWh,
+    peakLoadWatts,
+    peakLoadIsEstimated,
+    panelArrayWp,
+    batteryKwh,
+    inverterKva,
+    lineItems,
+    subtotal,
+    bosCost,
+    vatAmount,
+    total,
+  };
 }
 
 export function formatKsh(amount: number): string {

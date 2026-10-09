@@ -8,6 +8,7 @@ export type SolarCalculatorSettingsRecord = {
   inverterPricePerKva: number;
   bosPercent: number;
   vatPercent: number;
+  gridTariffPerKwh: number;
 };
 
 type SolarCalculatorSettingsRow = {
@@ -17,6 +18,7 @@ type SolarCalculatorSettingsRow = {
   inverter_price_per_kva: number;
   bos_percent: number;
   vat_percent: number;
+  grid_tariff_per_kwh: number;
 };
 
 function mapRow(row: SolarCalculatorSettingsRow): SolarCalculatorSettingsRecord {
@@ -27,6 +29,7 @@ function mapRow(row: SolarCalculatorSettingsRow): SolarCalculatorSettingsRecord 
     inverterPricePerKva: row.inverter_price_per_kva,
     bosPercent: row.bos_percent,
     vatPercent: row.vat_percent,
+    gridTariffPerKwh: row.grid_tariff_per_kwh,
   };
 }
 
@@ -39,6 +42,7 @@ function toRow(values: SolarCalculatorSettingsRecord) {
     inverter_price_per_kva: values.inverterPricePerKva,
     bos_percent: values.bosPercent,
     vat_percent: values.vatPercent,
+    grid_tariff_per_kwh: values.gridTariffPerKwh,
     updated_at: new Date().toISOString(),
   };
 }

@@ -186,6 +186,11 @@ create table if not exists solar_calculator_settings (
   inverter_price_per_kva numeric not null default 20000,
   bos_percent numeric not null default 12,
   vat_percent numeric not null default 16,
+  -- Converts a monthly KSh bill to daily kWh for the "I know my usage"
+  -- input mode: dailyKwh = monthlyBillKsh / grid_tariff_per_kwh / 30.
+  grid_tariff_per_kwh numeric not null default 25,
   constraint solar_calculator_settings_singleton check (id = 1)
 );
 alter table solar_calculator_settings enable row level security;
+-- Migration for databases created before grid_tariff_per_kwh existed:
+-- alter table solar_calculator_settings add column if not exists grid_tariff_per_kwh numeric not null default 25;

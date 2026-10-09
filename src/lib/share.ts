@@ -42,6 +42,8 @@ export function buildSolarEstimateWhatsAppMessage(params: {
   inverterKva: number;
   autonomyDays: number;
   estimatedTotal: string;
+  /** True if the visitor used "I know my usage" — no real appliance list, so the inverter figure needs confirming. */
+  peakLoadIsEstimated: boolean;
 }): string {
   const batteryLabel = params.batteryChemistry === "lithium" ? "Lithium (LiFePO4)" : "Gel";
   return [
@@ -52,7 +54,7 @@ export function buildSolarEstimateWhatsAppMessage(params: {
     `• Daily energy need: ${Math.round(params.dailyEnergyWh)} Wh`,
     `• Solar panel array: ${Math.round(params.panelArrayWp)} Wp`,
     `• Battery bank: ${params.batteryKwh.toFixed(2)} kWh (${batteryLabel}), ${params.autonomyDays} day(s) autonomy`,
-    `• Hybrid inverter: ${params.inverterKva} kVA`,
+    `• Hybrid inverter: ${params.inverterKva} kVA${params.peakLoadIsEstimated ? " (estimated from usage, not a real appliance list)" : ""}`,
     `• Estimated materials cost: ${params.estimatedTotal}`,
     "",
     "Could you confirm this sizing and give me an accurate quote, including installation?",

@@ -19,6 +19,7 @@ export async function getSolarCalculatorFormValues(): Promise<SolarCalculatorAdm
     inverterPricePerKva: settings.inverterPricePerKva,
     bosPercent: settings.bosPercent,
     vatPercent: settings.vatPercent,
+    gridTariffPerKwh: settings.gridTariffPerKwh,
   };
 }
 

@@ -88,6 +88,27 @@ export function SolarCalculatorSettingsForm({ defaultValues }: { defaultValues: 
         </p>
       </section>
 
+      <section className="grid gap-4">
+        <h2 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">Usage-Based Estimate</h2>
+        <FormField
+          label="Blended grid electricity rate — KSh per kWh"
+          htmlFor="gridTariffPerKwh"
+        >
+          <Input
+            id="gridTariffPerKwh"
+            type="number"
+            min={0.01}
+            step={0.5}
+            {...register("gridTariffPerKwh", { valueAsNumber: true })}
+          />
+        </FormField>
+        <p className="text-xs text-muted-foreground">
+          Used only when a visitor enters their monthly KPLC bill instead of ticking appliances — converts the bill
+          to daily kWh. KPLC&apos;s real tariff is tiered, so this is a single blended rate, not an exact match to
+          any one customer&apos;s bill.
+        </p>
+      </section>
+
       <Button type="submit" size="lg" disabled={isSubmitting} className="w-fit rounded-full">
         {isSubmitting ? "Saving..." : "Save Changes"}
       </Button>
