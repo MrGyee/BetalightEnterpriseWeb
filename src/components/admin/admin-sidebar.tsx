@@ -44,13 +44,18 @@ const navGroups = [
     ],
   },
   {
-    label: "Business",
+    label: "Solar Calculator",
     items: [
-      { href: "/admin/leads", label: "Leads", icon: Inbox },
-      { href: "/admin/solar-calculator", label: "Solar Calculator", icon: Calculator },
+      { href: "/admin/solar-calculator", label: "Pricing & Settings", icon: Calculator },
       { href: "/admin/panel-models", label: "Panel Models", icon: Sun },
       { href: "/admin/inverter-models", label: "Inverter Models", icon: Zap },
       { href: "/admin/battery-models", label: "Battery Models", icon: BatteryCharging },
+    ],
+  },
+  {
+    label: "Business",
+    items: [
+      { href: "/admin/leads", label: "Leads", icon: Inbox },
       { href: "/admin/settings", label: "Contacts & Socials", icon: Settings },
     ],
   },
