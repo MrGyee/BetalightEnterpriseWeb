@@ -81,7 +81,10 @@ export const siteSettingsAdminSchema = z.object({
   phonePrimary: z.string().min(7, "Primary phone number is required."),
   phoneShop1: z.string().optional().or(z.literal("")),
   phoneShop2: z.string().optional().or(z.literal("")),
-  whatsappNumber: z.string().min(7, "WhatsApp number is required."),
+  whatsappNumber: z
+    .string()
+    .min(7, "WhatsApp number is required.")
+    .regex(/^\+?\d[\d\s]*$/, "Digits only (with country code, e.g. 2547...) — no labels or other text in this field."),
   email: z.string().email("Enter a valid email address."),
   addressLine1: z.string().min(2, "Address is required."),
   addressLine2: z.string().optional().or(z.literal("")),

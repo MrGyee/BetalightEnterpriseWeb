@@ -115,14 +115,20 @@ export function Hero({ content, slides }: { content: HeroContentRecord; slides: 
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start"
           >
-            <Link
-              href="/solar-cost-estimate"
-              className={cn(buttonVariants({ size: "lg" }), "rounded-full px-7 text-base")}
-            >
-              <Calculator className="size-4" />
-              Get My Free Solar Estimate
-              <ArrowRight className="size-4" />
-            </Link>
+            <div className="flex flex-col items-center gap-2 lg:items-start">
+              <Link
+                href="/solar-cost-estimate"
+                className={cn(buttonVariants({ size: "lg" }), "rounded-full px-7 text-base")}
+              >
+                <Calculator className="size-4" />
+                Get My Free Solar Estimate
+                <ArrowRight className="size-4" />
+              </Link>
+              <p className="text-xs text-slate-300">
+                Tick what you want to power — get a panel, battery and inverter sizing with an estimated cost in
+                seconds, no sign-up.
+              </p>
+            </div>
           </motion.div>
 
           {/* Trust indicators */}
