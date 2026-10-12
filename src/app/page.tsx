@@ -1,7 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { SolutionsGrid } from "@/components/home/solutions-grid";
 import { FeaturedProducts } from "@/components/home/featured-products";
-import { SolarEstimateBanner } from "@/components/home/solar-estimate-banner";
 import { Industries } from "@/components/home/industries";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 import { ProjectsGallery } from "@/components/home/projects-gallery";
@@ -28,7 +27,6 @@ export default async function Home() {
   return (
     <>
       <Hero content={heroContent} slides={heroSlides} />
-      <SolarEstimateBanner />
       <FeaturedProducts products={featuredProducts} />
       <SolutionsGrid />
       <ProjectsGallery projects={projects.slice(0, 6)} />

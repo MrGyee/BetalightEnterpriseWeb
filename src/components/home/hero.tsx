@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Star, CheckCircle2, ChevronDown } from "lucide-react";
+import { ArrowRight, Star, CheckCircle2, ChevronDown, Calculator } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
 import { HeroSlideshow } from "@/components/home/hero-slideshow";
@@ -115,18 +115,13 @@ export function Hero({ content, slides }: { content: HeroContentRecord; slides: 
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start"
           >
-            <Link href="/quote" className={cn(buttonVariants({ size: "lg" }), "rounded-full px-7 text-base")}>
-              Request a Free Quote
-              <ArrowRight className="size-4" />
-            </Link>
             <Link
-              href="/products"
-              className={cn(
-                buttonVariants({ size: "lg", variant: "outline" }),
-                "rounded-full border-white/30 bg-white/5 px-7 text-base text-white hover:bg-white/15 hover:text-white"
-              )}
+              href="/solar-cost-estimate"
+              className={cn(buttonVariants({ size: "lg" }), "rounded-full px-7 text-base")}
             >
-              Explore Our Products
+              <Calculator className="size-4" />
+              Get My Free Solar Estimate
+              <ArrowRight className="size-4" />
             </Link>
           </motion.div>
 
