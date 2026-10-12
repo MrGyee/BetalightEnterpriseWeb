@@ -134,6 +134,10 @@ export const solarCalculatorAdminSchema = z.object({
   bosPercent: z.number().min(0, "Must be 0 or more.").max(100, "Must be 100 or less."),
   vatPercent: z.number().min(0, "Must be 0 or more.").max(100, "Must be 100 or less."),
   gridTariffPerKwh: z.number().min(0.01, "Must be more than 0."),
+  labourEnabled: z.boolean(),
+  labourMode: z.enum(["fixed", "percent"]),
+  labourFixedKsh: z.number().min(0, "Must be 0 or more."),
+  labourPercent: z.number().min(0, "Must be 0 or more.").max(100, "Must be 100 or less."),
 });
 export type SolarCalculatorAdminValues = z.infer<typeof solarCalculatorAdminSchema>;
 

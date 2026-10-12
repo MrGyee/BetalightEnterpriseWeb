@@ -20,6 +20,10 @@ export async function getSolarCalculatorFormValues(): Promise<SolarCalculatorAdm
     bosPercent: settings.bosPercent,
     vatPercent: settings.vatPercent,
     gridTariffPerKwh: settings.gridTariffPerKwh,
+    labourEnabled: settings.labourEnabled,
+    labourMode: settings.labourMode,
+    labourFixedKsh: settings.labourFixedKsh,
+    labourPercent: settings.labourPercent,
   };
 }
 

@@ -15,6 +15,10 @@ const FALLBACK_SOLAR_CALCULATOR_SETTINGS: SolarCalculatorSettingsRecord = {
   bosPercent: 12,
   vatPercent: 16,
   gridTariffPerKwh: 25,
+  labourEnabled: false,
+  labourMode: "percent",
+  labourFixedKsh: 0,
+  labourPercent: 10,
 };
 
 // Falls back to the placeholders above if the `solar_calculator_settings`

@@ -142,6 +142,8 @@ export interface SolarEstimate {
   subtotal: number;
   bosCost: number;
   vatAmount: number;
+  labourCost: number;
+  labourIncluded: boolean;
   total: number;
 }
 
@@ -238,7 +240,16 @@ export function calculateSolarEstimate(
   const subtotal = panelCost + batteryCost + inverterCost;
   const bosCost = subtotal * (pricing.bosPercent / 100);
   const vatAmount = (subtotal + bosCost) * (pricing.vatPercent / 100);
-  const total = subtotal + bosCost + vatAmount;
+  // Kept out of the VAT base deliberately: vatPercent reflects equipment's
+  // VAT treatment (zero-rated, per the admin setting here), which doesn't
+  // automatically extend to installation as a service — those are commonly
+  // taxed differently, so this avoids silently implying labour is tax-free too.
+  const labourCost = pricing.labourEnabled
+    ? pricing.labourMode === "fixed"
+      ? pricing.labourFixedKsh
+      : (subtotal + bosCost) * (pricing.labourPercent / 100)
+    : 0;
+  const total = subtotal + bosCost + vatAmount + labourCost;
 
   const batteryLabel = input.batteryChemistry === "lithium" ? "LiFePO4 Lithium" : "Gel";
 
@@ -265,6 +276,15 @@ export function calculateSolarEstimate(
     { label: `VAT (${pricing.vatPercent}%)`, quantity: "1", unitPrice: vatAmount, total: vatAmount },
   ];
 
+  if (pricing.labourEnabled) {
+    lineItems.push({
+      label: pricing.labourMode === "fixed" ? "Labour & installation" : `Labour & installation (${pricing.labourPercent}%)`,
+      quantity: "1",
+      unitPrice: labourCost,
+      total: labourCost,
+    });
+  }
+
   return {
     dailyEnergyWh,
     peakLoadWatts,
@@ -276,6 +296,8 @@ export function calculateSolarEstimate(
     subtotal,
     bosCost,
     vatAmount,
+    labourCost,
+    labourIncluded: pricing.labourEnabled,
     total,
   };
 }

@@ -170,6 +170,7 @@ export function FullEstimateWizard({ pricing }: { pricing: SolarCalculatorSettin
           peakLoadIsEstimated: estimate.peakLoadIsEstimated,
           propertyTypeLabel: propertyLabel,
           goalLabel,
+          labourIncluded: estimate.labourIncluded,
         })
       )
     : null;
@@ -455,8 +456,9 @@ export function FullEstimateWizard({ pricing }: { pricing: SolarCalculatorSettin
               )}
 
               <p className="mt-3 text-xs text-muted-foreground">
-                This is a materials estimate only, based on typical unit rates — it excludes installation, delivery and
-                site-specific extras, and is not a fixed quote. Send it to us on WhatsApp for an accurate, installed price.
+                {estimate.labourIncluded
+                  ? "This estimate includes labour and installation, based on typical unit rates — it still excludes delivery and site-specific extras, and is not a fixed quote. Send it to us on WhatsApp for an accurate price."
+                  : "This is a materials estimate only, based on typical unit rates — it excludes installation, delivery and site-specific extras, and is not a fixed quote. Send it to us on WhatsApp for an accurate, installed price."}
               </p>
 
               {whatsappHref && (

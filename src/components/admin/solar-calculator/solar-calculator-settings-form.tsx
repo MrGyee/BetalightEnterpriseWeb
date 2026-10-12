@@ -9,11 +9,17 @@ import { updateSolarCalculatorAction } from "@/app/actions/admin/solar-calculato
 import { FormField } from "@/components/shared/form-field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
+const selectClassName =
+  "flex h-9 w-full rounded-lg border border-input bg-background px-2.5 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 export function SolarCalculatorSettingsForm({ defaultValues }: { defaultValues: SolarCalculatorAdminValues }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit } = useForm<SolarCalculatorAdminValues>({ defaultValues });
+  const { register, handleSubmit, watch, setValue } = useForm<SolarCalculatorAdminValues>({ defaultValues });
+  const labourEnabled = watch("labourEnabled");
+  const labourMode = watch("labourMode");
 
   async function onSubmit(values: SolarCalculatorAdminValues) {
     setIsSubmitting(true);
@@ -107,6 +113,46 @@ export function SolarCalculatorSettingsForm({ defaultValues }: { defaultValues: 
           to daily kWh. KPLC&apos;s real tariff is tiered, so this is a single blended rate, not an exact match to
           any one customer&apos;s bill.
         </p>
+      </section>
+
+      <section className="grid gap-4">
+        <h2 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">Labour &amp; Installation</h2>
+        <label className="flex items-center gap-2.5 text-sm font-medium text-foreground">
+          <Checkbox checked={labourEnabled} onCheckedChange={(v) => setValue("labourEnabled", !!v)} />
+          Add labour/installation to the Full Estimate
+        </label>
+        <p className="text-xs text-muted-foreground">
+          Off by default — the public calculator says &quot;materials only, installation excluded&quot; until this is
+          turned on. Doesn&apos;t affect the Quick Tools, which price individual components only.
+        </p>
+
+        {labourEnabled && (
+          <>
+            <FormField label="How should it be calculated?" htmlFor="labourMode">
+              <select id="labourMode" className={selectClassName} {...register("labourMode")}>
+                <option value="percent">Percentage of materials</option>
+                <option value="fixed">Fixed amount</option>
+              </select>
+            </FormField>
+
+            {labourMode === "percent" ? (
+              <FormField label="Labour — % of materials + balance of system" htmlFor="labourPercent">
+                <Input
+                  id="labourPercent"
+                  type="number"
+                  min={0}
+                  max={100}
+                  step={0.5}
+                  {...register("labourPercent", { valueAsNumber: true })}
+                />
+              </FormField>
+            ) : (
+              <FormField label="Labour — fixed amount (KSh)" htmlFor="labourFixedKsh">
+                <Input id="labourFixedKsh" type="number" min={0} step={500} {...register("labourFixedKsh", { valueAsNumber: true })} />
+              </FormField>
+            )}
+          </>
+        )}
       </section>
 
       <Button type="submit" size="lg" disabled={isSubmitting} className="w-fit rounded-full">

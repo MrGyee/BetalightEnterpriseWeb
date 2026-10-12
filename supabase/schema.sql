@@ -189,11 +189,23 @@ create table if not exists solar_calculator_settings (
   -- Converts a monthly KSh bill to daily kWh for the "I know my usage"
   -- input mode: dailyKwh = monthlyBillKsh / grid_tariff_per_kwh / 30.
   grid_tariff_per_kwh numeric not null default 25,
+  -- Off by default — the Full Estimate says "materials only" until this is
+  -- turned on. labour_mode is 'fixed' (labour_fixed_ksh) or 'percent'
+  -- (labour_percent of materials + balance of system, before VAT).
+  labour_enabled boolean not null default false,
+  labour_mode text not null default 'percent' check (labour_mode in ('fixed', 'percent')),
+  labour_fixed_ksh numeric not null default 0,
+  labour_percent numeric not null default 10,
   constraint solar_calculator_settings_singleton check (id = 1)
 );
 alter table solar_calculator_settings enable row level security;
 -- Migration for databases created before grid_tariff_per_kwh existed:
 -- alter table solar_calculator_settings add column if not exists grid_tariff_per_kwh numeric not null default 25;
+-- Migration for databases created before the labour/installation fields existed:
+-- alter table solar_calculator_settings add column if not exists labour_enabled boolean not null default false;
+-- alter table solar_calculator_settings add column if not exists labour_mode text not null default 'percent' check (labour_mode in ('fixed', 'percent'));
+-- alter table solar_calculator_settings add column if not exists labour_fixed_ksh numeric not null default 0;
+-- alter table solar_calculator_settings add column if not exists labour_percent numeric not null default 10;
 
 -- Named, individually priced panel options for the Panel Size quick tool —
 -- separate from panel_price_per_watt above, which is a blended rate for the

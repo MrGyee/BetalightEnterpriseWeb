@@ -47,6 +47,7 @@ export function buildSolarEstimateWhatsAppMessage(params: {
   /** Lead-qualification context — doesn't change the sizing, just tells the sales team who's asking. */
   propertyTypeLabel?: string;
   goalLabel?: string;
+  labourIncluded: boolean;
 }): string {
   const batteryLabel = params.batteryChemistry === "lithium" ? "Lithium (LiFePO4)" : "Gel";
   return [
@@ -60,7 +61,7 @@ export function buildSolarEstimateWhatsAppMessage(params: {
     `• Solar panel array: ${Math.round(params.panelArrayWp)} Wp`,
     `• Battery bank: ${params.batteryKwh.toFixed(2)} kWh (${batteryLabel}), ${params.autonomyDays} day(s) autonomy`,
     `• Hybrid inverter: ${params.inverterKva} kVA${params.peakLoadIsEstimated ? " (estimated from usage, not a real appliance list)" : ""}`,
-    `• Estimated materials cost: ${params.estimatedTotal}`,
+    `• Estimated ${params.labourIncluded ? "cost (incl. labour & installation)" : "materials cost"}: ${params.estimatedTotal}`,
     "",
     "Could you confirm this sizing and give me an accurate quote, including installation?",
     "",

@@ -1,6 +1,8 @@
 import "server-only";
 import { getSupabaseClient } from "@/lib/supabase/server-client";
 
+export type LabourMode = "fixed" | "percent";
+
 export type SolarCalculatorSettingsRecord = {
   panelPricePerWatt: number;
   lithiumPricePerKwh: number;
@@ -9,6 +11,12 @@ export type SolarCalculatorSettingsRecord = {
   bosPercent: number;
   vatPercent: number;
   gridTariffPerKwh: number;
+  /** Off by default — the Full Estimate disclaimer says "materials only" until this is turned on. */
+  labourEnabled: boolean;
+  labourMode: LabourMode;
+  labourFixedKsh: number;
+  /** Applied to materials + balance of system, before VAT. */
+  labourPercent: number;
 };
 
 type SolarCalculatorSettingsRow = {
@@ -19,6 +27,10 @@ type SolarCalculatorSettingsRow = {
   bos_percent: number;
   vat_percent: number;
   grid_tariff_per_kwh: number;
+  labour_enabled: boolean;
+  labour_mode: LabourMode;
+  labour_fixed_ksh: number;
+  labour_percent: number;
 };
 
 function mapRow(row: SolarCalculatorSettingsRow): SolarCalculatorSettingsRecord {
@@ -30,6 +42,10 @@ function mapRow(row: SolarCalculatorSettingsRow): SolarCalculatorSettingsRecord 
     bosPercent: row.bos_percent,
     vatPercent: row.vat_percent,
     gridTariffPerKwh: row.grid_tariff_per_kwh,
+    labourEnabled: row.labour_enabled,
+    labourMode: row.labour_mode,
+    labourFixedKsh: row.labour_fixed_ksh,
+    labourPercent: row.labour_percent,
   };
 }
 
@@ -43,6 +59,10 @@ function toRow(values: SolarCalculatorSettingsRecord) {
     bos_percent: values.bosPercent,
     vat_percent: values.vatPercent,
     grid_tariff_per_kwh: values.gridTariffPerKwh,
+    labour_enabled: values.labourEnabled,
+    labour_mode: values.labourMode,
+    labour_fixed_ksh: values.labourFixedKsh,
+    labour_percent: values.labourPercent,
     updated_at: new Date().toISOString(),
   };
 }
