@@ -28,8 +28,8 @@ export default async function Home() {
   return (
     <>
       <Hero content={heroContent} slides={heroSlides} />
-      <FeaturedProducts products={featuredProducts} />
       <SolarEstimateBanner />
+      <FeaturedProducts products={featuredProducts} />
       <SolutionsGrid />
       <ProjectsGallery projects={projects.slice(0, 6)} />
       <WhyChooseUs />
