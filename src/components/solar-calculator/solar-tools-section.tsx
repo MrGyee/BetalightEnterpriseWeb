@@ -4,11 +4,18 @@ import { useState } from "react";
 import { FullEstimateWizard } from "@/components/solar-calculator/full-estimate-wizard";
 import { QuickToolsGrid } from "@/components/solar-calculator/quick-tools";
 import type { SolarCalculatorSettingsRecord } from "@/lib/store/solar-calculator.store";
+import type { PanelModelRecord } from "@/lib/store/catalog.store";
 import { cn } from "@/lib/utils";
 
 type Section = "estimate" | "tools";
 
-export function SolarToolsSection({ pricing }: { pricing: SolarCalculatorSettingsRecord }) {
+export function SolarToolsSection({
+  pricing,
+  panelModels,
+}: {
+  pricing: SolarCalculatorSettingsRecord;
+  panelModels: PanelModelRecord[];
+}) {
   const [section, setSection] = useState<Section>("estimate");
 
   return (
@@ -36,7 +43,9 @@ export function SolarToolsSection({ pricing }: { pricing: SolarCalculatorSetting
         </button>
       </div>
 
-      <div className="mt-8">{section === "estimate" ? <FullEstimateWizard pricing={pricing} /> : <QuickToolsGrid />}</div>
+      <div className="mt-8">
+        {section === "estimate" ? <FullEstimateWizard pricing={pricing} /> : <QuickToolsGrid panelModels={panelModels} />}
+      </div>
     </div>
   );
 }

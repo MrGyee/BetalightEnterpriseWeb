@@ -54,6 +54,14 @@ export interface FaqRecord {
   sortOrder: number;
 }
 
+export interface PanelModelRecord {
+  id: string;
+  label: string;
+  watts: number;
+  priceKsh: number;
+  sortOrder: number;
+}
+
 interface ProductRow {
   slug: string;
   name: string;
@@ -106,6 +114,14 @@ interface FaqRow {
   sort_order: number;
 }
 
+interface PanelModelRow {
+  id: string;
+  label: string;
+  watts: number;
+  price_ksh: number;
+  sort_order: number;
+}
+
 const mapProduct = (row: ProductRow): ProductRecord => ({
   slug: row.slug,
   name: row.name,
@@ -155,6 +171,14 @@ const mapFaq = (row: FaqRow): FaqRecord => ({
   question: row.question,
   answer: row.answer,
   category: row.category,
+  sortOrder: row.sort_order,
+});
+
+const mapPanelModel = (row: PanelModelRow): PanelModelRecord => ({
+  id: row.id,
+  label: row.label,
+  watts: row.watts,
+  priceKsh: row.price_ksh,
   sortOrder: row.sort_order,
 });
 
@@ -218,6 +242,15 @@ function faqToRow(f: Omit<FaqRecord, "id">) {
   };
 }
 
+function panelModelToRow(p: Omit<PanelModelRecord, "id">) {
+  return {
+    label: p.label,
+    watts: p.watts,
+    price_ksh: p.priceKsh,
+    sort_order: p.sortOrder,
+  };
+}
+
 export const catalogStore = {
   listProducts: () => selectAll("products", mapProduct, "name", true),
   getProductBySlug: (slug: string) => selectBySlug("products", slug, mapProduct),
@@ -248,5 +281,13 @@ export const catalogStore = {
   getFaqById: (id: string) => selectById("faqs", id, mapFaq),
   createFaq: (values: Omit<FaqRecord, "id">) => insertOne("faqs", faqToRow(values), mapFaq),
   updateFaq: (id: string, values: Omit<FaqRecord, "id">) => updateByKey("faqs", "id", id, faqToRow(values), mapFaq),
+
+  listPanelModels: () => selectAll("solar_panel_models", mapPanelModel, "sort_order", true),
+  getPanelModelById: (id: string) => selectById("solar_panel_models", id, mapPanelModel),
+  createPanelModel: (values: Omit<PanelModelRecord, "id">) =>
+    insertOne("solar_panel_models", panelModelToRow(values), mapPanelModel),
+  updatePanelModel: (id: string, values: Omit<PanelModelRecord, "id">) =>
+    updateByKey("solar_panel_models", "id", id, panelModelToRow(values), mapPanelModel),
+  deletePanelModel: (id: string) => deleteByKey("solar_panel_models", "id", id),
   deleteFaq: (id: string) => deleteByKey("faqs", "id", id),
 };

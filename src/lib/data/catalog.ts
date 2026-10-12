@@ -1,6 +1,13 @@
 import "server-only";
 import { catalogStore } from "@/lib/store/catalog.store";
-import type { ProductRecord, ProjectRecord, BlogPostRecord, TestimonialRecord, FaqRecord } from "@/lib/store/catalog.store";
+import type {
+  ProductRecord,
+  ProjectRecord,
+  BlogPostRecord,
+  TestimonialRecord,
+  FaqRecord,
+  PanelModelRecord,
+} from "@/lib/store/catalog.store";
 
 export const getProducts = () => catalogStore.listProducts();
 export const getProductBySlug = (slug: string) => catalogStore.getProductBySlug(slug);
@@ -31,3 +38,10 @@ export const getFaqById = (id: string) => catalogStore.getFaqById(id);
 export const createFaq = (values: Omit<FaqRecord, "id">) => catalogStore.createFaq(values);
 export const updateFaq = (id: string, values: Omit<FaqRecord, "id">) => catalogStore.updateFaq(id, values);
 export const deleteFaq = (id: string) => catalogStore.deleteFaq(id);
+
+export const getPanelModels = () => catalogStore.listPanelModels();
+export const getPanelModelById = (id: string) => catalogStore.getPanelModelById(id);
+export const createPanelModel = (values: Omit<PanelModelRecord, "id">) => catalogStore.createPanelModel(values);
+export const updatePanelModel = (id: string, values: Omit<PanelModelRecord, "id">) =>
+  catalogStore.updatePanelModel(id, values);
+export const deletePanelModel = (id: string) => catalogStore.deletePanelModel(id);

@@ -7,11 +7,15 @@ import {
   sizeBattery,
   sizePanelArray,
   sizeBreaker,
+  formatKsh,
   REFERENCE_BATTERY_KWH,
   REFERENCE_PANEL_WATTS,
+  PEAK_SUN_HOURS,
+  PANEL_WATTAGE_OPTIONS,
   type BatteryChemistry,
   type ElectricalPhase,
 } from "@/lib/solar-calculator";
+import type { PanelModelRecord } from "@/lib/store/catalog.store";
 import { cn } from "@/lib/utils";
 
 // A translucent background (the original bg-transparent + dark:bg-input/30)
@@ -140,13 +144,28 @@ function BatterySizeTool() {
   );
 }
 
-function PanelSizeTool() {
+const MANUAL_PANEL_SELECTION = "manual";
+const GENERIC_PANEL_PREFIX = "generic-";
+
+function PanelSizeTool({ panelModels }: { panelModels: PanelModelRecord[] }) {
   const [dailyKwh, setDailyKwh] = useState<number>(0);
-  const [panelWattage, setPanelWattage] = useState<number>(REFERENCE_PANEL_WATTS);
+  // No admin-priced models yet -> offer the curated wattage tiers as a
+  // size-only fallback rather than forcing straight to manual entry.
+  const defaultSelection =
+    panelModels[0]?.id ?? (panelModels.length === 0 ? `${GENERIC_PANEL_PREFIX}${REFERENCE_PANEL_WATTS}` : MANUAL_PANEL_SELECTION);
+  const [selection, setSelection] = useState<string>(defaultSelection);
+  const [manualWattage, setManualWattage] = useState<number>(REFERENCE_PANEL_WATTS);
+  const [peakSunHours, setPeakSunHours] = useState<number>(PEAK_SUN_HOURS);
+
+  const selectedModel = panelModels.find((m) => m.id === selection);
+  const genericWatts = selection.startsWith(GENERIC_PANEL_PREFIX) ? Number(selection.slice(GENERIC_PANEL_PREFIX.length)) : null;
+  const panelWattage = selectedModel?.watts ?? genericWatts ?? manualWattage;
+
   const result = useMemo(
-    () => sizePanelArray({ dailyEnergyWh: dailyKwh * 1000, panelWattage }),
-    [dailyKwh, panelWattage]
+    () => sizePanelArray({ dailyEnergyWh: dailyKwh * 1000, panelWattage, peakSunHours }),
+    [dailyKwh, panelWattage, peakSunHours]
   );
+  const cost = selectedModel && result ? result.panelCount * selectedModel.priceKsh : null;
 
   return (
     <ToolCard title="Solar Panel Size">
@@ -161,23 +180,59 @@ function PanelSizeTool() {
           placeholder="e.g. 5"
         />
       </Field>
-      <Field label="Panel wattage (W)" htmlFor="pnl-watt">
+      <Field label="Panel" htmlFor="pnl-model">
+        <select id="pnl-model" className={selectClassName} value={selection} onChange={(e) => setSelection(e.target.value)}>
+          {panelModels.map((model) => (
+            <option key={model.id} value={model.id}>
+              {model.label} ({model.watts}W — {formatKsh(model.priceKsh)})
+            </option>
+          ))}
+          {panelModels.length === 0 &&
+            PANEL_WATTAGE_OPTIONS.map((watts) => (
+              <option key={watts} value={`${GENERIC_PANEL_PREFIX}${watts}`}>
+                {watts}W panel (size only, no price set yet)
+              </option>
+            ))}
+          <option value={MANUAL_PANEL_SELECTION}>Enter a wattage manually</option>
+        </select>
+      </Field>
+      {selection === MANUAL_PANEL_SELECTION && (
+        <Field label="Panel wattage (W)" htmlFor="pnl-watt">
+          <Input
+            id="pnl-watt"
+            type="number"
+            min={1}
+            value={manualWattage}
+            onChange={(e) => setManualWattage(Math.max(1, Number(e.target.value)))}
+          />
+        </Field>
+      )}
+      <Field label="Peak sun hours" htmlFor="pnl-psh">
         <Input
-          id="pnl-watt"
+          id="pnl-psh"
           type="number"
-          min={1}
-          value={panelWattage}
-          onChange={(e) => setPanelWattage(Math.max(1, Number(e.target.value)))}
+          min={0.1}
+          step={0.1}
+          value={peakSunHours}
+          onChange={(e) => setPeakSunHours(Math.max(0.1, Number(e.target.value)))}
         />
       </Field>
       {result && (
         <Result>
-          <p>
+          <p className="text-xs text-muted-foreground">
+            {peakSunHours} sun hours × 0.8 system derate = {result.effectiveHours.toFixed(2)} effective hours
+          </p>
+          <p className="mt-2">
             Array size needed: <strong className="text-primary">{Math.round(result.arrayWp).toLocaleString("en-KE")} Wp</strong>
           </p>
           <p className="mt-1 text-muted-foreground">
-            ≈ {result.panelCount} × {panelWattage}W panels
+            ≈ {result.panelCount} × {panelWattage}W panel{result.panelCount === 1 ? "" : "s"}
           </p>
+          {cost !== null && (
+            <p className="mt-1">
+              Estimated panel cost: <strong className="text-primary">{formatKsh(cost)}</strong>
+            </p>
+          )}
         </Result>
       )}
     </ToolCard>
@@ -241,17 +296,17 @@ function BreakerSizeTool() {
   );
 }
 
-export function QuickToolsGrid() {
+export function QuickToolsGrid({ panelModels }: { panelModels: PanelModelRecord[] }) {
   return (
     <div>
       <p className="max-w-2xl text-sm text-muted-foreground">
-        Already know one number? Get a single sizing answer without the full appliance walkthrough. These give a size
-        only, not a cost — use the Full Estimate tab for pricing.
+        Already know one number? Get a single sizing answer without the full appliance walkthrough. Most give a size
+        only — pick a named panel model in Solar Panel Size to also see its price.
       </p>
       <div className={cn("mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2")}>
         <InverterSizeTool />
         <BatterySizeTool />
-        <PanelSizeTool />
+        <PanelSizeTool panelModels={panelModels} />
         <BreakerSizeTool />
       </div>
     </div>

@@ -77,6 +77,14 @@ export const faqAdminSchema = z.object({
 });
 export type FaqAdminValues = z.infer<typeof faqAdminSchema>;
 
+export const panelModelAdminSchema = z.object({
+  label: z.string().min(2, "Label is required, e.g. \"JINKO 450W Bifacial\"."),
+  watts: z.number().min(1, "Must be more than 0."),
+  priceKsh: z.number().min(0, "Must be 0 or more."),
+  sortOrder: z.number(),
+});
+export type PanelModelAdminValues = z.infer<typeof panelModelAdminSchema>;
+
 export const siteSettingsAdminSchema = z.object({
   phonePrimary: z.string().min(7, "Primary phone number is required."),
   phoneShop1: z.string().optional().or(z.literal("")),

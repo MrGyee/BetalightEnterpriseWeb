@@ -150,10 +150,12 @@ export interface SolarEstimate {
 // tightly enough that per-city numbers would be false precision given we
 // aren't modelling season at all. 5 matches the Kenya-wide planning default
 // used by AfroTools' own Kenya solar ROI calculator.
-const PEAK_SUN_HOURS = 5;
+// Exported so the panel quick tool can show these as the default values of
+// editable fields, rather than hiding them as opaque constants.
+export const PEAK_SUN_HOURS = 5;
 // Combined wiring/temperature/inverter-conversion derate applied when sizing
 // the panel array from daily energy need — standard off-grid sizing practice.
-const SYSTEM_DERATE = 0.8;
+export const SYSTEM_DERATE = 0.8;
 // Headroom above continuous load for appliance starting surge (compressors,
 // motors) when sizing the inverter.
 const INVERTER_SURGE_HEADROOM = 1.25;
@@ -241,7 +243,12 @@ export function calculateSolarEstimate(
   const batteryLabel = input.batteryChemistry === "lithium" ? "LiFePO4 Lithium" : "Gel";
 
   const lineItems: SolarEstimateLineItem[] = [
-    { label: "Solar panel array", quantity: `${Math.round(panelArrayWp)} Wp`, unitPrice: pricing.panelPricePerWatt, total: panelCost },
+    {
+      label: "Solar panel array",
+      quantity: `${Math.round(panelArrayWp)} Wp (≈${Math.ceil(panelArrayWp / REFERENCE_PANEL_WATTS)} × ${REFERENCE_PANEL_WATTS}W panels)`,
+      unitPrice: pricing.panelPricePerWatt,
+      total: panelCost,
+    },
     {
       label: `Battery bank (${batteryLabel})`,
       quantity: `${batteryKwh.toFixed(2)} kWh`,
@@ -295,6 +302,12 @@ const STANDARD_BREAKER_AMPS = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 1
 export const REFERENCE_BATTERY_KWH = 2.56;
 export const REFERENCE_PANEL_WATTS = 450;
 
+// Curated, not copied: a competitor's panel picker lists specific Canadian
+// Solar / Jinko models up to 670W, but Betalight's own JINKO bifacial panel
+// is stocked "50W to 450W" per the catalog — listing a 670W option here
+// would offer something not actually available to order.
+export const PANEL_WATTAGE_OPTIONS = [100, 150, 250, 330, 400, 450] as const;
+
 function roundUpToNearest(value: number, options: readonly number[]): number {
   return options.find((option) => option >= value) ?? options[options.length - 1];
 }
@@ -337,14 +350,28 @@ export function sizeBattery(params: {
 export interface PanelArraySizeResult {
   arrayWp: number;
   panelCount: number;
+  effectiveHours: number;
 }
 
-/** Daily energy -> panel array size, against Kenya's ~5 peak sun hours. */
-export function sizePanelArray(params: { dailyEnergyWh: number; panelWattage?: number }): PanelArraySizeResult | null {
+/**
+ * Daily energy -> panel array size. Peak sun hours and system derate default
+ * to the researched constants but can be overridden by a visitor who knows
+ * their actual site conditions — exposed, not hidden, so the quick tool can
+ * show its own math the way a visitor can check by hand.
+ */
+export function sizePanelArray(params: {
+  dailyEnergyWh: number;
+  panelWattage?: number;
+  peakSunHours?: number;
+  systemDerate?: number;
+}): PanelArraySizeResult | null {
   if (params.dailyEnergyWh <= 0) return null;
-  const arrayWp = params.dailyEnergyWh / (PEAK_SUN_HOURS * SYSTEM_DERATE);
+  const peakSunHours = params.peakSunHours ?? PEAK_SUN_HOURS;
+  const systemDerate = params.systemDerate ?? SYSTEM_DERATE;
+  const effectiveHours = peakSunHours * systemDerate;
+  const arrayWp = params.dailyEnergyWh / effectiveHours;
   const panelWattage = params.panelWattage ?? REFERENCE_PANEL_WATTS;
-  return { arrayWp, panelCount: Math.ceil(arrayWp / panelWattage) };
+  return { arrayWp, panelCount: Math.ceil(arrayWp / panelWattage), effectiveHours };
 }
 
 export type ElectricalPhase = "single" | "three";

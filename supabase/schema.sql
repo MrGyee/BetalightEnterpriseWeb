@@ -194,3 +194,18 @@ create table if not exists solar_calculator_settings (
 alter table solar_calculator_settings enable row level security;
 -- Migration for databases created before grid_tariff_per_kwh existed:
 -- alter table solar_calculator_settings add column if not exists grid_tariff_per_kwh numeric not null default 25;
+
+-- Named, individually priced panel options for the Panel Size quick tool —
+-- separate from panel_price_per_watt above, which is a blended rate for the
+-- Full Estimate. Real panels aren't sold at a flat per-watt rate, so this
+-- lets admin list actual stocked models (e.g. "JINKO 450W Bifacial") each
+-- with its own price, the way a visitor would actually be quoted one.
+create table if not exists solar_panel_models (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  label text not null,
+  watts numeric not null,
+  price_ksh numeric not null,
+  sort_order integer not null default 0
+);
+alter table solar_panel_models enable row level security;

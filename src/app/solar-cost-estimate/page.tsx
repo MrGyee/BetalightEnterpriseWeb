@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { SolarToolsSection } from "@/components/solar-calculator/solar-tools-section";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getSolarCalculatorSettings } from "@/lib/data/solar-calculator";
+import { getPanelModels } from "@/lib/data/catalog";
 import { faqSchema } from "@/lib/seo/schema";
 
 export const revalidate = 300;
@@ -48,7 +49,7 @@ const faqs = [
 ];
 
 export default async function SolarCostEstimatePage() {
-  const pricing = await getSolarCalculatorSettings();
+  const [pricing, panelModels] = await Promise.all([getSolarCalculatorSettings(), getPanelModels().catch(() => [])]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -64,7 +65,7 @@ export default async function SolarCostEstimatePage() {
       </div>
 
       <div className="mt-10">
-        <SolarToolsSection pricing={pricing} />
+        <SolarToolsSection pricing={pricing} panelModels={panelModels} />
       </div>
 
       <div className="mt-20 max-w-3xl">
