@@ -85,6 +85,23 @@ export const panelModelAdminSchema = z.object({
 });
 export type PanelModelAdminValues = z.infer<typeof panelModelAdminSchema>;
 
+export const inverterModelAdminSchema = z.object({
+  label: z.string().min(2, "Label is required, e.g. \"Deye 5kVA Hybrid\"."),
+  kva: z.number().min(0.1, "Must be more than 0."),
+  priceKsh: z.number().min(0, "Must be 0 or more."),
+  sortOrder: z.number(),
+});
+export type InverterModelAdminValues = z.infer<typeof inverterModelAdminSchema>;
+
+export const batteryModelAdminSchema = z.object({
+  label: z.string().min(2, "Label is required, e.g. \"Vestwoods 200Ah LiFePO4\"."),
+  capacityKwh: z.number().min(0.01, "Must be more than 0."),
+  chemistry: z.enum(["lithium", "gel"]),
+  priceKsh: z.number().min(0, "Must be 0 or more."),
+  sortOrder: z.number(),
+});
+export type BatteryModelAdminValues = z.infer<typeof batteryModelAdminSchema>;
+
 export const siteSettingsAdminSchema = z.object({
   phonePrimary: z.string().min(7, "Primary phone number is required."),
   phoneShop1: z.string().optional().or(z.literal("")),

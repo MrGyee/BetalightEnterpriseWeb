@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FullEstimateWizard } from "@/components/solar-calculator/full-estimate-wizard";
 import { QuickToolsGrid } from "@/components/solar-calculator/quick-tools";
 import type { SolarCalculatorSettingsRecord } from "@/lib/store/solar-calculator.store";
-import type { PanelModelRecord } from "@/lib/store/catalog.store";
+import type { PanelModelRecord, InverterModelRecord, BatteryModelRecord } from "@/lib/store/catalog.store";
 import { cn } from "@/lib/utils";
 
 type Section = "estimate" | "tools";
@@ -12,9 +12,13 @@ type Section = "estimate" | "tools";
 export function SolarToolsSection({
   pricing,
   panelModels,
+  inverterModels,
+  batteryModels,
 }: {
   pricing: SolarCalculatorSettingsRecord;
   panelModels: PanelModelRecord[];
+  inverterModels: InverterModelRecord[];
+  batteryModels: BatteryModelRecord[];
 }) {
   const [section, setSection] = useState<Section>("estimate");
 
@@ -44,7 +48,11 @@ export function SolarToolsSection({
       </div>
 
       <div className="mt-8">
-        {section === "estimate" ? <FullEstimateWizard pricing={pricing} /> : <QuickToolsGrid panelModels={panelModels} />}
+        {section === "estimate" ? (
+          <FullEstimateWizard pricing={pricing} />
+        ) : (
+          <QuickToolsGrid panelModels={panelModels} inverterModels={inverterModels} batteryModels={batteryModels} />
+        )}
       </div>
     </div>
   );

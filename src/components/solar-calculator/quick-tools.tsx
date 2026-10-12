@@ -15,7 +15,7 @@ import {
   type BatteryChemistry,
   type ElectricalPhase,
 } from "@/lib/solar-calculator";
-import type { PanelModelRecord } from "@/lib/store/catalog.store";
+import type { PanelModelRecord, InverterModelRecord, BatteryModelRecord } from "@/lib/store/catalog.store";
 import { cn } from "@/lib/utils";
 
 // A translucent background (the original bg-transparent + dark:bg-input/30)
@@ -51,10 +51,16 @@ function Result({ children }: { children: React.ReactNode }) {
   return <div className="mt-4 rounded-xl bg-secondary/40 p-3 text-sm">{children}</div>;
 }
 
-function InverterSizeTool() {
+const GENERIC_INVERTER_SELECTION = "generic";
+
+function InverterSizeTool({ inverterModels }: { inverterModels: InverterModelRecord[] }) {
   const [peakLoadWatts, setPeakLoadWatts] = useState<number>(0);
   const [headroomPercent, setHeadroomPercent] = useState<number>(25);
+  const [selection, setSelection] = useState<string>(inverterModels[0]?.id ?? GENERIC_INVERTER_SELECTION);
+
   const result = useMemo(() => sizeInverter({ peakLoadWatts, headroomPercent }), [peakLoadWatts, headroomPercent]);
+  const selectedModel = inverterModels.find((m) => m.id === selection);
+  const coversLoad = selectedModel && result ? selectedModel.kva >= result.recommendedKva : null;
 
   return (
     <ToolCard title="Inverter Size">
@@ -78,6 +84,18 @@ function InverterSizeTool() {
           onChange={(e) => setHeadroomPercent(Math.max(0, Number(e.target.value)))}
         />
       </Field>
+      {inverterModels.length > 0 && (
+        <Field label="Inverter" htmlFor="inv-model">
+          <select id="inv-model" className={selectClassName} value={selection} onChange={(e) => setSelection(e.target.value)}>
+            {inverterModels.map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.label} ({model.kva}kVA — {formatKsh(model.priceKsh)})
+              </option>
+            ))}
+            <option value={GENERIC_INVERTER_SELECTION}>Just show recommended size (no price)</option>
+          </select>
+        </Field>
+      )}
       {result && (
         <Result>
           <p>
@@ -86,20 +104,42 @@ function InverterSizeTool() {
           <p className="mt-1">
             Recommended inverter: <strong className="text-primary">{result.recommendedKva} kVA</strong>
           </p>
+          {selectedModel && (
+            <>
+              <p className="mt-1">
+                {coversLoad ? "✓" : "⚠"} {selectedModel.label} ({selectedModel.kva} kVA)
+                {coversLoad ? " covers this load." : " is smaller than recommended — consider a bigger unit."}
+              </p>
+              <p className="mt-1">
+                Price: <strong className="text-primary">{formatKsh(selectedModel.priceKsh)}</strong>
+              </p>
+            </>
+          )}
         </Result>
       )}
     </ToolCard>
   );
 }
 
-function BatterySizeTool() {
+const MANUAL_BATTERY_SELECTION = "manual";
+
+function BatterySizeTool({ batteryModels }: { batteryModels: BatteryModelRecord[] }) {
   const [dailyKwh, setDailyKwh] = useState<number>(0);
   const [autonomyDays, setAutonomyDays] = useState<number>(1);
-  const [chemistry, setChemistry] = useState<BatteryChemistry>("lithium");
+  const [manualChemistry, setManualChemistry] = useState<BatteryChemistry>("lithium");
+  const [selection, setSelection] = useState<string>(batteryModels[0]?.id ?? MANUAL_BATTERY_SELECTION);
+
+  const selectedModel = batteryModels.find((m) => m.id === selection);
+  // A picked model is a specific product — its own chemistry drives the DoD
+  // math, overriding the manual selector rather than the two disagreeing.
+  const chemistry = selectedModel?.chemistry ?? manualChemistry;
+
   const result = useMemo(
     () => sizeBattery({ dailyEnergyWh: dailyKwh * 1000, autonomyDays, chemistry }),
     [dailyKwh, autonomyDays, chemistry]
   );
+  const modelCount = selectedModel && result ? Math.ceil(result.batteryKwh / selectedModel.capacityKwh) : null;
+  const cost = selectedModel && modelCount !== null ? modelCount * selectedModel.priceKsh : null;
 
   return (
     <ToolCard title="Battery Size">
@@ -124,20 +164,52 @@ function BatterySizeTool() {
           onChange={(e) => setAutonomyDays(Math.max(1, Number(e.target.value)))}
         />
       </Field>
-      <Field label="Battery type" htmlFor="bat-chem">
-        <select id="bat-chem" className={selectClassName} value={chemistry} onChange={(e) => setChemistry(e.target.value as BatteryChemistry)}>
-          <option value="lithium">Lithium (LiFePO4)</option>
-          <option value="gel">Gel</option>
-        </select>
-      </Field>
+      {batteryModels.length > 0 && (
+        <Field label="Battery" htmlFor="bat-model">
+          <select id="bat-model" className={selectClassName} value={selection} onChange={(e) => setSelection(e.target.value)}>
+            {batteryModels.map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.label} ({model.capacityKwh}kWh {model.chemistry === "lithium" ? "Li" : "Gel"} — {formatKsh(model.priceKsh)})
+              </option>
+            ))}
+            <option value={MANUAL_BATTERY_SELECTION}>Choose chemistry manually</option>
+          </select>
+        </Field>
+      )}
+      {selection === MANUAL_BATTERY_SELECTION && (
+        <Field label="Battery type" htmlFor="bat-chem">
+          <select
+            id="bat-chem"
+            className={selectClassName}
+            value={manualChemistry}
+            onChange={(e) => setManualChemistry(e.target.value as BatteryChemistry)}
+          >
+            <option value="lithium">Lithium (LiFePO4)</option>
+            <option value="gel">Gel</option>
+          </select>
+        </Field>
+      )}
       {result && (
         <Result>
           <p>
             Battery bank needed: <strong className="text-primary">{result.batteryKwh.toFixed(2)} kWh</strong>
           </p>
-          <p className="mt-1 text-muted-foreground">
-            ≈ {result.referenceBatteryCount} × our {REFERENCE_BATTERY_KWH} kWh (200Ah) lithium battery
-          </p>
+          {selectedModel && modelCount !== null ? (
+            <>
+              <p className="mt-1 text-muted-foreground">
+                ≈ {modelCount} × {selectedModel.label}
+              </p>
+              {cost !== null && (
+                <p className="mt-1">
+                  Estimated battery cost: <strong className="text-primary">{formatKsh(cost)}</strong>
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="mt-1 text-muted-foreground">
+              ≈ {result.referenceBatteryCount} × our {REFERENCE_BATTERY_KWH} kWh (200Ah) lithium battery
+            </p>
+          )}
         </Result>
       )}
     </ToolCard>
@@ -296,16 +368,24 @@ function BreakerSizeTool() {
   );
 }
 
-export function QuickToolsGrid({ panelModels }: { panelModels: PanelModelRecord[] }) {
+export function QuickToolsGrid({
+  panelModels,
+  inverterModels,
+  batteryModels,
+}: {
+  panelModels: PanelModelRecord[];
+  inverterModels: InverterModelRecord[];
+  batteryModels: BatteryModelRecord[];
+}) {
   return (
     <div>
       <p className="max-w-2xl text-sm text-muted-foreground">
-        Already know one number? Get a single sizing answer without the full appliance walkthrough. Most give a size
-        only — pick a named panel model in Solar Panel Size to also see its price.
+        Already know one number? Get a single sizing answer without the full appliance walkthrough. Pick a named
+        model in Inverter, Battery or Solar Panel Size to also see its price — Breaker Size is always size-only.
       </p>
       <div className={cn("mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2")}>
-        <InverterSizeTool />
-        <BatterySizeTool />
+        <InverterSizeTool inverterModels={inverterModels} />
+        <BatterySizeTool batteryModels={batteryModels} />
         <PanelSizeTool panelModels={panelModels} />
         <BreakerSizeTool />
       </div>

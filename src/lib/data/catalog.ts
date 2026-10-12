@@ -7,6 +7,8 @@ import type {
   TestimonialRecord,
   FaqRecord,
   PanelModelRecord,
+  InverterModelRecord,
+  BatteryModelRecord,
 } from "@/lib/store/catalog.store";
 
 export const getProducts = () => catalogStore.listProducts();
@@ -45,3 +47,17 @@ export const createPanelModel = (values: Omit<PanelModelRecord, "id">) => catalo
 export const updatePanelModel = (id: string, values: Omit<PanelModelRecord, "id">) =>
   catalogStore.updatePanelModel(id, values);
 export const deletePanelModel = (id: string) => catalogStore.deletePanelModel(id);
+
+export const getInverterModels = () => catalogStore.listInverterModels();
+export const getInverterModelById = (id: string) => catalogStore.getInverterModelById(id);
+export const createInverterModel = (values: Omit<InverterModelRecord, "id">) => catalogStore.createInverterModel(values);
+export const updateInverterModel = (id: string, values: Omit<InverterModelRecord, "id">) =>
+  catalogStore.updateInverterModel(id, values);
+export const deleteInverterModel = (id: string) => catalogStore.deleteInverterModel(id);
+
+export const getBatteryModels = () => catalogStore.listBatteryModels();
+export const getBatteryModelById = (id: string) => catalogStore.getBatteryModelById(id);
+export const createBatteryModel = (values: Omit<BatteryModelRecord, "id">) => catalogStore.createBatteryModel(values);
+export const updateBatteryModel = (id: string, values: Omit<BatteryModelRecord, "id">) =>
+  catalogStore.updateBatteryModel(id, values);
+export const deleteBatteryModel = (id: string) => catalogStore.deleteBatteryModel(id);

@@ -209,3 +209,28 @@ create table if not exists solar_panel_models (
   sort_order integer not null default 0
 );
 alter table solar_panel_models enable row level security;
+
+-- Same pattern as solar_panel_models, for the Inverter Size quick tool.
+create table if not exists solar_inverter_models (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  label text not null,
+  kva numeric not null,
+  price_ksh numeric not null,
+  sort_order integer not null default 0
+);
+alter table solar_inverter_models enable row level security;
+
+-- Same pattern again, for the Battery Size quick tool. Chemistry lives on
+-- the model itself (not a separate selector) since a named battery model is
+-- a specific product, not an abstract lithium-or-gel choice.
+create table if not exists solar_battery_models (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  label text not null,
+  capacity_kwh numeric not null,
+  chemistry text not null default 'lithium' check (chemistry in ('lithium', 'gel')),
+  price_ksh numeric not null,
+  sort_order integer not null default 0
+);
+alter table solar_battery_models enable row level security;

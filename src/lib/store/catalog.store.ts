@@ -62,6 +62,25 @@ export interface PanelModelRecord {
   sortOrder: number;
 }
 
+export interface InverterModelRecord {
+  id: string;
+  label: string;
+  kva: number;
+  priceKsh: number;
+  sortOrder: number;
+}
+
+export type BatteryModelChemistry = "lithium" | "gel";
+
+export interface BatteryModelRecord {
+  id: string;
+  label: string;
+  capacityKwh: number;
+  chemistry: BatteryModelChemistry;
+  priceKsh: number;
+  sortOrder: number;
+}
+
 interface ProductRow {
   slug: string;
   name: string;
@@ -122,6 +141,23 @@ interface PanelModelRow {
   sort_order: number;
 }
 
+interface InverterModelRow {
+  id: string;
+  label: string;
+  kva: number;
+  price_ksh: number;
+  sort_order: number;
+}
+
+interface BatteryModelRow {
+  id: string;
+  label: string;
+  capacity_kwh: number;
+  chemistry: BatteryModelChemistry;
+  price_ksh: number;
+  sort_order: number;
+}
+
 const mapProduct = (row: ProductRow): ProductRecord => ({
   slug: row.slug,
   name: row.name,
@@ -178,6 +214,23 @@ const mapPanelModel = (row: PanelModelRow): PanelModelRecord => ({
   id: row.id,
   label: row.label,
   watts: row.watts,
+  priceKsh: row.price_ksh,
+  sortOrder: row.sort_order,
+});
+
+const mapInverterModel = (row: InverterModelRow): InverterModelRecord => ({
+  id: row.id,
+  label: row.label,
+  kva: row.kva,
+  priceKsh: row.price_ksh,
+  sortOrder: row.sort_order,
+});
+
+const mapBatteryModel = (row: BatteryModelRow): BatteryModelRecord => ({
+  id: row.id,
+  label: row.label,
+  capacityKwh: row.capacity_kwh,
+  chemistry: row.chemistry,
   priceKsh: row.price_ksh,
   sortOrder: row.sort_order,
 });
@@ -251,6 +304,25 @@ function panelModelToRow(p: Omit<PanelModelRecord, "id">) {
   };
 }
 
+function inverterModelToRow(m: Omit<InverterModelRecord, "id">) {
+  return {
+    label: m.label,
+    kva: m.kva,
+    price_ksh: m.priceKsh,
+    sort_order: m.sortOrder,
+  };
+}
+
+function batteryModelToRow(b: Omit<BatteryModelRecord, "id">) {
+  return {
+    label: b.label,
+    capacity_kwh: b.capacityKwh,
+    chemistry: b.chemistry,
+    price_ksh: b.priceKsh,
+    sort_order: b.sortOrder,
+  };
+}
+
 export const catalogStore = {
   listProducts: () => selectAll("products", mapProduct, "name", true),
   getProductBySlug: (slug: string) => selectBySlug("products", slug, mapProduct),
@@ -289,5 +361,21 @@ export const catalogStore = {
   updatePanelModel: (id: string, values: Omit<PanelModelRecord, "id">) =>
     updateByKey("solar_panel_models", "id", id, panelModelToRow(values), mapPanelModel),
   deletePanelModel: (id: string) => deleteByKey("solar_panel_models", "id", id),
+
+  listInverterModels: () => selectAll("solar_inverter_models", mapInverterModel, "sort_order", true),
+  getInverterModelById: (id: string) => selectById("solar_inverter_models", id, mapInverterModel),
+  createInverterModel: (values: Omit<InverterModelRecord, "id">) =>
+    insertOne("solar_inverter_models", inverterModelToRow(values), mapInverterModel),
+  updateInverterModel: (id: string, values: Omit<InverterModelRecord, "id">) =>
+    updateByKey("solar_inverter_models", "id", id, inverterModelToRow(values), mapInverterModel),
+  deleteInverterModel: (id: string) => deleteByKey("solar_inverter_models", "id", id),
+
+  listBatteryModels: () => selectAll("solar_battery_models", mapBatteryModel, "sort_order", true),
+  getBatteryModelById: (id: string) => selectById("solar_battery_models", id, mapBatteryModel),
+  createBatteryModel: (values: Omit<BatteryModelRecord, "id">) =>
+    insertOne("solar_battery_models", batteryModelToRow(values), mapBatteryModel),
+  updateBatteryModel: (id: string, values: Omit<BatteryModelRecord, "id">) =>
+    updateByKey("solar_battery_models", "id", id, batteryModelToRow(values), mapBatteryModel),
+  deleteBatteryModel: (id: string) => deleteByKey("solar_battery_models", "id", id),
   deleteFaq: (id: string) => deleteByKey("faqs", "id", id),
 };
